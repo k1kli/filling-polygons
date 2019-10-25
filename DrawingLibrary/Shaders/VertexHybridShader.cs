@@ -19,7 +19,7 @@ namespace DrawingLibrary.Shaders
         {
             vertexData[i++] = vertex;
         }
-        private static readonly float[] barymetricWeights = new float[3];
+        private static readonly double[] barymetricWeights = new double[3];
         public override void ForFragment(int x, int y)
         {
             GetBarymetricWeights(vertexData, barymetricWeights, x, y);

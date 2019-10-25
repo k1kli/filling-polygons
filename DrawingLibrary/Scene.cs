@@ -20,12 +20,12 @@ namespace DrawingLibrary
             triangleDrawer.Shader = shader;
             shader.Init(bitmap);
         }
-        public float MinX { get; set; } = 0;
-        public float MinY { get; set; } = 0;
-        public float MaxX { get; set; } = 10;
-        public float MaxY { get; set; } = 10;
-        public float Width => MaxX - MinX;
-        public float Height => MaxY - MinY;
+        public double MinX { get; set; } = 0;
+        public double MinY { get; set; } = 0;
+        public double MaxX { get; set; } = 10;
+        public double MaxY { get; set; } = 10;
+        public double Width => MaxX - MinX;
+        public double Height => MaxY - MinY;
 
         public Vector2 TransformToSceneCoords(Vector2 bitmapCoordsPos)
         {

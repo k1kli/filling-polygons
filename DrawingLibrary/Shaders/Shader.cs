@@ -29,27 +29,27 @@ namespace DrawingLibrary.Shaders
                 + (((((c1 >> 24) & 255) + ((c2 >> 24) & 255) + ((c3 >> 24) & 255)) / 3) << 24);
         }
 
-        public static void GetBarymetricWeights(VertexData[] vertices, float[] resultingWeights, int curX, int curY)
+        public static void GetBarymetricWeights(VertexData[] vertices, double[] resultingWeights, int curX, int curY)
         {
             resultingWeights[0] =
-                 ((float)(vertices[1].BitmapPos.Y - vertices[2].BitmapPos.Y)
+                 ((double)(vertices[1].BitmapPos.Y - vertices[2].BitmapPos.Y)
                  * (curX - vertices[2].BitmapPos.X)
-                 + (vertices[2].BitmapPos.X - vertices[1].BitmapPos.X)
+                 + (double)(vertices[2].BitmapPos.X - vertices[1].BitmapPos.X)
                  * (curY - vertices[2].BitmapPos.Y))
                  / 
-                 ((vertices[1].BitmapPos.Y - vertices[2].BitmapPos.Y)
+                 ((double)(vertices[1].BitmapPos.Y - vertices[2].BitmapPos.Y)
                  * (vertices[0].BitmapPos.X - vertices[2].BitmapPos.X)
-                 + (vertices[2].BitmapPos.X - vertices[1].BitmapPos.X)
+                 + (double)(vertices[2].BitmapPos.X - vertices[1].BitmapPos.X)
                  * (vertices[0].BitmapPos.Y - vertices[2].BitmapPos.Y));
             resultingWeights[1] =
-                 ((float)(vertices[2].BitmapPos.Y - vertices[0].BitmapPos.Y)
+                 ((double)(vertices[2].BitmapPos.Y - vertices[0].BitmapPos.Y)
                  * (curX - vertices[2].BitmapPos.X)
-                 + (vertices[0].BitmapPos.X - vertices[2].BitmapPos.X)
+                 + (double)(vertices[0].BitmapPos.X - vertices[2].BitmapPos.X)
                  * (curY - vertices[2].BitmapPos.Y))
                  /
-                 ((vertices[1].BitmapPos.Y - vertices[2].BitmapPos.Y)
+                 ((double)(vertices[1].BitmapPos.Y - vertices[2].BitmapPos.Y)
                  * (vertices[0].BitmapPos.X - vertices[2].BitmapPos.X)
-                 + (vertices[2].BitmapPos.X - vertices[1].BitmapPos.X)
+                 + (double)(vertices[2].BitmapPos.X - vertices[1].BitmapPos.X)
                  * (vertices[0].BitmapPos.Y - vertices[2].BitmapPos.Y));
             resultingWeights[2] = 1 - resultingWeights[1] - resultingWeights[0];
         }
@@ -61,7 +61,7 @@ namespace DrawingLibrary.Shaders
         /// <param name="weights">Barymetric weights</param>
         /// <param name="vectors">Vectors to average</param>
         /// <returns></returns>
-        public static Vector2 WeightedAverage(float[] weights, params Vector2[] vectors)
+        public static Vector2 WeightedAverage(double[] weights, params Vector2[] vectors)
         {
             Vector2 average = vectors[0]*weights[0];
             for (int i = 1; i < vectors.Length; i++)

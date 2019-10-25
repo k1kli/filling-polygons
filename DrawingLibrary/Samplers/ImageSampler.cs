@@ -39,7 +39,7 @@ namespace DrawingLibrary.Samplers
             Rectangle rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
             System.Drawing.Imaging.BitmapData bmpData =
                 bmp.LockBits(rect, System.Drawing.Imaging.ImageLockMode.ReadWrite,
-                bmp.PixelFormat);
+                System.Drawing.Imaging.PixelFormat.Format32bppArgb);
 
             // Get the address of the first line.
             IntPtr ptr = bmpData.Scan0;

@@ -37,15 +37,15 @@ namespace DrawingLibrary.Vectors
         {
             return new IntVector2() { X = -v.X, Y = -v.Y };
         }
-        public static IntVector2 operator *(IntVector2 v, float factor)
+        public static IntVector2 operator *(IntVector2 v, double factor)
         {
             return new IntVector2() { X = (int)(v.X * factor), Y = (int)(v.Y * factor) };
         }
-        public static IntVector2 operator *(float factor, IntVector2 v)
+        public static IntVector2 operator *(double factor, IntVector2 v)
         {
             return v * factor;
         }
-        public static IntVector2 operator /(IntVector2 v, float factor)
+        public static IntVector2 operator /(IntVector2 v, double factor)
         {
             return new IntVector2() { X = (int)(v.X / factor), Y = (int)(v.Y / factor) };
         }

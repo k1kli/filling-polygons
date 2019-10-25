@@ -40,11 +40,11 @@ namespace FillingPolygons
         private void CreateMesh()
         {
             mesh = new Mesh();
-            float padding = scene.Width * 0.05f;
-            float gridWidth = scene.Width - 2 * padding;
-            float gridHeight = scene.Height - 2 * padding;
-            float gridHorizontalGap = gridWidth / m;
-            float gridVerticalGap = gridHeight / n;
+            double padding = scene.Width * 0.05;
+            double gridWidth = scene.Width - 2 * padding;
+            double gridHeight = scene.Height - 2 * padding;
+            double gridHorizontalGap = gridWidth / m;
+            double gridVerticalGap = gridHeight / n;
             mesh.Vertices = new Vector2[(n + 1) * (m + 1)];
             mesh.UV = new Vector2[(n + 1) * (m + 1)];
             mesh.Triangles = new int[n * m * 2 * 3];
@@ -53,7 +53,7 @@ namespace FillingPolygons
                 for (int x = 0; x <= m; x++)
                 {
                     mesh.Vertices[y * (m + 1) + x] = new Vector2(padding + gridHorizontalGap * x, padding + gridVerticalGap * y);
-                    mesh.UV[y * (m + 1) + x] = new Vector2(((float)x) / m, ((float)y) / n);
+                    mesh.UV[y * (m + 1) + x] = new Vector2(((double)x) / m, ((double)y) / n);
                 }
             }
             for (int y = 0; y < n; y++)

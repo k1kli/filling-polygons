@@ -8,11 +8,11 @@ namespace DrawingLibrary.Vectors
 {
     public struct Vector3
     {
-        public float X { get; set; }
-        public float Y { get; set; }
-        public float Z { get; set; }
+        public double X { get; set; }
+        public double Y { get; set; }
+        public double Z { get; set; }
 
-        public Vector3(float x, float y, float z = 0)
+        public Vector3(double x, double y, double z = 0)
         {
             X = x;
             Y = y;
@@ -24,9 +24,9 @@ namespace DrawingLibrary.Vectors
             Y = v.Y;
             Z = 0;
         }
-        public float Magnitude =>
-            (float)Math.Sqrt(MagnitudeSqr);
-        public float MagnitudeSqr => X * X + Y * Y + Z*Z;
+        public double Magnitude =>
+            (double)Math.Sqrt(MagnitudeSqr);
+        public double MagnitudeSqr => X * X + Y * Y + Z*Z;
         public Vector3 Normalized => this / Magnitude;
 
         public static Vector3 operator +(Vector3 v1, Vector3 v2)
@@ -41,15 +41,15 @@ namespace DrawingLibrary.Vectors
         {
             return new Vector3() { X = -v.X, Y = -v.Y, Z = -v.Z };
         }
-        public static Vector3 operator *(Vector3 v, float factor)
+        public static Vector3 operator *(Vector3 v, double factor)
         {
             return new Vector3() { X = v.X * factor, Y = v.Y * factor, Z = v.Z * factor };
         }
-        public static Vector3 operator *(float factor, Vector3 v)
+        public static Vector3 operator *(double factor, Vector3 v)
         {
             return v * factor;
         }
-        public static Vector3 operator /(Vector3 v, float factor)
+        public static Vector3 operator /(Vector3 v, double factor)
         {
             return new Vector3() { X = v.X / factor, Y = v.Y / factor, Z = v.Z / factor };
         }
@@ -63,7 +63,7 @@ namespace DrawingLibrary.Vectors
             return !(v1 == v2);
         }
 
-        public static float DotProduct(Vector3 v1, Vector3 v2)
+        public static double DotProduct(Vector3 v1, Vector3 v2)
         {
             return v1.X * v2.X + v1.Y * v2.Y + v1.Z*v2.Z;
         }
