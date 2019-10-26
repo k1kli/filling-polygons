@@ -12,7 +12,6 @@ namespace DrawingLibrary.Shaders
     {
         private VertexData[] vertexData = new VertexData[3];
         private Vector3[] colors = new Vector3[3];
-        private Vector3 color;
         int i;
         public override void StartTriangle()
         {
@@ -23,7 +22,7 @@ namespace DrawingLibrary.Shaders
             vertexData[i] = vertex;
             colors[i] = MainTex.Sample(vertexData[i].UV);
             Vectors.Vector3 normal = Normals.Sample(vertexData[i].UV);
-            color = CalculateLight(globalData.Ks,
+            colors[i] = CalculateLight(globalData.Ks,
                                    globalData.Kd,
                                    globalData.LightRGB,
                                    colors[i],
@@ -31,13 +30,12 @@ namespace DrawingLibrary.Shaders
                                    normal,
                                    globalData.M);
             i++;
-            if(i == 3)
-            {
-                color = (colors[0]+colors[1]+colors[2])/3;
-            }
         }
         public override Color ForFragment(int x, int y)
         {
+            double[] barymetricWeights = new double[3];
+            GetBarymetricWeights(vertexData, barymetricWeights, x, y);
+            Vector3 color = colors[0] * barymetricWeights[0] + colors[1] * barymetricWeights[1] + colors[2] * barymetricWeights[2];
             return color.ToColor();
         }
     }

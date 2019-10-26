@@ -21,6 +21,7 @@ namespace DrawingLibrary
         int[] sortedVerticesIndexes = { 0, 1, 2 };
         LinkedList<AETData> AET = new LinkedList<AETData>();
         private MemoryBitmap bitmap;
+        private LinkedList<IntVector2> ToDraw = new LinkedList<IntVector2>();
 
         public TriangleDrawer(MemoryBitmap bitmap)
         {
@@ -70,6 +71,8 @@ namespace DrawingLibrary
                 DrawOnScanLine(y);
                 RemoveFinishedEdges(y);
             }
+            Parallel.ForEach(ToDraw, (v) => bitmap.SetPixel(v.X, v.Y, Shader.ForFragment(v.X, v.Y)));
+            ToDraw.Clear();
         }
 
         private void RemoveFinishedEdges(int y)
@@ -103,7 +106,8 @@ namespace DrawingLibrary
                 int y1 = y;
                 for (int x = startX; x < endX; x++)
                 {
-                    bitmap.SetPixel(x, y, Shader.ForFragment(x, y));
+                    ToDraw.AddLast(new IntVector2(x, y));
+                    //bitmap.SetPixel(x, y, Shader.ForFragment(x, y));
                 }
                 //Parallel.For(startX, endX, (x) => bitmap.SetPixel(x, y1, Shader.ForFragment(x, y1)));
             }

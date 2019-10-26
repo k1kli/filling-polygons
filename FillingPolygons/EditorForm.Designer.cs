@@ -30,6 +30,10 @@
         {
             this.editorLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.ToolboxPanel = new System.Windows.Forms.Panel();
+            this.chooseShaderGroupBox = new System.Windows.Forms.GroupBox();
+            this.hybridShaderRadioButton = new System.Windows.Forms.RadioButton();
+            this.vertexColorShaderRadioButton = new System.Windows.Forms.RadioButton();
+            this.preciseShaderRadioButton = new System.Windows.Forms.RadioButton();
             this.lightGroupBox = new System.Windows.Forms.GroupBox();
             this.confirmToLightVectorButton = new System.Windows.Forms.Button();
             this.zToLightVectorTextBox = new System.Windows.Forms.TextBox();
@@ -56,6 +60,7 @@
             this.drawWireframeToolstripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editorLayoutPanel.SuspendLayout();
             this.ToolboxPanel.SuspendLayout();
+            this.chooseShaderGroupBox.SuspendLayout();
             this.lightGroupBox.SuspendLayout();
             this.normalsSourceGroupBox.SuspendLayout();
             this.colorSourceGroupBox.SuspendLayout();
@@ -67,8 +72,8 @@
             // editorLayoutPanel
             // 
             this.editorLayoutPanel.ColumnCount = 2;
-            this.editorLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
-            this.editorLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 70F));
+            this.editorLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 315F));
+            this.editorLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.editorLayoutPanel.Controls.Add(this.ToolboxPanel, 0, 0);
             this.editorLayoutPanel.Controls.Add(this.drawAreaPanel, 1, 0);
             this.editorLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -81,6 +86,7 @@
             // 
             // ToolboxPanel
             // 
+            this.ToolboxPanel.Controls.Add(this.chooseShaderGroupBox);
             this.ToolboxPanel.Controls.Add(this.lightGroupBox);
             this.ToolboxPanel.Controls.Add(this.normalsSourceGroupBox);
             this.ToolboxPanel.Controls.Add(this.colorSourceGroupBox);
@@ -90,8 +96,61 @@
             this.ToolboxPanel.Size = new System.Drawing.Size(312, 652);
             this.ToolboxPanel.TabIndex = 0;
             // 
+            // chooseShaderGroupBox
+            // 
+            this.chooseShaderGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.chooseShaderGroupBox.Controls.Add(this.hybridShaderRadioButton);
+            this.chooseShaderGroupBox.Controls.Add(this.vertexColorShaderRadioButton);
+            this.chooseShaderGroupBox.Controls.Add(this.preciseShaderRadioButton);
+            this.chooseShaderGroupBox.Location = new System.Drawing.Point(9, 335);
+            this.chooseShaderGroupBox.Name = "chooseShaderGroupBox";
+            this.chooseShaderGroupBox.Size = new System.Drawing.Size(300, 114);
+            this.chooseShaderGroupBox.TabIndex = 13;
+            this.chooseShaderGroupBox.TabStop = false;
+            this.chooseShaderGroupBox.Text = "Wyznaczanie koloru piksela";
+            // 
+            // hybridShaderRadioButton
+            // 
+            this.hybridShaderRadioButton.AutoSize = true;
+            this.hybridShaderRadioButton.Location = new System.Drawing.Point(6, 84);
+            this.hybridShaderRadioButton.Name = "hybridShaderRadioButton";
+            this.hybridShaderRadioButton.Size = new System.Drawing.Size(99, 21);
+            this.hybridShaderRadioButton.TabIndex = 7;
+            this.hybridShaderRadioButton.TabStop = true;
+            this.hybridShaderRadioButton.Text = "Hybrydowo";
+            this.hybridShaderRadioButton.UseVisualStyleBackColor = true;
+            this.hybridShaderRadioButton.CheckedChanged += new System.EventHandler(this.HybridShaderRadioButton_CheckedChanged);
+            // 
+            // vertexColorShaderRadioButton
+            // 
+            this.vertexColorShaderRadioButton.AutoSize = true;
+            this.vertexColorShaderRadioButton.Location = new System.Drawing.Point(6, 57);
+            this.vertexColorShaderRadioButton.Name = "vertexColorShaderRadioButton";
+            this.vertexColorShaderRadioButton.Size = new System.Drawing.Size(168, 21);
+            this.vertexColorShaderRadioButton.TabIndex = 6;
+            this.vertexColorShaderRadioButton.TabStop = true;
+            this.vertexColorShaderRadioButton.Text = "Tylko w wierzchołkach";
+            this.vertexColorShaderRadioButton.UseVisualStyleBackColor = true;
+            this.vertexColorShaderRadioButton.CheckedChanged += new System.EventHandler(this.VertexColorShaderRadioButton_CheckedChanged);
+            // 
+            // preciseShaderRadioButton
+            // 
+            this.preciseShaderRadioButton.AutoSize = true;
+            this.preciseShaderRadioButton.Checked = true;
+            this.preciseShaderRadioButton.Location = new System.Drawing.Point(6, 30);
+            this.preciseShaderRadioButton.Name = "preciseShaderRadioButton";
+            this.preciseShaderRadioButton.Size = new System.Drawing.Size(92, 21);
+            this.preciseShaderRadioButton.TabIndex = 5;
+            this.preciseShaderRadioButton.TabStop = true;
+            this.preciseShaderRadioButton.Text = "Dokładnie";
+            this.preciseShaderRadioButton.UseVisualStyleBackColor = true;
+            this.preciseShaderRadioButton.CheckedChanged += new System.EventHandler(this.PreciseShaderRadioButton_CheckedChanged);
+            // 
             // lightGroupBox
             // 
+            this.lightGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lightGroupBox.Controls.Add(this.confirmToLightVectorButton);
             this.lightGroupBox.Controls.Add(this.zToLightVectorTextBox);
             this.lightGroupBox.Controls.Add(this.yToLightVectorTextBox);
@@ -110,6 +169,7 @@
             // 
             // confirmToLightVectorButton
             // 
+            this.confirmToLightVectorButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.confirmToLightVectorButton.Location = new System.Drawing.Point(181, 79);
             this.confirmToLightVectorButton.Name = "confirmToLightVectorButton";
             this.confirmToLightVectorButton.Size = new System.Drawing.Size(113, 46);
@@ -122,22 +182,25 @@
             // 
             this.zToLightVectorTextBox.Location = new System.Drawing.Point(29, 103);
             this.zToLightVectorTextBox.Name = "zToLightVectorTextBox";
-            this.zToLightVectorTextBox.Size = new System.Drawing.Size(146, 22);
+            this.zToLightVectorTextBox.Size = new System.Drawing.Size(140, 22);
             this.zToLightVectorTextBox.TabIndex = 11;
+            this.zToLightVectorTextBox.Text = "1";
             // 
             // yToLightVectorTextBox
             // 
             this.yToLightVectorTextBox.Location = new System.Drawing.Point(29, 76);
             this.yToLightVectorTextBox.Name = "yToLightVectorTextBox";
-            this.yToLightVectorTextBox.Size = new System.Drawing.Size(146, 22);
+            this.yToLightVectorTextBox.Size = new System.Drawing.Size(140, 22);
             this.yToLightVectorTextBox.TabIndex = 10;
+            this.yToLightVectorTextBox.Text = "0";
             // 
             // xToLightVectorTextBox
             // 
             this.xToLightVectorTextBox.Location = new System.Drawing.Point(29, 50);
             this.xToLightVectorTextBox.Name = "xToLightVectorTextBox";
-            this.xToLightVectorTextBox.Size = new System.Drawing.Size(146, 22);
+            this.xToLightVectorTextBox.Size = new System.Drawing.Size(140, 22);
             this.xToLightVectorTextBox.TabIndex = 9;
+            this.xToLightVectorTextBox.Text = "0";
             // 
             // toLightVectorZLabel
             // 
@@ -177,6 +240,7 @@
             // 
             // chooseLightColorButton
             // 
+            this.chooseLightColorButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.chooseLightColorButton.Location = new System.Drawing.Point(181, 21);
             this.chooseLightColorButton.Name = "chooseLightColorButton";
             this.chooseLightColorButton.Size = new System.Drawing.Size(113, 46);
@@ -187,6 +251,8 @@
             // 
             // normalsSourceGroupBox
             // 
+            this.normalsSourceGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.normalsSourceGroupBox.Controls.Add(this.chooseNormalMapButton);
             this.normalsSourceGroupBox.Controls.Add(this.staticNormalRadioButton);
             this.normalsSourceGroupBox.Controls.Add(this.normalMapRadioButton);
@@ -199,8 +265,9 @@
             // 
             // chooseNormalMapButton
             // 
+            this.chooseNormalMapButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.chooseNormalMapButton.Enabled = false;
-            this.chooseNormalMapButton.Location = new System.Drawing.Point(181, 50);
+            this.chooseNormalMapButton.Location = new System.Drawing.Point(181, 51);
             this.chooseNormalMapButton.Name = "chooseNormalMapButton";
             this.chooseNormalMapButton.Size = new System.Drawing.Size(113, 23);
             this.chooseNormalMapButton.TabIndex = 4;
@@ -211,6 +278,7 @@
             // staticNormalRadioButton
             // 
             this.staticNormalRadioButton.AutoSize = true;
+            this.staticNormalRadioButton.Checked = true;
             this.staticNormalRadioButton.Location = new System.Drawing.Point(6, 23);
             this.staticNormalRadioButton.Name = "staticNormalRadioButton";
             this.staticNormalRadioButton.Size = new System.Drawing.Size(104, 21);
@@ -234,6 +302,8 @@
             // 
             // colorSourceGroupBox
             // 
+            this.colorSourceGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.colorSourceGroupBox.Controls.Add(this.chooseImageButton);
             this.colorSourceGroupBox.Controls.Add(this.chooseColorButton);
             this.colorSourceGroupBox.Controls.Add(this.staticColorRadioButton);
@@ -247,7 +317,7 @@
             // 
             // chooseImageButton
             // 
-            this.chooseImageButton.Enabled = false;
+            this.chooseImageButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.chooseImageButton.Location = new System.Drawing.Point(181, 50);
             this.chooseImageButton.Name = "chooseImageButton";
             this.chooseImageButton.Size = new System.Drawing.Size(113, 23);
@@ -258,6 +328,7 @@
             // 
             // chooseColorButton
             // 
+            this.chooseColorButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.chooseColorButton.Enabled = false;
             this.chooseColorButton.Location = new System.Drawing.Point(181, 21);
             this.chooseColorButton.Name = "chooseColorButton";
@@ -282,6 +353,7 @@
             // colorFromImageRadioButton
             // 
             this.colorFromImageRadioButton.AutoSize = true;
+            this.colorFromImageRadioButton.Checked = true;
             this.colorFromImageRadioButton.Location = new System.Drawing.Point(6, 52);
             this.colorFromImageRadioButton.Name = "colorFromImageRadioButton";
             this.colorFromImageRadioButton.Size = new System.Drawing.Size(68, 21);
@@ -309,6 +381,10 @@
             this.drawingBox.TabIndex = 0;
             this.drawingBox.TabStop = false;
             this.drawingBox.Paint += new System.Windows.Forms.PaintEventHandler(this.DrawingBox_Paint);
+            this.drawingBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.DrawingBox_MouseDown);
+            this.drawingBox.MouseLeave += new System.EventHandler(this.DrawingBox_MouseLeave);
+            this.drawingBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.DrawingBox_MouseMove);
+            this.drawingBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.DrawingBox_MouseUp);
             // 
             // menuStrip1
             // 
@@ -334,7 +410,7 @@
             this.drawWireframeToolstripMenuItem.Checked = true;
             this.drawWireframeToolstripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.drawWireframeToolstripMenuItem.Name = "drawWireframeToolstripMenuItem";
-            this.drawWireframeToolstripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.drawWireframeToolstripMenuItem.Size = new System.Drawing.Size(179, 26);
             this.drawWireframeToolstripMenuItem.Text = "Rysuj szkielet";
             this.drawWireframeToolstripMenuItem.Click += new System.EventHandler(this.DrawWireframeToolStripMenuItem_Click);
             // 
@@ -347,9 +423,12 @@
             this.Controls.Add(this.menuStrip1);
             this.Name = "EditorForm";
             this.Text = "EditorForm";
-            this.ResizeEnd += new System.EventHandler(this.EditorForm_ResizeEnd);
+            this.Load += new System.EventHandler(this.EditorForm_Load);
+            this.ClientSizeChanged += new System.EventHandler(this.EditorForm_ClientSizeChanged);
             this.editorLayoutPanel.ResumeLayout(false);
             this.ToolboxPanel.ResumeLayout(false);
+            this.chooseShaderGroupBox.ResumeLayout(false);
+            this.chooseShaderGroupBox.PerformLayout();
             this.lightGroupBox.ResumeLayout(false);
             this.lightGroupBox.PerformLayout();
             this.normalsSourceGroupBox.ResumeLayout(false);
@@ -393,5 +472,9 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem widokToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem drawWireframeToolstripMenuItem;
+        private System.Windows.Forms.GroupBox chooseShaderGroupBox;
+        private System.Windows.Forms.RadioButton hybridShaderRadioButton;
+        private System.Windows.Forms.RadioButton vertexColorShaderRadioButton;
+        private System.Windows.Forms.RadioButton preciseShaderRadioButton;
     }
 }

@@ -1,4 +1,5 @@
-﻿using DrawingLibrary.Vectors;
+﻿using DrawingLibrary.Samplers;
+using DrawingLibrary.Vectors;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -13,15 +14,22 @@ namespace DrawingLibrary
         public MemoryBitmap Bitmap { get; }
         private readonly TriangleDrawer triangleDrawer;
         public GlobalData GlobalData;
+        public ISampler MainTex { get; set; } = new StaticColorSampler(System.Drawing.Color.Red);
+        public ISampler Normals { get; set; } = new StaticColorSampler(System.Drawing.Color.Blue);
         public bool DrawWireframe { get; set; } = true;
-        public Shaders.Shader Shader { get => triangleDrawer.Shader; set => triangleDrawer.Shader = value; }
+        public Shaders.Shader Shader {
+            get => triangleDrawer.Shader;
+            set
+            {
+                triangleDrawer.Shader = value; triangleDrawer.Shader.Init(this);
+            }
+        }
         public Scene(MemoryBitmap bitmap, Shaders.Shader shader, GlobalData globalData)
         {
             Bitmap = bitmap;
             triangleDrawer = new TriangleDrawer(Bitmap);
-            triangleDrawer.Shader = shader;
             GlobalData = globalData;
-            shader.Init(this);
+            Shader = shader;
         }
         public double MinX { get; set; } = 0;
         public double MinY { get; set; } = 0;
@@ -34,7 +42,7 @@ namespace DrawingLibrary
         {
             return new Vector2(
                 Width * bitmapCoordsPos.X / Bitmap.Width + MinX,
-                (MaxY - MinY) * bitmapCoordsPos.Y / Bitmap.Height + MinY);
+                Height * bitmapCoordsPos.Y / Bitmap.Height + MinY);
         }
 
         public Vectors.Vector2 TransformToBitmapCoords(Vector2 sceneCoordsPos)

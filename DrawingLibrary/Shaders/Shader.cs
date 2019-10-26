@@ -13,8 +13,8 @@ namespace DrawingLibrary.Shaders
     {
         private Scene scene;
         protected GlobalData globalData => scene.GlobalData;
-        public ISampler MainTex { get; set; } = new StaticColorSampler(System.Drawing.Color.Red);
-        public ISampler Normals { get; set; } = new StaticColorSampler(System.Drawing.Color.Blue);
+        public ISampler MainTex => scene.MainTex;
+        public ISampler Normals => scene.Normals;
         internal void Init(Scene scene)
         {
             this.scene = scene;
@@ -70,7 +70,7 @@ namespace DrawingLibrary.Shaders
         public static Vector3 CalculateLight(double ks, double kd, Vector3 lightColor, Vector3 objectColor, Vector3 toLight, Vector3 normal, double m)
         {
             double NLAngleCos = Vector3.DotProduct(normal, toLight);
-            double VRAngleCos = Vector3.DotProduct(V, (2*normal - toLight));
+            double VRAngleCos = Vector3.DotProduct(V, (2*normal - toLight).Normalized);
             return
                 Saturate(
                     Vector3.CoordinateMultiplication(lightColor, objectColor)
@@ -83,7 +83,7 @@ namespace DrawingLibrary.Shaders
         }
         public static double Saturate(double d)
         {
-            return d <= 1 ? d : 1;
+            return d >= 0 ? (d <= 1 ? d : 1) : 0;
         }
     }
 }

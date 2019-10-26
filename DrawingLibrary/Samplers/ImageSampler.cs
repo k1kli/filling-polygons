@@ -19,6 +19,14 @@ namespace DrawingLibrary.Samplers
             Image = bitmap;
         }
 
+        public void Transform(Func<Vector3, Vector3> func)
+        {
+            for(int i = 0; i < pixels.Length; i++)
+            {
+                pixels[i] = func(pixels[i]);
+            }
+        }
+
         public Bitmap Image
         {
             set => SetPixels(value);

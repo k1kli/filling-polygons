@@ -8,9 +8,11 @@ using System.Threading.Tasks;
 
 namespace DrawingLibrary.Shaders
 {
-    public class VertexHybridShader : Shader
+    public class HybridShader:Shader
     {
         private VertexData[] vertexData = new VertexData[3];
+        private Vector3[] colors = new Vector3[3];
+        private Vector3[] normals = new Vector3[3];
         int i;
         public override void StartTriangle()
         {
@@ -18,25 +20,24 @@ namespace DrawingLibrary.Shaders
         }
         public override void ForVertex(VertexData vertex)
         {
-            vertexData[i++] = vertex;
+            vertexData[i] = vertex;
+            colors[i] = MainTex.Sample(vertexData[i].UV);
+            normals[i] = Normals.Sample(vertexData[i].UV);
+            i++;
         }
-        private static readonly double[] barymetricWeights = new double[3];
         public override Color ForFragment(int x, int y)
         {
+            double[] barymetricWeights = new double[3];
             GetBarymetricWeights(vertexData, barymetricWeights, x, y);
-            Vector2 UV = WeightedAverage(barymetricWeights, vertexData[0].UV,
-                                                         vertexData[1].UV,
-                                                         vertexData[2].UV);
-            Vector3 color = MainTex.Sample(UV);
-            Vectors.Vector3 normal = Normals.Sample(UV);
-            color = CalculateLight(globalData.Ks,
+            Vector3 color = colors[0] * barymetricWeights[0] + colors[1] * barymetricWeights[1] + colors[2] * barymetricWeights[2];
+            Vector3 normal = normals[0] * barymetricWeights[0] + normals[1] * barymetricWeights[1] + normals[2] * barymetricWeights[2];
+            return CalculateLight(globalData.Ks,
                                    globalData.Kd,
                                    globalData.LightRGB,
                                    color,
                                    globalData.ToLightVersor,
                                    normal,
-                                   globalData.M);
-            return color.ToColor();
+                                   globalData.M).ToColor();
         }
     }
 }

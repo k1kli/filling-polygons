@@ -18,17 +18,16 @@ namespace FillingPolygons
     {
         Scene scene;
         Mesh mesh;
+        MeshDeformer deformer;
         int n = 10;
         int m = 15;
         public EditorForm()
         {
             InitializeComponent();
-            Shader shader = new VertexHybridShader
-            {
-                MainTex = new ImageSampler(new Bitmap("..\\..\\data\\Image.jpg"))
-            };
+            Shader shader = new PreciseShader();
             GlobalData globalData = new GlobalData(0.5, 0.5, Color.White, new Vector3(0, 0, 1).Normalized, 1);
             scene = new Scene(new MemoryBitmap(drawingBox.Width, drawingBox.Height), shader, globalData);
+            scene.MainTex = new ImageSampler(new Bitmap("..\\..\\data\\Image.jpg"));
             CreateMesh();
         }
 
@@ -70,6 +69,7 @@ namespace FillingPolygons
                     mesh.Triangles[(y * m * 2 + x * 2) * 3 + 5] = (y + 1) * (m + 1) + x;
                 }
             }
+            deformer = new MeshDeformer(mesh);
         }
 
         private void EditorForm_ResizeEnd(object sender, EventArgs e)
@@ -93,7 +93,7 @@ namespace FillingPolygons
             ColorDialog colorDialog = new ColorDialog();
             if (colorDialog.ShowDialog() == DialogResult.OK)
             {
-                scene.Shader.MainTex = new StaticColorSampler(colorDialog.Color);
+                scene.MainTex = new StaticColorSampler(colorDialog.Color);
                 drawingBox.Invalidate();
             }
 
@@ -106,7 +106,7 @@ namespace FillingPolygons
                 "png files (*.png)|*.png|All files (*.*)|*.*";
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                scene.Shader.MainTex
+                scene.MainTex
                     = new ImageSampler(new Bitmap(openFileDialog.FileName));
                 drawingBox.Invalidate();
             }
@@ -114,7 +114,7 @@ namespace FillingPolygons
 
         private void StaticNormalRadioButton_CheckedChanged(object sender, EventArgs e)
         {
-            scene.Shader.Normals = new StaticColorSampler(Color.Blue);
+            scene.Normals = new StaticColorSampler(Color.Blue);
             drawingBox.Invalidate();
         }
 
@@ -130,8 +130,9 @@ namespace FillingPolygons
                 "png files (*.png)|*.png|All files (*.*)|*.*";
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                scene.Shader.Normals
-                    = new ImageSampler(new Bitmap(openFileDialog.FileName));
+                ImageSampler isamp = new ImageSampler(new Bitmap(openFileDialog.FileName));
+                isamp.Transform(v => new Vector3(v.X * 2 - 1, v.Y * 2 - 1, v.Z).Normalized);
+                scene.Normals= isamp;
                 drawingBox.Invalidate();
             }
         }
@@ -172,6 +173,71 @@ namespace FillingPolygons
         {
             scene.DrawWireframe = drawWireframeToolstripMenuItem.Checked = !drawWireframeToolstripMenuItem.Checked;
             drawingBox.Invalidate();
+        }
+
+        private void PreciseShaderRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if(preciseShaderRadioButton.Checked)
+            {
+                scene.Shader = new PreciseShader();
+                drawingBox.Invalidate();
+            }
+        }
+
+        private void VertexColorShaderRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (vertexColorShaderRadioButton.Checked)
+            {
+                scene.Shader = new VertexColorShader();
+                drawingBox.Invalidate();
+            }
+        }
+
+        private void HybridShaderRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (hybridShaderRadioButton.Checked)
+            {
+                scene.Shader = new HybridShader();
+                drawingBox.Invalidate();
+            }
+        }
+
+        private void EditorForm_Load(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void DrawingBox_MouseDown(object sender, MouseEventArgs e)
+        {
+            deformer.MouseDown(scene.TransformToSceneCoords(new Vector2(e.X, e.Y)));
+        }
+
+        private void DrawingBox_MouseMove(object sender, MouseEventArgs e)
+        {
+            if(deformer.MouseMove(scene.TransformToSceneCoords(new Vector2(e.X, e.Y))))
+            {
+                drawingBox.Invalidate();
+            }
+        }
+
+        private void DrawingBox_MouseUp(object sender, MouseEventArgs e)
+        {
+            deformer.MouseUp();
+        }
+
+        private void DrawingBox_MouseLeave(object sender, EventArgs e)
+        {
+            deformer.MouseUp();
+        }
+
+        private void EditorForm_ClientSizeChanged(object sender, EventArgs e)
+        {
+
+            if (scene != null)
+            {
+                scene.Bitmap.Resize(drawingBox.Width, drawingBox.Height);
+                drawingBox.Invalidate();
+            }
         }
     }
 }
