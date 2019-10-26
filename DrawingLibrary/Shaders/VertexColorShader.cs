@@ -1,5 +1,7 @@
-﻿using System;
+﻿using DrawingLibrary.Vectors;
+using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,7 +11,8 @@ namespace DrawingLibrary.Shaders
     public class VertexColorShader : Shader
     {
         private VertexData[] vertexData = new VertexData[3];
-        private uint color;
+        private Vector3[] colors = new Vector3[3];
+        private Vector3 color;
         int i;
         public override void StartTriangle()
         {
@@ -17,17 +20,25 @@ namespace DrawingLibrary.Shaders
         }
         public override void ForVertex(VertexData vertex)
         {
-            vertexData[i++] = vertex;
+            vertexData[i] = vertex;
+            colors[i] = MainTex.Sample(vertexData[i].UV);
+            Vectors.Vector3 normal = Normals.Sample(vertexData[i].UV);
+            color = CalculateLight(globalData.Ks,
+                                   globalData.Kd,
+                                   globalData.LightRGB,
+                                   colors[i],
+                                   globalData.ToLightVersor,
+                                   normal,
+                                   globalData.M);
+            i++;
             if(i == 3)
             {
-                color = AverageColor(Sampler.Sample(vertexData[0].UV),
-                                     Sampler.Sample(vertexData[1].UV),
-                                     Sampler.Sample(vertexData[2].UV));
+                color = (colors[0]+colors[1]+colors[2])/3;
             }
         }
-        public override void ForFragment(int x, int y)
+        public override Color ForFragment(int x, int y)
         {
-            DrawingBitmap.SetPixel(x, y, (int)color);
+            return color.ToColor();
         }
     }
 }

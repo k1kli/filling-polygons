@@ -10,7 +10,7 @@ namespace DrawingLibrary.Samplers
 {
     public class ImageSampler : ISampler
     {
-        private int[] pixels;
+        private Vector3[] pixels;
         private int width;
         private int height;
 
@@ -23,11 +23,11 @@ namespace DrawingLibrary.Samplers
         {
             set => SetPixels(value);
         }
-        public uint Sample(Vector2 UV)
+        public Vector3 Sample(Vector2 UV)
         {
-            return (uint)GetPixel(((int)(UV.X*width))%width, ((int)(UV.Y*height))%height);
+            return GetPixel(((int)(UV.X*width) + width)%width, ((int)(UV.Y*height) + height)%height);
         }
-        private int GetPixel(int x, int y)
+        private Vector3 GetPixel(int x, int y)
         {
             return pixels[y * width + x];
         }
@@ -48,10 +48,15 @@ namespace DrawingLibrary.Samplers
             height = bmpData.Height;
             // Declare an array to hold the bytes of the bitmap.
             int size = width * height;
-            pixels = new int[size];
+            int[] pixelsArgb = new int[size];
+            pixels = new Vector3[size];
 
             // Copy the RGB values into the array.
-            System.Runtime.InteropServices.Marshal.Copy(ptr, pixels, 0, size);
+            System.Runtime.InteropServices.Marshal.Copy(ptr, pixelsArgb, 0, size);
+            for(int i = 0; i < size; i++)
+            {
+                pixels[i] = Color.FromArgb(pixelsArgb[i]).ToVector3();
+            }
 
 
             // Unlock the bits.

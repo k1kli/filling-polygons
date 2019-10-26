@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DrawingLibrary.Samplers
+namespace DrawingLibrary
 {
-    public interface ISampler
+    class HelperMethods
     {
-        Vectors.Vector3 Sample(Vectors.Vector2 UV);
     }
 }

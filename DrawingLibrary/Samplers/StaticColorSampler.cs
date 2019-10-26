@@ -10,17 +10,17 @@ namespace DrawingLibrary.Samplers
 {
     public class StaticColorSampler : ISampler
     {
-        public uint argb { get; set; }
-        public Color Color { get => Color.FromArgb((int)argb); set => argb = (uint)value.ToArgb(); }
+        private Vector3 color;
+        public Color Color { get => color.ToColor(); set => color = value.ToVector3(); }
 
         public StaticColorSampler(Color color)
         {
             Color = color;
         }
 
-        public uint Sample(Vector2 UV)
+        public Vector3 Sample(Vector2 UV)
         {
-            return argb ;
+            return color;
         }
     }
 }

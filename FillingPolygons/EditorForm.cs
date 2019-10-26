@@ -25,9 +25,10 @@ namespace FillingPolygons
             InitializeComponent();
             Shader shader = new VertexHybridShader
             {
-                Sampler = new ImageSampler(new Bitmap("..\\..\\data\\Image.jpg"))
+                MainTex = new ImageSampler(new Bitmap("..\\..\\data\\Image.jpg"))
             };
-            scene = new Scene(new MemoryBitmap(drawingBox.Width, drawingBox.Height), shader);
+            GlobalData globalData = new GlobalData(0.5, 0.5, Color.White, new Vector3(0, 0, 1).Normalized, 1);
+            scene = new Scene(new MemoryBitmap(drawingBox.Width, drawingBox.Height), shader, globalData);
             CreateMesh();
         }
 
@@ -92,7 +93,7 @@ namespace FillingPolygons
             ColorDialog colorDialog = new ColorDialog();
             if (colorDialog.ShowDialog() == DialogResult.OK)
             {
-                scene.Shader.Sampler = new StaticColorSampler(colorDialog.Color);
+                scene.Shader.MainTex = new StaticColorSampler(colorDialog.Color);
                 drawingBox.Invalidate();
             }
 
@@ -105,10 +106,72 @@ namespace FillingPolygons
                 "png files (*.png)|*.png|All files (*.*)|*.*";
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                scene.Shader.Sampler
+                scene.Shader.MainTex
                     = new ImageSampler(new Bitmap(openFileDialog.FileName));
                 drawingBox.Invalidate();
             }
+        }
+
+        private void StaticNormalRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            scene.Shader.Normals = new StaticColorSampler(Color.Blue);
+            drawingBox.Invalidate();
+        }
+
+        private void NormalMapRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            chooseNormalMapButton.Enabled = normalMapRadioButton.Checked;
+        }
+
+        private void ChooseNormalMapButton_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "jpg files (*.jpg)|*.jpg|" +
+                "png files (*.png)|*.png|All files (*.*)|*.*";
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                scene.Shader.Normals
+                    = new ImageSampler(new Bitmap(openFileDialog.FileName));
+                drawingBox.Invalidate();
+            }
+        }
+
+        private void ChooseLightColorButton_Click(object sender, EventArgs e)
+        {
+            ColorDialog colorDialog = new ColorDialog();
+            if (colorDialog.ShowDialog() == DialogResult.OK)
+            {
+                scene.GlobalData.SetLightColor(colorDialog.Color);
+                drawingBox.Invalidate();
+            }
+        }
+
+        private void ConfirmToLightVectorButton_Click(object sender, EventArgs e)
+        {
+            if(double.TryParse(xToLightVectorTextBox.Text, out double x)
+                && double.TryParse(yToLightVectorTextBox.Text, out double y)
+                && double.TryParse(zToLightVectorTextBox.Text, out double z))
+            {
+                if(z > 0)
+                {
+                    scene.GlobalData.ToLightVersor = new Vector3(x, y, z).Normalized;
+                    drawingBox.Invalidate();
+                }
+                else
+                {
+                    MessageBox.Show("Value of z must be positive");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Coordinates must be numbers");
+            }
+        }
+
+        private void DrawWireframeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            scene.DrawWireframe = drawWireframeToolstripMenuItem.Checked = !drawWireframeToolstripMenuItem.Checked;
+            drawingBox.Invalidate();
         }
     }
 }

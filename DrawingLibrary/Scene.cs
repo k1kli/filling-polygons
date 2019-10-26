@@ -11,14 +11,17 @@ namespace DrawingLibrary
     public class Scene
     {
         public MemoryBitmap Bitmap { get; }
-        private TriangleDrawer triangleDrawer;
+        private readonly TriangleDrawer triangleDrawer;
+        public GlobalData GlobalData;
+        public bool DrawWireframe { get; set; } = true;
         public Shaders.Shader Shader { get => triangleDrawer.Shader; set => triangleDrawer.Shader = value; }
-        public Scene(MemoryBitmap bitmap, Shaders.Shader shader)
+        public Scene(MemoryBitmap bitmap, Shaders.Shader shader, GlobalData globalData)
         {
             Bitmap = bitmap;
-            triangleDrawer = new TriangleDrawer();
+            triangleDrawer = new TriangleDrawer(Bitmap);
             triangleDrawer.Shader = shader;
-            shader.Init(bitmap);
+            GlobalData = globalData;
+            shader.Init(this);
         }
         public double MinX { get; set; } = 0;
         public double MinY { get; set; } = 0;
@@ -57,6 +60,7 @@ namespace DrawingLibrary
             {
                 throw new Exception($"There is no vertex with index {max}");
             }
+            var watch = System.Diagnostics.Stopwatch.StartNew();
             for (int triangle = 0; triangle < mesh.Triangles.Length; triangle += 3)
             {
                 int p1X, p1Y, p2X, p2Y, p3X, p3Y;
@@ -70,10 +74,15 @@ namespace DrawingLibrary
                 triangleVertices[1].UV = mesh.UV[mesh.Triangles[triangle + 1]];
                 triangleVertices[2].UV = mesh.UV[mesh.Triangles[triangle + 2]];
                 triangleDrawer.DrawTriangle(triangleVertices);
-                g.DrawLine(Pens.Black, p1X, p1Y, p2X, p2Y);
-                g.DrawLine(Pens.Black, p3X, p3Y, p2X, p2Y);
-                g.DrawLine(Pens.Black, p1X, p1Y, p3X, p3Y);
+                if(DrawWireframe)
+                {
+                    g.DrawLine(Pens.Black, p1X, p1Y, p2X, p2Y);
+                    g.DrawLine(Pens.Black, p3X, p3Y, p2X, p2Y);
+                    g.DrawLine(Pens.Black, p1X, p1Y, p3X, p3Y);
+                }
             }
+            watch.Stop();
+            Console.WriteLine("Rendered mesh in " + watch.ElapsedMilliseconds + " ms");
             Bitmap.DisposeGraphics();
         }
     }

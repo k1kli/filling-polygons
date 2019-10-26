@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace DrawingLibrary
@@ -19,6 +20,12 @@ namespace DrawingLibrary
         }
         int[] sortedVerticesIndexes = { 0, 1, 2 };
         LinkedList<AETData> AET = new LinkedList<AETData>();
+        private MemoryBitmap bitmap;
+
+        public TriangleDrawer(MemoryBitmap bitmap)
+        {
+            this.bitmap = bitmap;
+        }
 
         public void DrawTriangle(VertexData[] vertices)
         {
@@ -93,10 +100,12 @@ namespace DrawingLibrary
                 var current = enumerator.Current;
                 int startX = (int)(previous.x + 0.5);
                 int endX = (int)(current.x + 0.5);
-                for (int x = startX; x <= endX; x++)
+                int y1 = y;
+                for (int x = startX; x < endX; x++)
                 {
-                    Shader.ForFragment(x, y);
+                    bitmap.SetPixel(x, y, Shader.ForFragment(x, y));
                 }
+                //Parallel.For(startX, endX, (x) => bitmap.SetPixel(x, y1, Shader.ForFragment(x, y1)));
             }
         }
         private double GetAntiTangent(IntVector2 from, IntVector2 to)

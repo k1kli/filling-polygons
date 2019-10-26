@@ -2,6 +2,7 @@
 using DrawingLibrary.Vectors;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,24 +11,19 @@ namespace DrawingLibrary.Shaders
 {
     public abstract class Shader
     {
-        protected MemoryBitmap DrawingBitmap { get; private set; }
-        public ISampler Sampler { get; set; } = new StaticColorSampler(System.Drawing.Color.Red);
-        internal void Init(MemoryBitmap drawingBitmap)
+        private Scene scene;
+        protected GlobalData globalData => scene.GlobalData;
+        public ISampler MainTex { get; set; } = new StaticColorSampler(System.Drawing.Color.Red);
+        public ISampler Normals { get; set; } = new StaticColorSampler(System.Drawing.Color.Blue);
+        internal void Init(Scene scene)
         {
-            DrawingBitmap = drawingBitmap;
+            this.scene = scene;
         }
         public virtual void ForVertex(VertexData vertex) { }
         public virtual void StartTriangle() { }
         public virtual void StartMesh() { }
-        public abstract void ForFragment(int x, int y);
+        public abstract Color ForFragment(int x, int y);
 
-        public static uint AverageColor(uint c1, uint c2, uint c3)
-        {
-            return ((c1 & 255) + (c2 & 255) + (c3 & 255)) / 3
-                + (((((c1 >> 8) & 255) + ((c2 >> 8) & 255) + ((c3 >> 8) & 255)) / 3) << 8)
-                + (((((c1 >> 16) & 255) + ((c2 >> 16) & 255) + ((c3 >> 16) & 255)) / 3) << 16)
-                + (((((c1 >> 24) & 255) + ((c2 >> 24) & 255) + ((c3 >> 24) & 255)) / 3) << 24);
-        }
 
         public static void GetBarymetricWeights(VertexData[] vertices, double[] resultingWeights, int curX, int curY)
         {
@@ -69,6 +65,25 @@ namespace DrawingLibrary.Shaders
                 average += vectors[i]*weights[i];
             }
             return average;
+        }
+        private static readonly Vector3 V = new Vector3(0, 0, 1);
+        public static Vector3 CalculateLight(double ks, double kd, Vector3 lightColor, Vector3 objectColor, Vector3 toLight, Vector3 normal, double m)
+        {
+            double NLAngleCos = Vector3.DotProduct(normal, toLight);
+            double VRAngleCos = Vector3.DotProduct(V, (2*normal - toLight));
+            return
+                Saturate(
+                    Vector3.CoordinateMultiplication(lightColor, objectColor)
+                 * (kd * NLAngleCos + ks * Math.Pow(VRAngleCos, m))
+                 );
+        }
+        public static Vector3 Saturate(Vector3 v)
+        {
+            return new Vector3(Saturate(v.X), Saturate(v.Y), Saturate(v.Z));
+        }
+        public static double Saturate(double d)
+        {
+            return d <= 1 ? d : 1;
         }
     }
 }
