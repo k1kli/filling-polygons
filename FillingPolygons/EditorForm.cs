@@ -25,7 +25,7 @@ namespace FillingPolygons
         {
             InitializeComponent();
             Shader shader = new PreciseShader();
-            GlobalData globalData = new GlobalData(0.5, 0.5, Color.White, new Vector3(0, 0, 1).Normalized, 1);
+            GlobalData globalData = new GlobalData(0.5, 0.5, Color.White, new Vector3(0, 0, 10000), 1);
             scene = new Scene(new MemoryBitmap(drawingBox.Width, drawingBox.Height), shader, globalData);
             scene.MainTex = new ImageSampler(new Bitmap("..\\..\\data\\Image.jpg"));
             CreateMesh();
@@ -52,7 +52,9 @@ namespace FillingPolygons
             {
                 for (int x = 0; x <= m; x++)
                 {
-                    mesh.Vertices[y * (m + 1) + x] = new Vector2(padding + gridHorizontalGap * x, padding + gridVerticalGap * y);
+                    mesh.Vertices[y * (m + 1) + x] = new Vector2(
+                        scene.MinX + padding + gridHorizontalGap * x,
+                        scene.MinY + padding + gridVerticalGap * y);
                     mesh.UV[y * (m + 1) + x] = new Vector2(((double)x) / m, ((double)y) / n);
                 }
             }
@@ -155,7 +157,7 @@ namespace FillingPolygons
             {
                 if(z > 0)
                 {
-                    scene.GlobalData.ToLightVersor = new Vector3(x, y, z).Normalized;
+                    scene.GlobalData.LightPosition = new Vector3(x, y, z).Normalized;
                     drawingBox.Invalidate();
                 }
                 else

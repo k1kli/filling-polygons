@@ -11,7 +11,7 @@ namespace DrawingLibrary.Shaders
 {
     public abstract class Shader
     {
-        private Scene scene;
+        protected Scene scene;
         protected GlobalData globalData => scene.GlobalData;
         public ISampler MainTex => scene.MainTex;
         public ISampler Normals => scene.Normals;
@@ -19,19 +19,19 @@ namespace DrawingLibrary.Shaders
         {
             this.scene = scene;
         }
-        public virtual void ForVertex(VertexData vertex) { }
+        public virtual void ForVertex(in VertexData vertex) { }
         public virtual void StartTriangle() { }
         public virtual void StartMesh() { }
-        public abstract Color ForFragment(int x, int y);
+        public abstract Color ForFragment(in IntVector2 bitmapPos);
 
 
-        public static void GetBarymetricWeights(VertexData[] vertices, double[] resultingWeights, int curX, int curY)
+        public static void GetBarymetricWeights(VertexData[] vertices, double[] resultingWeights, in IntVector2 bitmapPos)
         {
             resultingWeights[0] =
                  ((double)(vertices[1].BitmapPos.Y - vertices[2].BitmapPos.Y)
-                 * (curX - vertices[2].BitmapPos.X)
+                 * (bitmapPos.X - vertices[2].BitmapPos.X)
                  + (double)(vertices[2].BitmapPos.X - vertices[1].BitmapPos.X)
-                 * (curY - vertices[2].BitmapPos.Y))
+                 * (bitmapPos.Y - vertices[2].BitmapPos.Y))
                  / 
                  ((double)(vertices[1].BitmapPos.Y - vertices[2].BitmapPos.Y)
                  * (vertices[0].BitmapPos.X - vertices[2].BitmapPos.X)
@@ -39,9 +39,9 @@ namespace DrawingLibrary.Shaders
                  * (vertices[0].BitmapPos.Y - vertices[2].BitmapPos.Y));
             resultingWeights[1] =
                  ((double)(vertices[2].BitmapPos.Y - vertices[0].BitmapPos.Y)
-                 * (curX - vertices[2].BitmapPos.X)
+                 * (bitmapPos.X - vertices[2].BitmapPos.X)
                  + (double)(vertices[0].BitmapPos.X - vertices[2].BitmapPos.X)
-                 * (curY - vertices[2].BitmapPos.Y))
+                 * (bitmapPos.Y - vertices[2].BitmapPos.Y))
                  /
                  ((double)(vertices[1].BitmapPos.Y - vertices[2].BitmapPos.Y)
                  * (vertices[0].BitmapPos.X - vertices[2].BitmapPos.X)
@@ -52,22 +52,17 @@ namespace DrawingLibrary.Shaders
         /// <summary>
         /// Calculating average vector with barymetric sums
         /// Weights must sum up to 1
-        /// Number of vector parameters must be equal to size of weights array
+        /// Size of both arrays must be 3
         /// </summary>
         /// <param name="weights">Barymetric weights</param>
         /// <param name="vectors">Vectors to average</param>
         /// <returns></returns>
         public static Vector2 WeightedAverage(double[] weights, params Vector2[] vectors)
         {
-            Vector2 average = vectors[0]*weights[0];
-            for (int i = 1; i < vectors.Length; i++)
-            {
-                average += vectors[i]*weights[i];
-            }
-            return average;
+            return weights[0] * vectors[0] + weights[1] * vectors[1] + weights[2] * vectors[2];
         }
         private static readonly Vector3 V = new Vector3(0, 0, 1);
-        public static Vector3 CalculateLight(double ks, double kd, Vector3 lightColor, Vector3 objectColor, Vector3 toLight, Vector3 normal, double m)
+        public static Vector3 CalculateLight(double ks, double kd, in Vector3 lightColor, in Vector3 objectColor, in Vector3 toLight, in Vector3 normal, double m)
         {
             double NLAngleCos = Vector3.DotProduct(normal, toLight);
             double VRAngleCos = Vector3.DotProduct(V, (2*normal - toLight).Normalized);
@@ -77,7 +72,7 @@ namespace DrawingLibrary.Shaders
                  * (kd * NLAngleCos + ks * Math.Pow(VRAngleCos, m))
                  );
         }
-        public static Vector3 Saturate(Vector3 v)
+        public static Vector3 Saturate(in Vector3 v)
         {
             return new Vector3(Saturate(v.X), Saturate(v.Y), Saturate(v.Z));
         }

@@ -25,36 +25,36 @@ namespace DrawingLibrary.Vectors
         }
         public IntVector2 Normalized => this / Magnitude;
 
-        public static IntVector2 operator +(IntVector2 v1, IntVector2 v2)
+        public static IntVector2 operator +(in IntVector2 v1, in IntVector2 v2)
         {
             return new IntVector2() { X = v1.X + v2.X, Y = v1.Y + v2.Y };
         }
-        public static IntVector2 operator -(IntVector2 v1, IntVector2 v2)
+        public static IntVector2 operator -(in IntVector2 v1, in IntVector2 v2)
         {
             return new IntVector2() { X = v1.X - v2.X, Y = v1.Y - v2.Y };
         }
-        public static IntVector2 operator -(IntVector2 v)
+        public static IntVector2 operator -(in IntVector2 v)
         {
             return new IntVector2() { X = -v.X, Y = -v.Y };
         }
-        public static IntVector2 operator *(IntVector2 v, double factor)
+        public static IntVector2 operator *(in IntVector2 v, double factor)
         {
             return new IntVector2() { X = (int)(v.X * factor), Y = (int)(v.Y * factor) };
         }
-        public static IntVector2 operator *(double factor, IntVector2 v)
+        public static IntVector2 operator *(double factor, in IntVector2 v)
         {
             return v * factor;
         }
-        public static IntVector2 operator /(IntVector2 v, double factor)
+        public static IntVector2 operator /(in IntVector2 v, double factor)
         {
             return new IntVector2() { X = (int)(v.X / factor), Y = (int)(v.Y / factor) };
         }
 
-        public static bool operator ==(IntVector2 v1, IntVector2 v2)
+        public static bool operator ==(in IntVector2 v1, in IntVector2 v2)
         {
             return v1.X == v2.X && v1.Y == v2.Y;
         }
-        public static bool operator !=(IntVector2 v1, IntVector2 v2)
+        public static bool operator !=(in IntVector2 v1, in IntVector2 v2)
         {
             return v1.X != v2.X || v1.Y != v2.Y;
         }

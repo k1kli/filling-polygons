@@ -31,30 +31,36 @@ namespace DrawingLibrary
             GlobalData = globalData;
             Shader = shader;
         }
-        public double MinX { get; set; } = 0;
-        public double MinY { get; set; } = 0;
-        public double MaxX { get; set; } = 10;
-        public double MaxY { get; set; } = 10;
+        public double MinX { get; set; } = -5;
+        public double MinY { get; set; } = -5;
+        public double MaxX { get; set; } = 5;
+        public double MaxY { get; set; } = 5;
         public double Width => MaxX - MinX;
         public double Height => MaxY - MinY;
 
-        public Vector2 TransformToSceneCoords(Vector2 bitmapCoordsPos)
+        public Vector2 TransformToSceneCoords(in Vector2 bitmapCoordsPos)
+        {
+            return new Vector2(
+                Width * bitmapCoordsPos.X / Bitmap.Width + MinX,
+                Height * bitmapCoordsPos.Y / Bitmap.Height + MinY);
+        }
+        public Vector2 TransformToSceneCoords(in IntVector2 bitmapCoordsPos)
         {
             return new Vector2(
                 Width * bitmapCoordsPos.X / Bitmap.Width + MinX,
                 Height * bitmapCoordsPos.Y / Bitmap.Height + MinY);
         }
 
-        public Vectors.Vector2 TransformToBitmapCoords(Vector2 sceneCoordsPos)
+        public Vectors.Vector2 TransformToBitmapCoords(in Vector2 sceneCoordsPos)
         {
             return new Vector2(
-                 Bitmap.Width * (sceneCoordsPos.X + MinX) / Width,
-                Bitmap.Height * (sceneCoordsPos.Y + MinY) / Height);
+                 Bitmap.Width * (sceneCoordsPos.X - MinX) / Width,
+                Bitmap.Height * (sceneCoordsPos.Y - MinY) / Height);
         }
-        public void TransformToBitmapCoords(Vector2 sceneCoordsPos, out int bitmapX, out int bitmapY)
+        public void TransformToBitmapCoords(in Vector2 sceneCoordsPos, out int bitmapX, out int bitmapY)
         {
-            bitmapX = (int)(Bitmap.Width * (sceneCoordsPos.X + MinX) / Width);
-            bitmapY = (int)(Bitmap.Height * (sceneCoordsPos.Y + MinY) / Height);
+            bitmapX = (int)(Bitmap.Width * (sceneCoordsPos.X - MinX) / Width);
+            bitmapY = (int)(Bitmap.Height * (sceneCoordsPos.Y - MinY) / Height);
         }
 
         private static readonly VertexData[] triangleVertices = { new VertexData(), new VertexData(), new VertexData() };

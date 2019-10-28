@@ -17,14 +17,14 @@ namespace DrawingLibrary
         {
             LightRGB = c.ToVector3();
         }
-        public Vector3 ToLightVersor;
+        public Vector3 LightPosition;
         public double M;
-        public GlobalData(double ks, double kd, Color lightColor, Vector3 toLightVersor, double m)
+        public GlobalData(double ks, double kd, Color lightColor, Vector3 lightPosition, double m)
         {
             Ks = ks;
             Kd = kd;
             LightRGB = lightColor.ToVector3();
-            ToLightVersor = toLightVersor;
+            LightPosition = lightPosition;
             M = m;
         }
     }

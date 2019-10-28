@@ -16,24 +16,25 @@ namespace DrawingLibrary.Shaders
         {
             i = 0;
         }
-        public override void ForVertex(VertexData vertex)
+        public override void ForVertex(in VertexData vertex)
         {
             vertexData[i++] = vertex;
         }
-        public override Color ForFragment(int x, int y)
+        public override Color ForFragment(in IntVector2 bitmapPos)
         {
             double[] barymetricWeights = new double[3];
-            GetBarymetricWeights(vertexData, barymetricWeights, x, y);
+            GetBarymetricWeights(vertexData, barymetricWeights, bitmapPos);
             Vector2 UV = WeightedAverage(barymetricWeights, vertexData[0].UV,
                                                          vertexData[1].UV,
                                                          vertexData[2].UV);
             Vector3 color = MainTex.Sample(UV);
             Vectors.Vector3 normal = Normals.Sample(UV);
+            Vector3 toLight = (globalData.LightPosition - new Vector3(scene.TransformToSceneCoords(bitmapPos))).Normalized;
             color = CalculateLight(globalData.Ks,
                                    globalData.Kd,
                                    globalData.LightRGB,
                                    color,
-                                   globalData.ToLightVersor,
+                                   toLight,
                                    normal,
                                    globalData.M);
             return color.ToColor();

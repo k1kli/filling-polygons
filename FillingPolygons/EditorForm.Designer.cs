@@ -93,7 +93,7 @@
             this.ToolboxPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ToolboxPanel.Location = new System.Drawing.Point(3, 3);
             this.ToolboxPanel.Name = "ToolboxPanel";
-            this.ToolboxPanel.Size = new System.Drawing.Size(312, 652);
+            this.ToolboxPanel.Size = new System.Drawing.Size(309, 652);
             this.ToolboxPanel.TabIndex = 0;
             // 
             // chooseShaderGroupBox
@@ -105,7 +105,7 @@
             this.chooseShaderGroupBox.Controls.Add(this.preciseShaderRadioButton);
             this.chooseShaderGroupBox.Location = new System.Drawing.Point(9, 335);
             this.chooseShaderGroupBox.Name = "chooseShaderGroupBox";
-            this.chooseShaderGroupBox.Size = new System.Drawing.Size(300, 114);
+            this.chooseShaderGroupBox.Size = new System.Drawing.Size(297, 114);
             this.chooseShaderGroupBox.TabIndex = 13;
             this.chooseShaderGroupBox.TabStop = false;
             this.chooseShaderGroupBox.Text = "Wyznaczanie koloru piksela";
@@ -162,7 +162,7 @@
             this.lightGroupBox.Controls.Add(this.chooseLightColorButton);
             this.lightGroupBox.Location = new System.Drawing.Point(9, 191);
             this.lightGroupBox.Name = "lightGroupBox";
-            this.lightGroupBox.Size = new System.Drawing.Size(300, 138);
+            this.lightGroupBox.Size = new System.Drawing.Size(297, 138);
             this.lightGroupBox.TabIndex = 5;
             this.lightGroupBox.TabStop = false;
             this.lightGroupBox.Text = "Światło";
@@ -170,7 +170,7 @@
             // confirmToLightVectorButton
             // 
             this.confirmToLightVectorButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.confirmToLightVectorButton.Location = new System.Drawing.Point(181, 79);
+            this.confirmToLightVectorButton.Location = new System.Drawing.Point(178, 79);
             this.confirmToLightVectorButton.Name = "confirmToLightVectorButton";
             this.confirmToLightVectorButton.Size = new System.Drawing.Size(113, 46);
             this.confirmToLightVectorButton.TabIndex = 12;
@@ -241,7 +241,7 @@
             // chooseLightColorButton
             // 
             this.chooseLightColorButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.chooseLightColorButton.Location = new System.Drawing.Point(181, 21);
+            this.chooseLightColorButton.Location = new System.Drawing.Point(178, 21);
             this.chooseLightColorButton.Name = "chooseLightColorButton";
             this.chooseLightColorButton.Size = new System.Drawing.Size(113, 46);
             this.chooseLightColorButton.TabIndex = 4;
@@ -258,7 +258,7 @@
             this.normalsSourceGroupBox.Controls.Add(this.normalMapRadioButton);
             this.normalsSourceGroupBox.Location = new System.Drawing.Point(9, 100);
             this.normalsSourceGroupBox.Name = "normalsSourceGroupBox";
-            this.normalsSourceGroupBox.Size = new System.Drawing.Size(300, 85);
+            this.normalsSourceGroupBox.Size = new System.Drawing.Size(297, 85);
             this.normalsSourceGroupBox.TabIndex = 4;
             this.normalsSourceGroupBox.TabStop = false;
             this.normalsSourceGroupBox.Text = "Źródło wektora normalnego";
@@ -267,7 +267,7 @@
             // 
             this.chooseNormalMapButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.chooseNormalMapButton.Enabled = false;
-            this.chooseNormalMapButton.Location = new System.Drawing.Point(181, 51);
+            this.chooseNormalMapButton.Location = new System.Drawing.Point(178, 51);
             this.chooseNormalMapButton.Name = "chooseNormalMapButton";
             this.chooseNormalMapButton.Size = new System.Drawing.Size(113, 23);
             this.chooseNormalMapButton.TabIndex = 4;
@@ -310,7 +310,7 @@
             this.colorSourceGroupBox.Controls.Add(this.colorFromImageRadioButton);
             this.colorSourceGroupBox.Location = new System.Drawing.Point(9, 9);
             this.colorSourceGroupBox.Name = "colorSourceGroupBox";
-            this.colorSourceGroupBox.Size = new System.Drawing.Size(300, 85);
+            this.colorSourceGroupBox.Size = new System.Drawing.Size(297, 85);
             this.colorSourceGroupBox.TabIndex = 3;
             this.colorSourceGroupBox.TabStop = false;
             this.colorSourceGroupBox.Text = "Źródło koloru";
@@ -318,7 +318,7 @@
             // chooseImageButton
             // 
             this.chooseImageButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.chooseImageButton.Location = new System.Drawing.Point(181, 50);
+            this.chooseImageButton.Location = new System.Drawing.Point(178, 50);
             this.chooseImageButton.Name = "chooseImageButton";
             this.chooseImageButton.Size = new System.Drawing.Size(113, 23);
             this.chooseImageButton.TabIndex = 4;
@@ -330,7 +330,7 @@
             // 
             this.chooseColorButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.chooseColorButton.Enabled = false;
-            this.chooseColorButton.Location = new System.Drawing.Point(181, 21);
+            this.chooseColorButton.Location = new System.Drawing.Point(178, 21);
             this.chooseColorButton.Name = "chooseColorButton";
             this.chooseColorButton.Size = new System.Drawing.Size(113, 23);
             this.chooseColorButton.TabIndex = 3;
@@ -367,9 +367,9 @@
             // 
             this.drawAreaPanel.Controls.Add(this.drawingBox);
             this.drawAreaPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.drawAreaPanel.Location = new System.Drawing.Point(321, 3);
+            this.drawAreaPanel.Location = new System.Drawing.Point(318, 3);
             this.drawAreaPanel.Name = "drawAreaPanel";
-            this.drawAreaPanel.Size = new System.Drawing.Size(738, 652);
+            this.drawAreaPanel.Size = new System.Drawing.Size(741, 652);
             this.drawAreaPanel.TabIndex = 1;
             // 
             // drawingBox
@@ -377,7 +377,7 @@
             this.drawingBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.drawingBox.Location = new System.Drawing.Point(0, 0);
             this.drawingBox.Name = "drawingBox";
-            this.drawingBox.Size = new System.Drawing.Size(738, 652);
+            this.drawingBox.Size = new System.Drawing.Size(741, 652);
             this.drawingBox.TabIndex = 0;
             this.drawingBox.TabStop = false;
             this.drawingBox.Paint += new System.Windows.Forms.PaintEventHandler(this.DrawingBox_Paint);
@@ -423,6 +423,7 @@
             this.Controls.Add(this.menuStrip1);
             this.Name = "EditorForm";
             this.Text = "EditorForm";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.EditorForm_Load);
             this.ClientSizeChanged += new System.EventHandler(this.EditorForm_ClientSizeChanged);
             this.editorLayoutPanel.ResumeLayout(false);

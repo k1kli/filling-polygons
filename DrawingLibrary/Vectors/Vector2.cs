@@ -25,45 +25,45 @@ namespace DrawingLibrary.Vectors
         }
         public Vector2 Normalized => this / Magnitude;
 
-        public static Vector2 operator +(Vector2 v1, Vector2 v2)
+        public static Vector2 operator +(in Vector2 v1, in Vector2 v2)
         {
             return new Vector2() { X = v1.X + v2.X, Y = v1.Y + v2.Y };
         }
-        public static Vector2 operator -(Vector2 v1, Vector2 v2)
+        public static Vector2 operator -(in Vector2 v1, in Vector2 v2)
         {
             return new Vector2() { X = v1.X - v2.X, Y = v1.Y - v2.Y };
         }
-        public static Vector2 operator -(Vector2 v)
+        public static Vector2 operator -(in Vector2 v)
         {
             return new Vector2() { X = -v.X, Y = -v.Y };
         }
-        public static Vector2 operator *(Vector2 v, double factor)
+        public static Vector2 operator *(in Vector2 v, double factor)
         {
             return new Vector2() { X = v.X * factor, Y = v.Y * factor };
         }
-        public static Vector2 operator *(double factor, Vector2 v)
+        public static Vector2 operator *(double factor, in Vector2 v)
         {
             return v * factor;
         }
-        public static Vector2 operator /(Vector2 v, double factor)
+        public static Vector2 operator /(in Vector2 v, double factor)
         {
             return new Vector2() { X = v.X / factor, Y = v.Y / factor };
         }
 
-        public static bool operator ==(Vector2 v1, Vector2 v2)
+        public static bool operator ==(in Vector2 v1, in Vector2 v2)
         {
             return v1.X == v2.X && v1.Y == v2.Y;
         }
-        public static bool operator !=(Vector2 v1, Vector2 v2)
+        public static bool operator !=(in Vector2 v1, in Vector2 v2)
         {
             return v1.X != v2.X || v1.Y != v2.Y;
         }
 
-        public static double DotProduct(Vector2 v1, Vector2 v2)
+        public static double DotProduct(in Vector2 v1, in Vector2 v2)
         {
             return v1.X * v2.X + v1.Y * v2.Y;
         }
-        public static double CrossProduct(Vector2 v1, Vector2 v2)
+        public static double CrossProduct(in Vector2 v1, in Vector2 v2)
         {
             return v1.X * v2.Y - v1.Y * v2.X;
         }
