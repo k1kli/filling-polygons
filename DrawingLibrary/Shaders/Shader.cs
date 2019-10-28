@@ -19,34 +19,38 @@ namespace DrawingLibrary.Shaders
         {
             this.scene = scene;
         }
-        public virtual void ForVertex(in VertexData vertex) { }
+        public virtual void ForVertex(in IntVector2 vertex) { }
         public virtual void StartTriangle() { }
         public virtual void StartMesh() { }
         public abstract Color ForFragment(in IntVector2 bitmapPos);
 
+        public Vector2 GetUV(in IntVector2 bitmapPos)
+        {
+            return new Vector2((float)bitmapPos.X / scene.Bitmap.Width, (float)bitmapPos.Y / scene.Bitmap.Height);
+        }
 
-        public static void GetBarymetricWeights(VertexData[] vertices, float[] resultingWeights, in IntVector2 bitmapPos)
+        public static void GetBarymetricWeights(IntVector2[] vertices, float[] resultingWeights, in IntVector2 bitmapPos)
         {
             resultingWeights[0] =
-                 ((float)(vertices[1].BitmapPos.Y - vertices[2].BitmapPos.Y)
-                 * (bitmapPos.X - vertices[2].BitmapPos.X)
-                 + (float)(vertices[2].BitmapPos.X - vertices[1].BitmapPos.X)
-                 * (bitmapPos.Y - vertices[2].BitmapPos.Y))
+                 ((float)(vertices[1].Y - vertices[2].Y)
+                 * (bitmapPos.X - vertices[2].X)
+                 + (float)(vertices[2].X - vertices[1].X)
+                 * (bitmapPos.Y - vertices[2].Y))
                  / 
-                 ((float)(vertices[1].BitmapPos.Y - vertices[2].BitmapPos.Y)
-                 * (vertices[0].BitmapPos.X - vertices[2].BitmapPos.X)
-                 + (float)(vertices[2].BitmapPos.X - vertices[1].BitmapPos.X)
-                 * (vertices[0].BitmapPos.Y - vertices[2].BitmapPos.Y));
+                 ((float)(vertices[1].Y - vertices[2].Y)
+                 * (vertices[0].X - vertices[2].X)
+                 + (float)(vertices[2].X - vertices[1].X)
+                 * (vertices[0].Y - vertices[2].Y));
             resultingWeights[1] =
-                 ((float)(vertices[2].BitmapPos.Y - vertices[0].BitmapPos.Y)
-                 * (bitmapPos.X - vertices[2].BitmapPos.X)
-                 + (float)(vertices[0].BitmapPos.X - vertices[2].BitmapPos.X)
-                 * (bitmapPos.Y - vertices[2].BitmapPos.Y))
+                 ((float)(vertices[2].Y - vertices[0].Y)
+                 * (bitmapPos.X - vertices[2].X)
+                 + (float)(vertices[0].X - vertices[2].X)
+                 * (bitmapPos.Y - vertices[2].Y))
                  /
-                 ((float)(vertices[1].BitmapPos.Y - vertices[2].BitmapPos.Y)
-                 * (vertices[0].BitmapPos.X - vertices[2].BitmapPos.X)
-                 + (float)(vertices[2].BitmapPos.X - vertices[1].BitmapPos.X)
-                 * (vertices[0].BitmapPos.Y - vertices[2].BitmapPos.Y));
+                 ((float)(vertices[1].Y - vertices[2].Y)
+                 * (vertices[0].X - vertices[2].X)
+                 + (float)(vertices[2].X - vertices[1].X)
+                 * (vertices[0].Y - vertices[2].Y));
             resultingWeights[2] = 1 - resultingWeights[1] - resultingWeights[0];
         }
         /// <summary>

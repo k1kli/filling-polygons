@@ -63,7 +63,7 @@ namespace DrawingLibrary
             bitmapY = (int)(Bitmap.Height * (sceneCoordsPos.Y - MinY) / Height);
         }
 
-        private static readonly VertexData[] triangleVertices = { new VertexData(), new VertexData(), new VertexData() };
+        private static readonly IntVector2[] triangleVertices = { new IntVector2(), new IntVector2(), new IntVector2() };
         public void DrawMesh(Mesh mesh)
         {
             Bitmap.Clear();
@@ -81,12 +81,9 @@ namespace DrawingLibrary
                 TransformToBitmapCoords(mesh.Vertices[mesh.Triangles[triangle]], out p1X, out p1Y);
                 TransformToBitmapCoords(mesh.Vertices[mesh.Triangles[triangle+1]], out p2X, out p2Y);
                 TransformToBitmapCoords(mesh.Vertices[mesh.Triangles[triangle+2]], out p3X, out p3Y);
-                triangleVertices[0].BitmapPos.X = p1X; triangleVertices[0].BitmapPos.Y = p1Y;
-                triangleVertices[1].BitmapPos.X = p2X; triangleVertices[1].BitmapPos.Y = p2Y;
-                triangleVertices[2].BitmapPos.X = p3X; triangleVertices[2].BitmapPos.Y = p3Y;
-                triangleVertices[0].UV = mesh.UV[mesh.Triangles[triangle]];
-                triangleVertices[1].UV = mesh.UV[mesh.Triangles[triangle + 1]];
-                triangleVertices[2].UV = mesh.UV[mesh.Triangles[triangle + 2]];
+                triangleVertices[0].X = p1X; triangleVertices[0].Y = p1Y;
+                triangleVertices[1].X = p2X; triangleVertices[1].Y = p2Y;
+                triangleVertices[2].X = p3X; triangleVertices[2].Y = p3Y;
                 triangleDrawer.DrawTriangle(triangleVertices);
                 if(DrawWireframe)
                 {

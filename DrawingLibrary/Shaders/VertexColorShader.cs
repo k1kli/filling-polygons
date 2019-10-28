@@ -10,19 +10,20 @@ namespace DrawingLibrary.Shaders
 {
     public class VertexColorShader : Shader
     {
-        private VertexData[] vertexData = new VertexData[3];
+        private IntVector2[] vertices = new IntVector2[3];
         private Vector3[] colors = new Vector3[3];
         int i;
         public override void StartTriangle()
         {
             i = 0;
         }
-        public override void ForVertex(in VertexData vertex)
+        public override void ForVertex(in IntVector2 vertex)
         {
-            vertexData[i] = vertex;
-            colors[i] = MainTex.Sample(vertexData[i].UV);
-            Vectors.Vector3 normal = Normals.Sample(vertexData[i].UV);
-            Vector3 toLight = (globalData.LightPosition - new Vector3(scene.TransformToSceneCoords(vertex.BitmapPos))).Normalized;
+            vertices[i] = vertex;
+            Vector2 uv = GetUV(vertex);
+            colors[i] = MainTex.Sample(uv);
+            Vectors.Vector3 normal = Normals.Sample(uv);
+            Vector3 toLight = (globalData.LightPosition - new Vector3(scene.TransformToSceneCoords(vertex))).Normalized;
             colors[i] = CalculateLight(globalData.Ks,
                                    globalData.Kd,
                                    globalData.LightRGB,
@@ -35,7 +36,7 @@ namespace DrawingLibrary.Shaders
         public override Color ForFragment(in IntVector2 bitmapPos)
         {
             float[] barymetricWeights = new float[3];
-            GetBarymetricWeights(vertexData, barymetricWeights, bitmapPos);
+            GetBarymetricWeights(vertices, barymetricWeights, bitmapPos);
             Vector3 color = colors[0] * barymetricWeights[0] + colors[1] * barymetricWeights[1] + colors[2] * barymetricWeights[2];
             return color.ToColor();
         }

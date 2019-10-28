@@ -60,7 +60,6 @@
     <Compile Include="Vectors\IntVector2.cs" />
     <Compile Include="Vectors\Vector2.cs" />
     <Compile Include="Vectors\Vector3.cs" />
-    <Compile Include="VertexData.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

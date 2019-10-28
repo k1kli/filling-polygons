@@ -10,25 +10,22 @@ namespace DrawingLibrary.Shaders
 {
     public class PreciseShader : Shader
     {
-        private VertexData[] vertexData = new VertexData[3];
+        private IntVector2[] vertices = new IntVector2[3];
         int i;
         public override void StartTriangle()
         {
             i = 0;
         }
-        public override void ForVertex(in VertexData vertex)
+        public override void ForVertex(in IntVector2 vertex)
         {
-            vertexData[i++] = vertex;
+            vertices[i++] = vertex;
         }
         public override Color ForFragment(in IntVector2 bitmapPos)
         {
             float[] barymetricWeights = new float[3];
-            GetBarymetricWeights(vertexData, barymetricWeights, bitmapPos);
-            Vector2 UV = WeightedAverage(barymetricWeights, vertexData[0].UV,
-                                                         vertexData[1].UV,
-                                                         vertexData[2].UV);
-            Vector3 color = MainTex.Sample(UV);
-            Vectors.Vector3 normal = Normals.Sample(UV);
+            Vector2 uv = GetUV(bitmapPos);
+            Vector3 color = MainTex.Sample(uv);
+            Vectors.Vector3 normal = Normals.Sample(uv);
             Vector3 toLight = (globalData.LightPosition - new Vector3(scene.TransformToSceneCoords(bitmapPos))).Normalized;
             color = CalculateLight(globalData.Ks,
                                    globalData.Kd,
