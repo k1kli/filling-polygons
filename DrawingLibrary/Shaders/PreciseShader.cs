@@ -22,7 +22,7 @@ namespace DrawingLibrary.Shaders
         }
         public override Color ForFragment(in IntVector2 bitmapPos)
         {
-            double[] barymetricWeights = new double[3];
+            float[] barymetricWeights = new float[3];
             GetBarymetricWeights(vertexData, barymetricWeights, bitmapPos);
             Vector2 UV = WeightedAverage(barymetricWeights, vertexData[0].UV,
                                                          vertexData[1].UV,

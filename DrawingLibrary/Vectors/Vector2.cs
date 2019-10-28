@@ -8,17 +8,17 @@ namespace DrawingLibrary.Vectors
 {
     public struct Vector2
     {
-        public double X { get; set; }
-        public double Y { get; set; }
+        public float X { get; set; }
+        public float Y { get; set; }
 
-        public Vector2(double x, double y)
+        public Vector2(float x, float y)
         {
             X = x;
             Y = y;
         }
-        public double Magnitude =>
-            (double)Math.Sqrt(MagnitudeSqr);
-        public double MagnitudeSqr => X * X + Y * Y;
+        public float Magnitude =>
+            (float)Math.Sqrt(MagnitudeSqr);
+        public float MagnitudeSqr => X * X + Y * Y;
         public Vector2 GetPerpendicular()
         {
             return new Vector2(-this.Y, this.X);
@@ -37,15 +37,15 @@ namespace DrawingLibrary.Vectors
         {
             return new Vector2() { X = -v.X, Y = -v.Y };
         }
-        public static Vector2 operator *(in Vector2 v, double factor)
+        public static Vector2 operator *(in Vector2 v, float factor)
         {
             return new Vector2() { X = v.X * factor, Y = v.Y * factor };
         }
-        public static Vector2 operator *(double factor, in Vector2 v)
+        public static Vector2 operator *(float factor, in Vector2 v)
         {
             return v * factor;
         }
-        public static Vector2 operator /(in Vector2 v, double factor)
+        public static Vector2 operator /(in Vector2 v, float factor)
         {
             return new Vector2() { X = v.X / factor, Y = v.Y / factor };
         }
@@ -59,11 +59,11 @@ namespace DrawingLibrary.Vectors
             return v1.X != v2.X || v1.Y != v2.Y;
         }
 
-        public static double DotProduct(in Vector2 v1, in Vector2 v2)
+        public static float DotProduct(in Vector2 v1, in Vector2 v2)
         {
             return v1.X * v2.X + v1.Y * v2.Y;
         }
-        public static double CrossProduct(in Vector2 v1, in Vector2 v2)
+        public static float CrossProduct(in Vector2 v1, in Vector2 v2)
         {
             return v1.X * v2.Y - v1.Y * v2.X;
         }

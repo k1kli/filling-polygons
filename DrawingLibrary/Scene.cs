@@ -31,12 +31,12 @@ namespace DrawingLibrary
             GlobalData = globalData;
             Shader = shader;
         }
-        public double MinX { get; set; } = -5;
-        public double MinY { get; set; } = -5;
-        public double MaxX { get; set; } = 5;
-        public double MaxY { get; set; } = 5;
-        public double Width => MaxX - MinX;
-        public double Height => MaxY - MinY;
+        public float MinX { get; set; } = -5;
+        public float MinY { get; set; } = -5;
+        public float MaxX { get; set; } = 5;
+        public float MaxY { get; set; } = 5;
+        public float Width => MaxX - MinX;
+        public float Height => MaxY - MinY;
 
         public Vector2 TransformToSceneCoords(in Vector2 bitmapCoordsPos)
         {

@@ -25,7 +25,7 @@ namespace FillingPolygons
         {
             InitializeComponent();
             Shader shader = new PreciseShader();
-            GlobalData globalData = new GlobalData(0.5, 0.5, Color.White, new Vector3(0, 0, 10000), 1);
+            GlobalData globalData = new GlobalData(0.5f, 0.5f, Color.White, new Vector3(0, 0, 10000), 1);
             scene = new Scene(new MemoryBitmap(drawingBox.Width, drawingBox.Height), shader, globalData);
             scene.MainTex = new ImageSampler(new Bitmap("..\\..\\data\\Image.jpg"));
             CreateMesh();
@@ -40,11 +40,11 @@ namespace FillingPolygons
         private void CreateMesh()
         {
             mesh = new Mesh();
-            double padding = scene.Width * 0.05;
-            double gridWidth = scene.Width - 2 * padding;
-            double gridHeight = scene.Height - 2 * padding;
-            double gridHorizontalGap = gridWidth / m;
-            double gridVerticalGap = gridHeight / n;
+            float padding = scene.Width * 0.05f;
+            float gridWidth = scene.Width - 2 * padding;
+            float gridHeight = scene.Height - 2 * padding;
+            float gridHorizontalGap = gridWidth / m;
+            float gridVerticalGap = gridHeight / n;
             mesh.Vertices = new Vector2[(n + 1) * (m + 1)];
             mesh.UV = new Vector2[(n + 1) * (m + 1)];
             mesh.Triangles = new int[n * m * 2 * 3];
@@ -55,7 +55,7 @@ namespace FillingPolygons
                     mesh.Vertices[y * (m + 1) + x] = new Vector2(
                         scene.MinX + padding + gridHorizontalGap * x,
                         scene.MinY + padding + gridVerticalGap * y);
-                    mesh.UV[y * (m + 1) + x] = new Vector2(((double)x) / m, ((double)y) / n);
+                    mesh.UV[y * (m + 1) + x] = new Vector2(((float)x) / m, ((float)y) / n);
                 }
             }
             for (int y = 0; y < n; y++)
@@ -151,9 +151,9 @@ namespace FillingPolygons
 
         private void ConfirmToLightVectorButton_Click(object sender, EventArgs e)
         {
-            if(double.TryParse(xToLightVectorTextBox.Text, out double x)
-                && double.TryParse(yToLightVectorTextBox.Text, out double y)
-                && double.TryParse(zToLightVectorTextBox.Text, out double z))
+            if(float.TryParse(xToLightVectorTextBox.Text, out float x)
+                && float.TryParse(yToLightVectorTextBox.Text, out float y)
+                && float.TryParse(zToLightVectorTextBox.Text, out float z))
             {
                 if(z > 0)
                 {

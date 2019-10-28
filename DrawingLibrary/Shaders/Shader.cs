@@ -25,27 +25,27 @@ namespace DrawingLibrary.Shaders
         public abstract Color ForFragment(in IntVector2 bitmapPos);
 
 
-        public static void GetBarymetricWeights(VertexData[] vertices, double[] resultingWeights, in IntVector2 bitmapPos)
+        public static void GetBarymetricWeights(VertexData[] vertices, float[] resultingWeights, in IntVector2 bitmapPos)
         {
             resultingWeights[0] =
-                 ((double)(vertices[1].BitmapPos.Y - vertices[2].BitmapPos.Y)
+                 ((float)(vertices[1].BitmapPos.Y - vertices[2].BitmapPos.Y)
                  * (bitmapPos.X - vertices[2].BitmapPos.X)
-                 + (double)(vertices[2].BitmapPos.X - vertices[1].BitmapPos.X)
+                 + (float)(vertices[2].BitmapPos.X - vertices[1].BitmapPos.X)
                  * (bitmapPos.Y - vertices[2].BitmapPos.Y))
                  / 
-                 ((double)(vertices[1].BitmapPos.Y - vertices[2].BitmapPos.Y)
+                 ((float)(vertices[1].BitmapPos.Y - vertices[2].BitmapPos.Y)
                  * (vertices[0].BitmapPos.X - vertices[2].BitmapPos.X)
-                 + (double)(vertices[2].BitmapPos.X - vertices[1].BitmapPos.X)
+                 + (float)(vertices[2].BitmapPos.X - vertices[1].BitmapPos.X)
                  * (vertices[0].BitmapPos.Y - vertices[2].BitmapPos.Y));
             resultingWeights[1] =
-                 ((double)(vertices[2].BitmapPos.Y - vertices[0].BitmapPos.Y)
+                 ((float)(vertices[2].BitmapPos.Y - vertices[0].BitmapPos.Y)
                  * (bitmapPos.X - vertices[2].BitmapPos.X)
-                 + (double)(vertices[0].BitmapPos.X - vertices[2].BitmapPos.X)
+                 + (float)(vertices[0].BitmapPos.X - vertices[2].BitmapPos.X)
                  * (bitmapPos.Y - vertices[2].BitmapPos.Y))
                  /
-                 ((double)(vertices[1].BitmapPos.Y - vertices[2].BitmapPos.Y)
+                 ((float)(vertices[1].BitmapPos.Y - vertices[2].BitmapPos.Y)
                  * (vertices[0].BitmapPos.X - vertices[2].BitmapPos.X)
-                 + (double)(vertices[2].BitmapPos.X - vertices[1].BitmapPos.X)
+                 + (float)(vertices[2].BitmapPos.X - vertices[1].BitmapPos.X)
                  * (vertices[0].BitmapPos.Y - vertices[2].BitmapPos.Y));
             resultingWeights[2] = 1 - resultingWeights[1] - resultingWeights[0];
         }
@@ -57,26 +57,26 @@ namespace DrawingLibrary.Shaders
         /// <param name="weights">Barymetric weights</param>
         /// <param name="vectors">Vectors to average</param>
         /// <returns></returns>
-        public static Vector2 WeightedAverage(double[] weights, params Vector2[] vectors)
+        public static Vector2 WeightedAverage(float[] weights, params Vector2[] vectors)
         {
             return weights[0] * vectors[0] + weights[1] * vectors[1] + weights[2] * vectors[2];
         }
         private static readonly Vector3 V = new Vector3(0, 0, 1);
-        public static Vector3 CalculateLight(double ks, double kd, in Vector3 lightColor, in Vector3 objectColor, in Vector3 toLight, in Vector3 normal, double m)
+        public static Vector3 CalculateLight(float ks, float kd, in Vector3 lightColor, in Vector3 objectColor, in Vector3 toLight, in Vector3 normal, float m)
         {
-            double NLAngleCos = Vector3.DotProduct(normal, toLight);
-            double VRAngleCos = Vector3.DotProduct(V, (2*normal - toLight).Normalized);
+            float NLAngleCos = Vector3.DotProduct(normal, toLight);
+            float VRAngleCos = Vector3.DotProduct(V, (2*normal - toLight).Normalized);
             return
                 Saturate(
                     Vector3.CoordinateMultiplication(lightColor, objectColor)
-                 * (kd * NLAngleCos + ks * Math.Pow(VRAngleCos, m))
+                 * (kd * NLAngleCos + ks * (float)Math.Pow(VRAngleCos, m))
                  );
         }
         public static Vector3 Saturate(in Vector3 v)
         {
             return new Vector3(Saturate(v.X), Saturate(v.Y), Saturate(v.Z));
         }
-        public static double Saturate(double d)
+        public static float Saturate(float d)
         {
             return d >= 0 ? (d <= 1 ? d : 1) : 0;
         }

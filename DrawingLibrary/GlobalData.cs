@@ -10,16 +10,16 @@ namespace DrawingLibrary
 {
     public struct GlobalData
     {
-        public double Ks;
-        public double Kd;
+        public float Ks;
+        public float Kd;
         public Vector3 LightRGB;
         public void SetLightColor(Color c)
         {
             LightRGB = c.ToVector3();
         }
         public Vector3 LightPosition;
-        public double M;
-        public GlobalData(double ks, double kd, Color lightColor, Vector3 lightPosition, double m)
+        public float M;
+        public GlobalData(float ks, float kd, Color lightColor, Vector3 lightPosition, float m)
         {
             Ks = ks;
             Kd = kd;

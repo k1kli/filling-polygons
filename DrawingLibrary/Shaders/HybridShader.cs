@@ -27,7 +27,7 @@ namespace DrawingLibrary.Shaders
         }
         public override Color ForFragment(in IntVector2 bitmapPos)
         {
-            double[] barymetricWeights = new double[3];
+            float[] barymetricWeights = new float[3];
             GetBarymetricWeights(vertexData, barymetricWeights, bitmapPos);
             Vector3 color = colors[0] * barymetricWeights[0] + colors[1] * barymetricWeights[1] + colors[2] * barymetricWeights[2];
             Vector3 normal = normals[0] * barymetricWeights[0] + normals[1] * barymetricWeights[1] + normals[2] * barymetricWeights[2];

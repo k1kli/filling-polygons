@@ -14,9 +14,9 @@ namespace DrawingLibrary
         public Shader Shader { get; set; }
         class AETData
         {
-            public double x;
-            public double antitangent;
-            public double yMax;
+            public float x;
+            public float antitangent;
+            public float yMax;
         }
         int[] sortedVerticesIndexes = { 0, 1, 2 };
         LinkedList<AETData> AET = new LinkedList<AETData>();
@@ -112,9 +112,9 @@ namespace DrawingLibrary
                 //Parallel.For(startX, endX, (x) => bitmap.SetPixel(x, y1, Shader.ForFragment(x, y1)));
             }
         }
-        private double GetAntiTangent(IntVector2 from, IntVector2 to)
+        private float GetAntiTangent(IntVector2 from, IntVector2 to)
         {
-            return (double)(to.X - from.X) / (to.Y - from.Y);
+            return (float)(to.X - from.X) / (to.Y - from.Y);
         }
     }
 }
