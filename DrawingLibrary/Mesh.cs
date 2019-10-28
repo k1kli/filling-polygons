@@ -11,5 +11,6 @@ namespace DrawingLibrary
         public Vectors.Vector2[] Vertices { get; set; }
         public Vectors.Vector2[] UV { get; set; }
         public int[] Triangles { get; set; }
+        public LightParameters[] TrianglesLightParameters { get; set; }
     }
 }

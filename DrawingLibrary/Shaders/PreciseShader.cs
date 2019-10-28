@@ -12,8 +12,9 @@ namespace DrawingLibrary.Shaders
     {
         private IntVector2[] vertices = new IntVector2[3];
         int i;
-        public override void StartTriangle()
+        public override void StartTriangle(int triangleIndex)
         {
+            base.StartTriangle(triangleIndex);
             i = 0;
         }
         public override void ForVertex(in IntVector2 vertex)
@@ -27,13 +28,11 @@ namespace DrawingLibrary.Shaders
             Vector3 color = MainTex.Sample(uv);
             Vectors.Vector3 normal = Normals.Sample(uv);
             Vector3 toLight = (globalData.LightPosition - new Vector3(scene.TransformToSceneCoords(bitmapPos))).Normalized;
-            color = CalculateLight(globalData.Ks,
-                                   globalData.Kd,
-                                   globalData.LightRGB,
+            color = CalculateLight(globalData.LightRGB,
                                    color,
                                    toLight,
                                    normal,
-                                   globalData.M);
+                                   mesh.TrianglesLightParameters[triangleIndex]);
             return color.ToColor();
         }
     }

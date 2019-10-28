@@ -75,6 +75,7 @@ namespace DrawingLibrary
                 throw new Exception($"There is no vertex with index {max}");
             }
             var watch = System.Diagnostics.Stopwatch.StartNew();
+            Shader.StartMesh(mesh);
             for (int triangle = 0; triangle < mesh.Triangles.Length; triangle += 3)
             {
                 int p1X, p1Y, p2X, p2Y, p3X, p3Y;
@@ -84,7 +85,7 @@ namespace DrawingLibrary
                 triangleVertices[0].X = p1X; triangleVertices[0].Y = p1Y;
                 triangleVertices[1].X = p2X; triangleVertices[1].Y = p2Y;
                 triangleVertices[2].X = p3X; triangleVertices[2].Y = p3Y;
-                triangleDrawer.DrawTriangle(triangleVertices);
+                triangleDrawer.DrawTriangle(triangleVertices, triangle/3);
                 if(DrawWireframe)
                 {
                     g.DrawLine(Pens.Black, p1X, p1Y, p2X, p2Y);

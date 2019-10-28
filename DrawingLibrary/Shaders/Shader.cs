@@ -15,13 +15,21 @@ namespace DrawingLibrary.Shaders
         protected GlobalData globalData => scene.GlobalData;
         public ISampler MainTex => scene.MainTex;
         public ISampler Normals => scene.Normals;
+        protected Mesh mesh { get; private set; }
+        protected int triangleIndex { get; private set; }
         internal void Init(Scene scene)
         {
             this.scene = scene;
         }
         public virtual void ForVertex(in IntVector2 vertex) { }
-        public virtual void StartTriangle() { }
-        public virtual void StartMesh() { }
+        public virtual void StartTriangle(int triangleIndex)
+        {
+            this.triangleIndex = triangleIndex;
+        }
+        public virtual void StartMesh(Mesh mesh)
+        {
+            this.mesh = mesh;
+        }
         public abstract Color ForFragment(in IntVector2 bitmapPos);
 
         public Vector2 GetUV(in IntVector2 bitmapPos)
@@ -66,14 +74,14 @@ namespace DrawingLibrary.Shaders
             return weights[0] * vectors[0] + weights[1] * vectors[1] + weights[2] * vectors[2];
         }
         private static readonly Vector3 V = new Vector3(0, 0, 1);
-        public static Vector3 CalculateLight(float ks, float kd, in Vector3 lightColor, in Vector3 objectColor, in Vector3 toLight, in Vector3 normal, float m)
+        public static Vector3 CalculateLight(in Vector3 lightColor, in Vector3 objectColor, in Vector3 toLight, in Vector3 normal, in LightParameters lightParameters)
         {
             float NLAngleCos = Vector3.DotProduct(normal, toLight);
             float VRAngleCos = Vector3.DotProduct(V, (2*normal - toLight).Normalized);
             return
                 Saturate(
                     Vector3.CoordinateMultiplication(lightColor, objectColor)
-                 * (kd * NLAngleCos + ks * (float)Math.Pow(VRAngleCos, m))
+                 * (lightParameters.Kd * NLAngleCos + lightParameters.Ks * (float)Math.Pow(VRAngleCos, lightParameters.M))
                  );
         }
         public static Vector3 Saturate(in Vector3 v)

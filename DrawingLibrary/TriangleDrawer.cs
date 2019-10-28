@@ -28,14 +28,14 @@ namespace DrawingLibrary
             this.bitmap = bitmap;
         }
 
-        public void DrawTriangle(IntVector2[] vertices)
+        public void DrawTriangle(IntVector2[] vertices, int triangleIndex)
         {
             if (Shader == null) throw new Exception("First assign value to Shader field");
             for (int i = 0; i < vertices.Length; i++)
             {
                 Shader.ForVertex(vertices[i]);
             }
-            Shader.StartTriangle();
+            Shader.StartTriangle(triangleIndex);
             Array.Sort(sortedVerticesIndexes, (int a, int b) => vertices[a].Y.CompareTo(vertices[b].Y));
             int yMin = vertices[sortedVerticesIndexes[0]].Y;
             int yMax = vertices[sortedVerticesIndexes[sortedVerticesIndexes.Length - 1]].Y;

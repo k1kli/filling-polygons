@@ -45,6 +45,7 @@
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="GlobalData.cs" />
     <Compile Include="HelperMethods.cs" />
+    <Compile Include="LightParameters.cs" />
     <Compile Include="Samplers\ImageSampler.cs" />
     <Compile Include="Samplers\ISampler.cs" />
     <Compile Include="Samplers\StaticColorSampler.cs" />

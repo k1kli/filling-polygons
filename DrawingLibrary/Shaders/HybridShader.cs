@@ -14,8 +14,9 @@ namespace DrawingLibrary.Shaders
         private Vector3[] colors = new Vector3[3];
         private Vector3[] normals = new Vector3[3];
         int i;
-        public override void StartTriangle()
+        public override void StartTriangle(int triangleIndex)
         {
+            base.StartTriangle(triangleIndex);
             i = 0;
         }
         public override void ForVertex(in IntVector2 vertex)
@@ -33,13 +34,11 @@ namespace DrawingLibrary.Shaders
             Vector3 color = colors[0] * barymetricWeights[0] + colors[1] * barymetricWeights[1] + colors[2] * barymetricWeights[2];
             Vector3 normal = normals[0] * barymetricWeights[0] + normals[1] * barymetricWeights[1] + normals[2] * barymetricWeights[2];
             Vector3 toLight = (globalData.LightPosition - new Vector3(scene.TransformToSceneCoords(bitmapPos))).Normalized;
-            return CalculateLight(globalData.Ks,
-                                   globalData.Kd,
-                                   globalData.LightRGB,
+            return CalculateLight(globalData.LightRGB,
                                    color,
                                    toLight,
                                    normal,
-                                   globalData.M).ToColor();
+                                   mesh.TrianglesLightParameters[triangleIndex]).ToColor();
         }
     }
 }
