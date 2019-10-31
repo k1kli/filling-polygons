@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,79 +12,82 @@ namespace DrawingLibrary.Shaders
 {
     public abstract class Shader
     {
-        private Scene scene;
+        protected Scene scene;
         protected GlobalData globalData => scene.GlobalData;
         public ISampler MainTex => scene.MainTex;
         public ISampler Normals => scene.Normals;
+        protected Mesh mesh { get; private set; }
+        protected int triangleIndex { get; private set; }
         internal void Init(Scene scene)
         {
             this.scene = scene;
         }
-        public virtual void ForVertex(VertexData vertex) { }
-        public virtual void StartTriangle() { }
-        public virtual void StartMesh() { }
-        public abstract Color ForFragment(int x, int y);
+        public virtual void ForVertex(in IntVector2 vertex) { }
+        public virtual void StartTriangle(int triangleIndex)
+        {
+            this.triangleIndex = triangleIndex;
+        }
+        public virtual void StartMesh(Mesh mesh)
+        {
+            this.mesh = mesh;
+        }
+        public abstract Color ForFragment(in IntVector2 bitmapPos);
 
+        public Vector2 GetUV(in IntVector2 bitmapPos)
+        {
+            return new Vector2((float)bitmapPos.X / scene.Bitmap.Width, (float)bitmapPos.Y / scene.Bitmap.Height);
+        }
 
-        public static void GetBarymetricWeights(VertexData[] vertices, double[] resultingWeights, int curX, int curY)
+        public static void GetBarymetricWeights(IntVector2[] vertices, float[] resultingWeights, in IntVector2 bitmapPos)
         {
             resultingWeights[0] =
-                 ((double)(vertices[1].BitmapPos.Y - vertices[2].BitmapPos.Y)
-                 * (curX - vertices[2].BitmapPos.X)
-                 + (double)(vertices[2].BitmapPos.X - vertices[1].BitmapPos.X)
-                 * (curY - vertices[2].BitmapPos.Y))
+                 ((float)(vertices[1].Y - vertices[2].Y)
+                 * (bitmapPos.X - vertices[2].X)
+                 + (float)(vertices[2].X - vertices[1].X)
+                 * (bitmapPos.Y - vertices[2].Y))
                  / 
-                 ((double)(vertices[1].BitmapPos.Y - vertices[2].BitmapPos.Y)
-                 * (vertices[0].BitmapPos.X - vertices[2].BitmapPos.X)
-                 + (double)(vertices[2].BitmapPos.X - vertices[1].BitmapPos.X)
-                 * (vertices[0].BitmapPos.Y - vertices[2].BitmapPos.Y));
+                 ((float)(vertices[1].Y - vertices[2].Y)
+                 * (vertices[0].X - vertices[2].X)
+                 + (float)(vertices[2].X - vertices[1].X)
+                 * (vertices[0].Y - vertices[2].Y));
             resultingWeights[1] =
-                 ((double)(vertices[2].BitmapPos.Y - vertices[0].BitmapPos.Y)
-                 * (curX - vertices[2].BitmapPos.X)
-                 + (double)(vertices[0].BitmapPos.X - vertices[2].BitmapPos.X)
-                 * (curY - vertices[2].BitmapPos.Y))
+                 ((float)(vertices[2].Y - vertices[0].Y)
+                 * (bitmapPos.X - vertices[2].X)
+                 + (float)(vertices[0].X - vertices[2].X)
+                 * (bitmapPos.Y - vertices[2].Y))
                  /
-                 ((double)(vertices[1].BitmapPos.Y - vertices[2].BitmapPos.Y)
-                 * (vertices[0].BitmapPos.X - vertices[2].BitmapPos.X)
-                 + (double)(vertices[2].BitmapPos.X - vertices[1].BitmapPos.X)
-                 * (vertices[0].BitmapPos.Y - vertices[2].BitmapPos.Y));
+                 ((float)(vertices[1].Y - vertices[2].Y)
+                 * (vertices[0].X - vertices[2].X)
+                 + (float)(vertices[2].X - vertices[1].X)
+                 * (vertices[0].Y - vertices[2].Y));
             resultingWeights[2] = 1 - resultingWeights[1] - resultingWeights[0];
         }
         /// <summary>
         /// Calculating average vector with barymetric sums
         /// Weights must sum up to 1
-        /// Number of vector parameters must be equal to size of weights array
+        /// Size of both arrays must be 3
         /// </summary>
         /// <param name="weights">Barymetric weights</param>
         /// <param name="vectors">Vectors to average</param>
         /// <returns></returns>
-        public static Vector2 WeightedAverage(double[] weights, params Vector2[] vectors)
+        public static Vector2 WeightedAverage(float[] weights, params Vector2[] vectors)
         {
-            Vector2 average = vectors[0]*weights[0];
-            for (int i = 1; i < vectors.Length; i++)
-            {
-                average += vectors[i]*weights[i];
-            }
-            return average;
+            return weights[0] * vectors[0] + weights[1] * vectors[1] + weights[2] * vectors[2];
         }
         private static readonly Vector3 V = new Vector3(0, 0, 1);
-        public static Vector3 CalculateLight(double ks, double kd, Vector3 lightColor, Vector3 objectColor, Vector3 toLight, Vector3 normal, double m)
+        private static Vector3 MinColorVec = new Vector3(0, 0, 0);
+        private static Vector3 MaxColorVec = new Vector3(1, 1, 1);
+        public static Vector3 CalculateLight(in Vector3 lightColor, in Vector3 objectColor, in Vector3 toLight, in Vector3 normal, in LightParameters lightParameters)
         {
-            double NLAngleCos = Vector3.DotProduct(normal, toLight);
-            double VRAngleCos = Vector3.DotProduct(V, (2*normal - toLight).Normalized);
+            float NLAngleCos = Vector3.Dot(normal, toLight);
+            float VRAngleCos = Vector3.Dot(V, Vector3.Normalize(2 * normal - toLight));
             return
-                Saturate(
-                    Vector3.CoordinateMultiplication(lightColor, objectColor)
-                 * (kd * NLAngleCos + ks * Math.Pow(VRAngleCos, m))
+                Vector3.Clamp(
+                    Vector3.Multiply(lightColor, objectColor)
+                 * (lightParameters.Kd * NLAngleCos + lightParameters.Ks * (float)Math.Pow(VRAngleCos, lightParameters.M)),
+                    MinColorVec,
+                    MaxColorVec
                  );
-        }
-        public static Vector3 Saturate(Vector3 v)
-        {
-            return new Vector3(Saturate(v.X), Saturate(v.Y), Saturate(v.Z));
-        }
-        public static double Saturate(double d)
-        {
-            return d >= 0 ? (d <= 1 ? d : 1) : 0;
         }
     }
 }

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -55,9 +56,9 @@ namespace DrawingLibrary
         {
             uint argb = (uint)color.ToArgb();
             return new Vector3(
-                (double)(argb >> 16 & 255) / 255,
-                (double)(argb >> 8 & 255) / 255,
-                (double)(argb & 255) / 255);
+                (float)(argb >> 16 & 255) / 255,
+                (float)(argb >> 8 & 255) / 255,
+                (float)(argb & 255) / 255);
         }
         public static Color ToColor(this Vector3 vector3)
         {

@@ -5,37 +5,35 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Numerics;
 
 namespace DrawingLibrary.Shaders
 {
     public class PreciseShader : Shader
     {
-        private VertexData[] vertexData = new VertexData[3];
+        private IntVector2[] vertices = new IntVector2[3];
         int i;
-        public override void StartTriangle()
+        public override void StartTriangle(int triangleIndex)
         {
+            base.StartTriangle(triangleIndex);
             i = 0;
         }
-        public override void ForVertex(VertexData vertex)
+        public override void ForVertex(in IntVector2 vertex)
         {
-            vertexData[i++] = vertex;
+            vertices[i++] = vertex;
         }
-        public override Color ForFragment(int x, int y)
+        public override Color ForFragment(in IntVector2 bitmapPos)
         {
-            double[] barymetricWeights = new double[3];
-            GetBarymetricWeights(vertexData, barymetricWeights, x, y);
-            Vector2 UV = WeightedAverage(barymetricWeights, vertexData[0].UV,
-                                                         vertexData[1].UV,
-                                                         vertexData[2].UV);
-            Vector3 color = MainTex.Sample(UV);
-            Vectors.Vector3 normal = Normals.Sample(UV);
-            color = CalculateLight(globalData.Ks,
-                                   globalData.Kd,
-                                   globalData.LightRGB,
+            float[] barymetricWeights = new float[3];
+            Vector2 uv = GetUV(bitmapPos);
+            Vector3 color = MainTex.Sample(uv);
+            Vector3 normal = Normals.Sample(uv);
+            Vector3 toLight = Vector3.Normalize(globalData.LightPosition - new Vector3(scene.TransformToSceneCoords(bitmapPos), 0.0f));
+            color = CalculateLight(globalData.LightRGB,
                                    color,
-                                   globalData.ToLightVersor,
+                                   toLight,
                                    normal,
-                                   globalData.M);
+                                   mesh.TrianglesLightParameters[triangleIndex]);
             return color.ToColor();
         }
     }

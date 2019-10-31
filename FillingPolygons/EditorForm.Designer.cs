@@ -30,19 +30,26 @@
         {
             this.editorLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.ToolboxPanel = new System.Windows.Forms.Panel();
+            this.lightParametersGroupBox = new System.Windows.Forms.GroupBox();
+            this.mLightParameterTextBox = new System.Windows.Forms.TextBox();
+            this.ksLightParameterTextBox = new System.Windows.Forms.TextBox();
+            this.kdLightParameterTextBox = new System.Windows.Forms.TextBox();
+            this.mLightParameterLabel = new System.Windows.Forms.Label();
+            this.ksLightParameterLabel = new System.Windows.Forms.Label();
+            this.kdLightParameterLabel = new System.Windows.Forms.Label();
+            this.mLightParameterTrackBar = new System.Windows.Forms.TrackBar();
+            this.ksLightParameterTrackBar = new System.Windows.Forms.TrackBar();
+            this.kdLightParameterTrackBar = new System.Windows.Forms.TrackBar();
+            this.constantLightParametersRadioButton = new System.Windows.Forms.RadioButton();
+            this.randomLightParametersRadioButton = new System.Windows.Forms.RadioButton();
             this.chooseShaderGroupBox = new System.Windows.Forms.GroupBox();
             this.hybridShaderRadioButton = new System.Windows.Forms.RadioButton();
             this.vertexColorShaderRadioButton = new System.Windows.Forms.RadioButton();
             this.preciseShaderRadioButton = new System.Windows.Forms.RadioButton();
             this.lightGroupBox = new System.Windows.Forms.GroupBox();
-            this.confirmToLightVectorButton = new System.Windows.Forms.Button();
-            this.zToLightVectorTextBox = new System.Windows.Forms.TextBox();
-            this.yToLightVectorTextBox = new System.Windows.Forms.TextBox();
-            this.xToLightVectorTextBox = new System.Windows.Forms.TextBox();
-            this.toLightVectorZLabel = new System.Windows.Forms.Label();
-            this.toLightVectorYLabel = new System.Windows.Forms.Label();
-            this.toLightVectorXLabel = new System.Windows.Forms.Label();
-            this.toLightVectorLabel = new System.Windows.Forms.Label();
+            this.animateLightPosLabel = new System.Windows.Forms.RadioButton();
+            this.constantLightPosLabel = new System.Windows.Forms.RadioButton();
+            this.lightLocationLabel = new System.Windows.Forms.Label();
             this.chooseLightColorButton = new System.Windows.Forms.Button();
             this.normalsSourceGroupBox = new System.Windows.Forms.GroupBox();
             this.chooseNormalMapButton = new System.Windows.Forms.Button();
@@ -60,6 +67,10 @@
             this.drawWireframeToolstripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editorLayoutPanel.SuspendLayout();
             this.ToolboxPanel.SuspendLayout();
+            this.lightParametersGroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.mLightParameterTrackBar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ksLightParameterTrackBar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.kdLightParameterTrackBar)).BeginInit();
             this.chooseShaderGroupBox.SuspendLayout();
             this.lightGroupBox.SuspendLayout();
             this.normalsSourceGroupBox.SuspendLayout();
@@ -78,23 +89,176 @@
             this.editorLayoutPanel.Controls.Add(this.drawAreaPanel, 1, 0);
             this.editorLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.editorLayoutPanel.Location = new System.Drawing.Point(0, 28);
+            this.editorLayoutPanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.editorLayoutPanel.Name = "editorLayoutPanel";
             this.editorLayoutPanel.RowCount = 1;
             this.editorLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.editorLayoutPanel.Size = new System.Drawing.Size(1062, 658);
+            this.editorLayoutPanel.Size = new System.Drawing.Size(1061, 774);
             this.editorLayoutPanel.TabIndex = 2;
             // 
             // ToolboxPanel
             // 
+            this.ToolboxPanel.Controls.Add(this.lightParametersGroupBox);
             this.ToolboxPanel.Controls.Add(this.chooseShaderGroupBox);
             this.ToolboxPanel.Controls.Add(this.lightGroupBox);
             this.ToolboxPanel.Controls.Add(this.normalsSourceGroupBox);
             this.ToolboxPanel.Controls.Add(this.colorSourceGroupBox);
             this.ToolboxPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ToolboxPanel.Location = new System.Drawing.Point(3, 3);
+            this.ToolboxPanel.Location = new System.Drawing.Point(3, 2);
+            this.ToolboxPanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ToolboxPanel.Name = "ToolboxPanel";
-            this.ToolboxPanel.Size = new System.Drawing.Size(312, 652);
+            this.ToolboxPanel.Size = new System.Drawing.Size(309, 770);
             this.ToolboxPanel.TabIndex = 0;
+            // 
+            // lightParametersGroupBox
+            // 
+            this.lightParametersGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lightParametersGroupBox.Controls.Add(this.mLightParameterTextBox);
+            this.lightParametersGroupBox.Controls.Add(this.ksLightParameterTextBox);
+            this.lightParametersGroupBox.Controls.Add(this.kdLightParameterTextBox);
+            this.lightParametersGroupBox.Controls.Add(this.mLightParameterLabel);
+            this.lightParametersGroupBox.Controls.Add(this.ksLightParameterLabel);
+            this.lightParametersGroupBox.Controls.Add(this.kdLightParameterLabel);
+            this.lightParametersGroupBox.Controls.Add(this.mLightParameterTrackBar);
+            this.lightParametersGroupBox.Controls.Add(this.ksLightParameterTrackBar);
+            this.lightParametersGroupBox.Controls.Add(this.kdLightParameterTrackBar);
+            this.lightParametersGroupBox.Controls.Add(this.constantLightParametersRadioButton);
+            this.lightParametersGroupBox.Controls.Add(this.randomLightParametersRadioButton);
+            this.lightParametersGroupBox.Location = new System.Drawing.Point(9, 420);
+            this.lightParametersGroupBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.lightParametersGroupBox.Name = "lightParametersGroupBox";
+            this.lightParametersGroupBox.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.lightParametersGroupBox.Size = new System.Drawing.Size(297, 187);
+            this.lightParametersGroupBox.TabIndex = 14;
+            this.lightParametersGroupBox.TabStop = false;
+            this.lightParametersGroupBox.Text = "Parametry Światła";
+            // 
+            // mLightParameterTextBox
+            // 
+            this.mLightParameterTextBox.Enabled = false;
+            this.mLightParameterTextBox.Location = new System.Drawing.Point(259, 148);
+            this.mLightParameterTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.mLightParameterTextBox.Name = "mLightParameterTextBox";
+            this.mLightParameterTextBox.Size = new System.Drawing.Size(31, 22);
+            this.mLightParameterTextBox.TabIndex = 15;
+            // 
+            // ksLightParameterTextBox
+            // 
+            this.ksLightParameterTextBox.Enabled = false;
+            this.ksLightParameterTextBox.Location = new System.Drawing.Point(259, 116);
+            this.ksLightParameterTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.ksLightParameterTextBox.Name = "ksLightParameterTextBox";
+            this.ksLightParameterTextBox.Size = new System.Drawing.Size(31, 22);
+            this.ksLightParameterTextBox.TabIndex = 14;
+            // 
+            // kdLightParameterTextBox
+            // 
+            this.kdLightParameterTextBox.Enabled = false;
+            this.kdLightParameterTextBox.Location = new System.Drawing.Point(260, 84);
+            this.kdLightParameterTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.kdLightParameterTextBox.Name = "kdLightParameterTextBox";
+            this.kdLightParameterTextBox.Size = new System.Drawing.Size(31, 22);
+            this.kdLightParameterTextBox.TabIndex = 13;
+            // 
+            // mLightParameterLabel
+            // 
+            this.mLightParameterLabel.AutoSize = true;
+            this.mLightParameterLabel.Location = new System.Drawing.Point(19, 146);
+            this.mLightParameterLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.mLightParameterLabel.Name = "mLightParameterLabel";
+            this.mLightParameterLabel.Size = new System.Drawing.Size(19, 17);
+            this.mLightParameterLabel.TabIndex = 12;
+            this.mLightParameterLabel.Text = "m";
+            // 
+            // ksLightParameterLabel
+            // 
+            this.ksLightParameterLabel.AutoSize = true;
+            this.ksLightParameterLabel.Location = new System.Drawing.Point(13, 114);
+            this.ksLightParameterLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.ksLightParameterLabel.Name = "ksLightParameterLabel";
+            this.ksLightParameterLabel.Size = new System.Drawing.Size(24, 17);
+            this.ksLightParameterLabel.TabIndex = 11;
+            this.ksLightParameterLabel.Text = "Ks";
+            // 
+            // kdLightParameterLabel
+            // 
+            this.kdLightParameterLabel.AutoSize = true;
+            this.kdLightParameterLabel.Location = new System.Drawing.Point(12, 80);
+            this.kdLightParameterLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.kdLightParameterLabel.Name = "kdLightParameterLabel";
+            this.kdLightParameterLabel.Size = new System.Drawing.Size(25, 17);
+            this.kdLightParameterLabel.TabIndex = 10;
+            this.kdLightParameterLabel.Text = "Kd";
+            // 
+            // mLightParameterTrackBar
+            // 
+            this.mLightParameterTrackBar.Enabled = false;
+            this.mLightParameterTrackBar.Location = new System.Drawing.Point(47, 146);
+            this.mLightParameterTrackBar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.mLightParameterTrackBar.Maximum = 100;
+            this.mLightParameterTrackBar.Name = "mLightParameterTrackBar";
+            this.mLightParameterTrackBar.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.mLightParameterTrackBar.Size = new System.Drawing.Size(205, 56);
+            this.mLightParameterTrackBar.TabIndex = 9;
+            this.mLightParameterTrackBar.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.mLightParameterTrackBar.Value = 50;
+            this.mLightParameterTrackBar.Scroll += new System.EventHandler(this.LightParametersScroll);
+            // 
+            // ksLightParameterTrackBar
+            // 
+            this.ksLightParameterTrackBar.Enabled = false;
+            this.ksLightParameterTrackBar.Location = new System.Drawing.Point(47, 114);
+            this.ksLightParameterTrackBar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.ksLightParameterTrackBar.Maximum = 100;
+            this.ksLightParameterTrackBar.Name = "ksLightParameterTrackBar";
+            this.ksLightParameterTrackBar.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.ksLightParameterTrackBar.Size = new System.Drawing.Size(205, 56);
+            this.ksLightParameterTrackBar.TabIndex = 8;
+            this.ksLightParameterTrackBar.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.ksLightParameterTrackBar.Value = 50;
+            this.ksLightParameterTrackBar.Scroll += new System.EventHandler(this.LightParametersScroll);
+            // 
+            // kdLightParameterTrackBar
+            // 
+            this.kdLightParameterTrackBar.Enabled = false;
+            this.kdLightParameterTrackBar.Location = new System.Drawing.Point(47, 84);
+            this.kdLightParameterTrackBar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.kdLightParameterTrackBar.Maximum = 100;
+            this.kdLightParameterTrackBar.Name = "kdLightParameterTrackBar";
+            this.kdLightParameterTrackBar.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.kdLightParameterTrackBar.Size = new System.Drawing.Size(204, 56);
+            this.kdLightParameterTrackBar.TabIndex = 7;
+            this.kdLightParameterTrackBar.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.kdLightParameterTrackBar.Value = 70;
+            this.kdLightParameterTrackBar.Scroll += new System.EventHandler(this.LightParametersScroll);
+            // 
+            // constantLightParametersRadioButton
+            // 
+            this.constantLightParametersRadioButton.AutoSize = true;
+            this.constantLightParametersRadioButton.Location = new System.Drawing.Point(5, 57);
+            this.constantLightParametersRadioButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.constantLightParametersRadioButton.Name = "constantLightParametersRadioButton";
+            this.constantLightParametersRadioButton.Size = new System.Drawing.Size(61, 21);
+            this.constantLightParametersRadioButton.TabIndex = 6;
+            this.constantLightParametersRadioButton.TabStop = true;
+            this.constantLightParametersRadioButton.Text = "Stałe";
+            this.constantLightParametersRadioButton.UseVisualStyleBackColor = true;
+            this.constantLightParametersRadioButton.CheckedChanged += new System.EventHandler(this.ConstantLightParametersRadioButton_CheckedChanged);
+            // 
+            // randomLightParametersRadioButton
+            // 
+            this.randomLightParametersRadioButton.AutoSize = true;
+            this.randomLightParametersRadioButton.Checked = true;
+            this.randomLightParametersRadioButton.Location = new System.Drawing.Point(5, 30);
+            this.randomLightParametersRadioButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.randomLightParametersRadioButton.Name = "randomLightParametersRadioButton";
+            this.randomLightParametersRadioButton.Size = new System.Drawing.Size(202, 21);
+            this.randomLightParametersRadioButton.TabIndex = 5;
+            this.randomLightParametersRadioButton.TabStop = true;
+            this.randomLightParametersRadioButton.Text = "Losowe dla każdego trójąta";
+            this.randomLightParametersRadioButton.UseVisualStyleBackColor = true;
+            this.randomLightParametersRadioButton.CheckedChanged += new System.EventHandler(this.RandomLightParametersRadioButton_CheckedChanged);
             // 
             // chooseShaderGroupBox
             // 
@@ -103,9 +267,11 @@
             this.chooseShaderGroupBox.Controls.Add(this.hybridShaderRadioButton);
             this.chooseShaderGroupBox.Controls.Add(this.vertexColorShaderRadioButton);
             this.chooseShaderGroupBox.Controls.Add(this.preciseShaderRadioButton);
-            this.chooseShaderGroupBox.Location = new System.Drawing.Point(9, 335);
+            this.chooseShaderGroupBox.Location = new System.Drawing.Point(9, 300);
+            this.chooseShaderGroupBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.chooseShaderGroupBox.Name = "chooseShaderGroupBox";
-            this.chooseShaderGroupBox.Size = new System.Drawing.Size(300, 114);
+            this.chooseShaderGroupBox.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.chooseShaderGroupBox.Size = new System.Drawing.Size(297, 114);
             this.chooseShaderGroupBox.TabIndex = 13;
             this.chooseShaderGroupBox.TabStop = false;
             this.chooseShaderGroupBox.Text = "Wyznaczanie koloru piksela";
@@ -113,7 +279,8 @@
             // hybridShaderRadioButton
             // 
             this.hybridShaderRadioButton.AutoSize = true;
-            this.hybridShaderRadioButton.Location = new System.Drawing.Point(6, 84);
+            this.hybridShaderRadioButton.Location = new System.Drawing.Point(5, 84);
+            this.hybridShaderRadioButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.hybridShaderRadioButton.Name = "hybridShaderRadioButton";
             this.hybridShaderRadioButton.Size = new System.Drawing.Size(99, 21);
             this.hybridShaderRadioButton.TabIndex = 7;
@@ -125,7 +292,8 @@
             // vertexColorShaderRadioButton
             // 
             this.vertexColorShaderRadioButton.AutoSize = true;
-            this.vertexColorShaderRadioButton.Location = new System.Drawing.Point(6, 57);
+            this.vertexColorShaderRadioButton.Location = new System.Drawing.Point(5, 57);
+            this.vertexColorShaderRadioButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.vertexColorShaderRadioButton.Name = "vertexColorShaderRadioButton";
             this.vertexColorShaderRadioButton.Size = new System.Drawing.Size(168, 21);
             this.vertexColorShaderRadioButton.TabIndex = 6;
@@ -138,7 +306,8 @@
             // 
             this.preciseShaderRadioButton.AutoSize = true;
             this.preciseShaderRadioButton.Checked = true;
-            this.preciseShaderRadioButton.Location = new System.Drawing.Point(6, 30);
+            this.preciseShaderRadioButton.Location = new System.Drawing.Point(5, 30);
+            this.preciseShaderRadioButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.preciseShaderRadioButton.Name = "preciseShaderRadioButton";
             this.preciseShaderRadioButton.Size = new System.Drawing.Size(92, 21);
             this.preciseShaderRadioButton.TabIndex = 5;
@@ -151,97 +320,59 @@
             // 
             this.lightGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.lightGroupBox.Controls.Add(this.confirmToLightVectorButton);
-            this.lightGroupBox.Controls.Add(this.zToLightVectorTextBox);
-            this.lightGroupBox.Controls.Add(this.yToLightVectorTextBox);
-            this.lightGroupBox.Controls.Add(this.xToLightVectorTextBox);
-            this.lightGroupBox.Controls.Add(this.toLightVectorZLabel);
-            this.lightGroupBox.Controls.Add(this.toLightVectorYLabel);
-            this.lightGroupBox.Controls.Add(this.toLightVectorXLabel);
-            this.lightGroupBox.Controls.Add(this.toLightVectorLabel);
+            this.lightGroupBox.Controls.Add(this.animateLightPosLabel);
+            this.lightGroupBox.Controls.Add(this.constantLightPosLabel);
+            this.lightGroupBox.Controls.Add(this.lightLocationLabel);
             this.lightGroupBox.Controls.Add(this.chooseLightColorButton);
             this.lightGroupBox.Location = new System.Drawing.Point(9, 191);
+            this.lightGroupBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.lightGroupBox.Name = "lightGroupBox";
-            this.lightGroupBox.Size = new System.Drawing.Size(300, 138);
+            this.lightGroupBox.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.lightGroupBox.Size = new System.Drawing.Size(297, 105);
             this.lightGroupBox.TabIndex = 5;
             this.lightGroupBox.TabStop = false;
             this.lightGroupBox.Text = "Światło";
             // 
-            // confirmToLightVectorButton
+            // animateLightPosLabel
             // 
-            this.confirmToLightVectorButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.confirmToLightVectorButton.Location = new System.Drawing.Point(181, 79);
-            this.confirmToLightVectorButton.Name = "confirmToLightVectorButton";
-            this.confirmToLightVectorButton.Size = new System.Drawing.Size(113, 46);
-            this.confirmToLightVectorButton.TabIndex = 12;
-            this.confirmToLightVectorButton.Text = "Zatwierdź wektor";
-            this.confirmToLightVectorButton.UseVisualStyleBackColor = true;
-            this.confirmToLightVectorButton.Click += new System.EventHandler(this.ConfirmToLightVectorButton_Click);
+            this.animateLightPosLabel.AutoSize = true;
+            this.animateLightPosLabel.Location = new System.Drawing.Point(5, 73);
+            this.animateLightPosLabel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.animateLightPosLabel.Name = "animateLightPosLabel";
+            this.animateLightPosLabel.Size = new System.Drawing.Size(221, 21);
+            this.animateLightPosLabel.TabIndex = 7;
+            this.animateLightPosLabel.TabStop = true;
+            this.animateLightPosLabel.Text = "Punkt animowany po półsferze";
+            this.animateLightPosLabel.UseVisualStyleBackColor = true;
+            this.animateLightPosLabel.CheckedChanged += new System.EventHandler(this.AnimateLightPosLabel_CheckedChanged);
             // 
-            // zToLightVectorTextBox
+            // constantLightPosLabel
             // 
-            this.zToLightVectorTextBox.Location = new System.Drawing.Point(29, 103);
-            this.zToLightVectorTextBox.Name = "zToLightVectorTextBox";
-            this.zToLightVectorTextBox.Size = new System.Drawing.Size(140, 22);
-            this.zToLightVectorTextBox.TabIndex = 11;
-            this.zToLightVectorTextBox.Text = "1";
+            this.constantLightPosLabel.AutoSize = true;
+            this.constantLightPosLabel.Location = new System.Drawing.Point(5, 44);
+            this.constantLightPosLabel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.constantLightPosLabel.Name = "constantLightPosLabel";
+            this.constantLightPosLabel.Size = new System.Drawing.Size(61, 21);
+            this.constantLightPosLabel.TabIndex = 6;
+            this.constantLightPosLabel.TabStop = true;
+            this.constantLightPosLabel.Text = "Stała";
+            this.constantLightPosLabel.UseVisualStyleBackColor = true;
+            this.constantLightPosLabel.CheckedChanged += new System.EventHandler(this.ConstantLightPosLabel_CheckedChanged);
             // 
-            // yToLightVectorTextBox
+            // lightLocationLabel
             // 
-            this.yToLightVectorTextBox.Location = new System.Drawing.Point(29, 76);
-            this.yToLightVectorTextBox.Name = "yToLightVectorTextBox";
-            this.yToLightVectorTextBox.Size = new System.Drawing.Size(140, 22);
-            this.yToLightVectorTextBox.TabIndex = 10;
-            this.yToLightVectorTextBox.Text = "0";
-            // 
-            // xToLightVectorTextBox
-            // 
-            this.xToLightVectorTextBox.Location = new System.Drawing.Point(29, 50);
-            this.xToLightVectorTextBox.Name = "xToLightVectorTextBox";
-            this.xToLightVectorTextBox.Size = new System.Drawing.Size(140, 22);
-            this.xToLightVectorTextBox.TabIndex = 9;
-            this.xToLightVectorTextBox.Text = "0";
-            // 
-            // toLightVectorZLabel
-            // 
-            this.toLightVectorZLabel.AutoSize = true;
-            this.toLightVectorZLabel.Location = new System.Drawing.Point(6, 103);
-            this.toLightVectorZLabel.Name = "toLightVectorZLabel";
-            this.toLightVectorZLabel.Size = new System.Drawing.Size(17, 17);
-            this.toLightVectorZLabel.TabIndex = 8;
-            this.toLightVectorZLabel.Text = "Z";
-            // 
-            // toLightVectorYLabel
-            // 
-            this.toLightVectorYLabel.AutoSize = true;
-            this.toLightVectorYLabel.Location = new System.Drawing.Point(6, 76);
-            this.toLightVectorYLabel.Name = "toLightVectorYLabel";
-            this.toLightVectorYLabel.Size = new System.Drawing.Size(17, 17);
-            this.toLightVectorYLabel.TabIndex = 7;
-            this.toLightVectorYLabel.Text = "Y";
-            // 
-            // toLightVectorXLabel
-            // 
-            this.toLightVectorXLabel.AutoSize = true;
-            this.toLightVectorXLabel.Location = new System.Drawing.Point(6, 50);
-            this.toLightVectorXLabel.Name = "toLightVectorXLabel";
-            this.toLightVectorXLabel.Size = new System.Drawing.Size(17, 17);
-            this.toLightVectorXLabel.TabIndex = 6;
-            this.toLightVectorXLabel.Text = "X";
-            // 
-            // toLightVectorLabel
-            // 
-            this.toLightVectorLabel.AutoSize = true;
-            this.toLightVectorLabel.Location = new System.Drawing.Point(6, 21);
-            this.toLightVectorLabel.Name = "toLightVectorLabel";
-            this.toLightVectorLabel.Size = new System.Drawing.Size(119, 17);
-            this.toLightVectorLabel.TabIndex = 5;
-            this.toLightVectorLabel.Text = "Wektor do światła";
+            this.lightLocationLabel.AutoSize = true;
+            this.lightLocationLabel.Location = new System.Drawing.Point(5, 21);
+            this.lightLocationLabel.Name = "lightLocationLabel";
+            this.lightLocationLabel.Size = new System.Drawing.Size(103, 17);
+            this.lightLocationLabel.TabIndex = 5;
+            this.lightLocationLabel.Text = "Lokacja światła";
             // 
             // chooseLightColorButton
             // 
             this.chooseLightColorButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.chooseLightColorButton.Location = new System.Drawing.Point(181, 21);
+            this.chooseLightColorButton.Location = new System.Drawing.Point(177, 21);
+            this.chooseLightColorButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.chooseLightColorButton.Name = "chooseLightColorButton";
             this.chooseLightColorButton.Size = new System.Drawing.Size(113, 46);
             this.chooseLightColorButton.TabIndex = 4;
@@ -257,8 +388,10 @@
             this.normalsSourceGroupBox.Controls.Add(this.staticNormalRadioButton);
             this.normalsSourceGroupBox.Controls.Add(this.normalMapRadioButton);
             this.normalsSourceGroupBox.Location = new System.Drawing.Point(9, 100);
+            this.normalsSourceGroupBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.normalsSourceGroupBox.Name = "normalsSourceGroupBox";
-            this.normalsSourceGroupBox.Size = new System.Drawing.Size(300, 85);
+            this.normalsSourceGroupBox.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.normalsSourceGroupBox.Size = new System.Drawing.Size(297, 85);
             this.normalsSourceGroupBox.TabIndex = 4;
             this.normalsSourceGroupBox.TabStop = false;
             this.normalsSourceGroupBox.Text = "Źródło wektora normalnego";
@@ -266,8 +399,8 @@
             // chooseNormalMapButton
             // 
             this.chooseNormalMapButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.chooseNormalMapButton.Enabled = false;
-            this.chooseNormalMapButton.Location = new System.Drawing.Point(181, 51);
+            this.chooseNormalMapButton.Location = new System.Drawing.Point(179, 50);
+            this.chooseNormalMapButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.chooseNormalMapButton.Name = "chooseNormalMapButton";
             this.chooseNormalMapButton.Size = new System.Drawing.Size(113, 23);
             this.chooseNormalMapButton.TabIndex = 4;
@@ -278,12 +411,11 @@
             // staticNormalRadioButton
             // 
             this.staticNormalRadioButton.AutoSize = true;
-            this.staticNormalRadioButton.Checked = true;
-            this.staticNormalRadioButton.Location = new System.Drawing.Point(6, 23);
+            this.staticNormalRadioButton.Location = new System.Drawing.Point(5, 23);
+            this.staticNormalRadioButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.staticNormalRadioButton.Name = "staticNormalRadioButton";
             this.staticNormalRadioButton.Size = new System.Drawing.Size(104, 21);
             this.staticNormalRadioButton.TabIndex = 1;
-            this.staticNormalRadioButton.TabStop = true;
             this.staticNormalRadioButton.Text = "Stały [0,0,1]";
             this.staticNormalRadioButton.UseVisualStyleBackColor = true;
             this.staticNormalRadioButton.CheckedChanged += new System.EventHandler(this.StaticNormalRadioButton_CheckedChanged);
@@ -291,7 +423,9 @@
             // normalMapRadioButton
             // 
             this.normalMapRadioButton.AutoSize = true;
-            this.normalMapRadioButton.Location = new System.Drawing.Point(6, 52);
+            this.normalMapRadioButton.Checked = true;
+            this.normalMapRadioButton.Location = new System.Drawing.Point(5, 52);
+            this.normalMapRadioButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.normalMapRadioButton.Name = "normalMapRadioButton";
             this.normalMapRadioButton.Size = new System.Drawing.Size(129, 21);
             this.normalMapRadioButton.TabIndex = 2;
@@ -309,8 +443,10 @@
             this.colorSourceGroupBox.Controls.Add(this.staticColorRadioButton);
             this.colorSourceGroupBox.Controls.Add(this.colorFromImageRadioButton);
             this.colorSourceGroupBox.Location = new System.Drawing.Point(9, 9);
+            this.colorSourceGroupBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.colorSourceGroupBox.Name = "colorSourceGroupBox";
-            this.colorSourceGroupBox.Size = new System.Drawing.Size(300, 85);
+            this.colorSourceGroupBox.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.colorSourceGroupBox.Size = new System.Drawing.Size(297, 85);
             this.colorSourceGroupBox.TabIndex = 3;
             this.colorSourceGroupBox.TabStop = false;
             this.colorSourceGroupBox.Text = "Źródło koloru";
@@ -318,7 +454,8 @@
             // chooseImageButton
             // 
             this.chooseImageButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.chooseImageButton.Location = new System.Drawing.Point(181, 50);
+            this.chooseImageButton.Location = new System.Drawing.Point(179, 50);
+            this.chooseImageButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.chooseImageButton.Name = "chooseImageButton";
             this.chooseImageButton.Size = new System.Drawing.Size(113, 23);
             this.chooseImageButton.TabIndex = 4;
@@ -330,7 +467,8 @@
             // 
             this.chooseColorButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.chooseColorButton.Enabled = false;
-            this.chooseColorButton.Location = new System.Drawing.Point(181, 21);
+            this.chooseColorButton.Location = new System.Drawing.Point(179, 21);
+            this.chooseColorButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.chooseColorButton.Name = "chooseColorButton";
             this.chooseColorButton.Size = new System.Drawing.Size(113, 23);
             this.chooseColorButton.TabIndex = 3;
@@ -341,7 +479,8 @@
             // staticColorRadioButton
             // 
             this.staticColorRadioButton.AutoSize = true;
-            this.staticColorRadioButton.Location = new System.Drawing.Point(6, 23);
+            this.staticColorRadioButton.Location = new System.Drawing.Point(5, 23);
+            this.staticColorRadioButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.staticColorRadioButton.Name = "staticColorRadioButton";
             this.staticColorRadioButton.Size = new System.Drawing.Size(95, 21);
             this.staticColorRadioButton.TabIndex = 1;
@@ -354,7 +493,8 @@
             // 
             this.colorFromImageRadioButton.AutoSize = true;
             this.colorFromImageRadioButton.Checked = true;
-            this.colorFromImageRadioButton.Location = new System.Drawing.Point(6, 52);
+            this.colorFromImageRadioButton.Location = new System.Drawing.Point(5, 52);
+            this.colorFromImageRadioButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.colorFromImageRadioButton.Name = "colorFromImageRadioButton";
             this.colorFromImageRadioButton.Size = new System.Drawing.Size(68, 21);
             this.colorFromImageRadioButton.TabIndex = 2;
@@ -367,17 +507,19 @@
             // 
             this.drawAreaPanel.Controls.Add(this.drawingBox);
             this.drawAreaPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.drawAreaPanel.Location = new System.Drawing.Point(321, 3);
+            this.drawAreaPanel.Location = new System.Drawing.Point(318, 2);
+            this.drawAreaPanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.drawAreaPanel.Name = "drawAreaPanel";
-            this.drawAreaPanel.Size = new System.Drawing.Size(738, 652);
+            this.drawAreaPanel.Size = new System.Drawing.Size(740, 770);
             this.drawAreaPanel.TabIndex = 1;
             // 
             // drawingBox
             // 
             this.drawingBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.drawingBox.Location = new System.Drawing.Point(0, 0);
+            this.drawingBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.drawingBox.Name = "drawingBox";
-            this.drawingBox.Size = new System.Drawing.Size(738, 652);
+            this.drawingBox.Size = new System.Drawing.Size(740, 770);
             this.drawingBox.TabIndex = 0;
             this.drawingBox.TabStop = false;
             this.drawingBox.Paint += new System.Windows.Forms.PaintEventHandler(this.DrawingBox_Paint);
@@ -393,7 +535,8 @@
             this.widokToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1062, 28);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
+            this.menuStrip1.Size = new System.Drawing.Size(1061, 28);
             this.menuStrip1.TabIndex = 3;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -418,15 +561,22 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1062, 686);
+            this.ClientSize = new System.Drawing.Size(1061, 802);
             this.Controls.Add(this.editorLayoutPanel);
             this.Controls.Add(this.menuStrip1);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "EditorForm";
             this.Text = "EditorForm";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.EditorForm_Load);
             this.ClientSizeChanged += new System.EventHandler(this.EditorForm_ClientSizeChanged);
             this.editorLayoutPanel.ResumeLayout(false);
             this.ToolboxPanel.ResumeLayout(false);
+            this.lightParametersGroupBox.ResumeLayout(false);
+            this.lightParametersGroupBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.mLightParameterTrackBar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ksLightParameterTrackBar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.kdLightParameterTrackBar)).EndInit();
             this.chooseShaderGroupBox.ResumeLayout(false);
             this.chooseShaderGroupBox.PerformLayout();
             this.lightGroupBox.ResumeLayout(false);
@@ -460,14 +610,7 @@
         private System.Windows.Forms.RadioButton staticNormalRadioButton;
         private System.Windows.Forms.RadioButton normalMapRadioButton;
         private System.Windows.Forms.GroupBox lightGroupBox;
-        private System.Windows.Forms.Button confirmToLightVectorButton;
-        private System.Windows.Forms.TextBox zToLightVectorTextBox;
-        private System.Windows.Forms.TextBox yToLightVectorTextBox;
-        private System.Windows.Forms.TextBox xToLightVectorTextBox;
-        private System.Windows.Forms.Label toLightVectorZLabel;
-        private System.Windows.Forms.Label toLightVectorYLabel;
-        private System.Windows.Forms.Label toLightVectorXLabel;
-        private System.Windows.Forms.Label toLightVectorLabel;
+        private System.Windows.Forms.Label lightLocationLabel;
         private System.Windows.Forms.Button chooseLightColorButton;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem widokToolStripMenuItem;
@@ -476,5 +619,19 @@
         private System.Windows.Forms.RadioButton hybridShaderRadioButton;
         private System.Windows.Forms.RadioButton vertexColorShaderRadioButton;
         private System.Windows.Forms.RadioButton preciseShaderRadioButton;
+        private System.Windows.Forms.GroupBox lightParametersGroupBox;
+        private System.Windows.Forms.RadioButton constantLightParametersRadioButton;
+        private System.Windows.Forms.RadioButton randomLightParametersRadioButton;
+        private System.Windows.Forms.Label mLightParameterLabel;
+        private System.Windows.Forms.Label ksLightParameterLabel;
+        private System.Windows.Forms.Label kdLightParameterLabel;
+        private System.Windows.Forms.TrackBar mLightParameterTrackBar;
+        private System.Windows.Forms.TrackBar ksLightParameterTrackBar;
+        private System.Windows.Forms.TrackBar kdLightParameterTrackBar;
+        private System.Windows.Forms.TextBox mLightParameterTextBox;
+        private System.Windows.Forms.TextBox ksLightParameterTextBox;
+        private System.Windows.Forms.TextBox kdLightParameterTextBox;
+        private System.Windows.Forms.RadioButton animateLightPosLabel;
+        private System.Windows.Forms.RadioButton constantLightPosLabel;
     }
 }

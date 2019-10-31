@@ -14,9 +14,9 @@ namespace DrawingLibrary
         public Shader Shader { get; set; }
         class AETData
         {
-            public double x;
-            public double antitangent;
-            public double yMax;
+            public float x;
+            public float antitangent;
+            public float yMax;
         }
         int[] sortedVerticesIndexes = { 0, 1, 2 };
         LinkedList<AETData> AET = new LinkedList<AETData>();
@@ -28,37 +28,37 @@ namespace DrawingLibrary
             this.bitmap = bitmap;
         }
 
-        public void DrawTriangle(VertexData[] vertices)
+        public void DrawTriangle(IntVector2[] vertices, int triangleIndex)
         {
             if (Shader == null) throw new Exception("First assign value to Shader field");
             for (int i = 0; i < vertices.Length; i++)
             {
                 Shader.ForVertex(vertices[i]);
             }
-            Shader.StartTriangle();
-            Array.Sort(sortedVerticesIndexes, (int a, int b) => vertices[a].BitmapPos.Y.CompareTo(vertices[b].BitmapPos.Y));
-            int yMin = vertices[sortedVerticesIndexes[0]].BitmapPos.Y;
-            int yMax = vertices[sortedVerticesIndexes[sortedVerticesIndexes.Length - 1]].BitmapPos.Y;
+            Shader.StartTriangle(triangleIndex);
+            Array.Sort(sortedVerticesIndexes, (int a, int b) => vertices[a].Y.CompareTo(vertices[b].Y));
+            int yMin = vertices[sortedVerticesIndexes[0]].Y;
+            int yMax = vertices[sortedVerticesIndexes[sortedVerticesIndexes.Length - 1]].Y;
             int k = 0;
             for (int y = yMin + 1; y <= yMax; y++)
             {
-                while (vertices[sortedVerticesIndexes[k]].BitmapPos.Y == y - 1)
+                while (vertices[sortedVerticesIndexes[k]].Y == y - 1)
                 {
                     int prevIndex = (sortedVerticesIndexes[k] + vertices.Length - 1) % vertices.Length;
                     int nextIndex = (sortedVerticesIndexes[k] + 1) % vertices.Length;
-                    if (vertices[prevIndex].BitmapPos.Y > y - 1) AET.AddLast(
+                    if (vertices[prevIndex].Y > y - 1) AET.AddLast(
                            new AETData()
                            {
-                               x = vertices[sortedVerticesIndexes[k]].BitmapPos.X,
-                               antitangent = GetAntiTangent(vertices[sortedVerticesIndexes[k]].BitmapPos, vertices[prevIndex].BitmapPos),
-                               yMax = vertices[prevIndex].BitmapPos.Y
+                               x = vertices[sortedVerticesIndexes[k]].X,
+                               antitangent = GetAntiTangent(vertices[sortedVerticesIndexes[k]], vertices[prevIndex]),
+                               yMax = vertices[prevIndex].Y
                            });
-                    if (vertices[nextIndex].BitmapPos.Y > y - 1) AET.AddLast(
+                    if (vertices[nextIndex].Y > y - 1) AET.AddLast(
                            new AETData()
                            {
-                               x = vertices[sortedVerticesIndexes[k]].BitmapPos.X,
-                               antitangent = GetAntiTangent(vertices[sortedVerticesIndexes[k]].BitmapPos, vertices[nextIndex].BitmapPos),
-                               yMax = vertices[nextIndex].BitmapPos.Y
+                               x = vertices[sortedVerticesIndexes[k]].X,
+                               antitangent = GetAntiTangent(vertices[sortedVerticesIndexes[k]], vertices[nextIndex]),
+                               yMax = vertices[nextIndex].Y
                            });
                     k++;
                 }
@@ -71,7 +71,7 @@ namespace DrawingLibrary
                 DrawOnScanLine(y);
                 RemoveFinishedEdges(y);
             }
-            Parallel.ForEach(ToDraw, (v) => bitmap.SetPixel(v.X, v.Y, Shader.ForFragment(v.X, v.Y)));
+            Parallel.ForEach(ToDraw, (v) => bitmap.SetPixel(v.X, v.Y, Shader.ForFragment(v)));
             ToDraw.Clear();
         }
 
@@ -112,9 +112,9 @@ namespace DrawingLibrary
                 //Parallel.For(startX, endX, (x) => bitmap.SetPixel(x, y1, Shader.ForFragment(x, y1)));
             }
         }
-        private double GetAntiTangent(IntVector2 from, IntVector2 to)
+        private float GetAntiTangent(IntVector2 from, IntVector2 to)
         {
-            return (double)(to.X - from.X) / (to.Y - from.Y);
+            return (float)(to.X - from.X) / (to.Y - from.Y);
         }
     }
 }

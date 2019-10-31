@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -19,41 +20,62 @@ namespace FillingPolygons
         Scene scene;
         Mesh mesh;
         MeshDeformer deformer;
-        int n = 10;
-        int m = 15;
+        int n = 5;
+        int m = 5;
+        bool parametersRandomized = true;
+        LightAnimator lightAnimator;
+
+        Random r = new Random();
+        LightParameters currentLightParameters;
         public EditorForm()
         {
             InitializeComponent();
             Shader shader = new PreciseShader();
-            GlobalData globalData = new GlobalData(0.5, 0.5, Color.White, new Vector3(0, 0, 1).Normalized, 1);
-            scene = new Scene(new MemoryBitmap(drawingBox.Width, drawingBox.Height), shader, globalData);
-            scene.MainTex = new ImageSampler(new Bitmap("..\\..\\data\\Image.jpg"));
+            GlobalData globalData = new GlobalData(Color.White, new Vector3(0, 0, 10000));
+            var normals = new ImageSampler(new Bitmap("..\\..\\data\\Normals.jpg"));
+            normals.Transform(v => Vector3.Normalize(new Vector3(v.X * 2 - 1, v.Y * 2 - 1, v.Z)));
+            scene = new Scene(new MemoryBitmap(drawingBox.Width, drawingBox.Height), shader, globalData)
+            {
+                MainTex = new ImageSampler(new Bitmap("..\\..\\data\\Image.jpg")),
+                Normals = normals
+            };
             CreateMesh();
         }
 
         private void DrawingBox_Paint(object sender, PaintEventArgs e)
         {
+            if(lightAnimator != null)
+            {
+                scene.GlobalData.LightPosition = lightAnimator.NextPos();
+            }
             scene.DrawMesh(mesh);
             e.Graphics.DrawImageUnscaled(scene.Bitmap.Bitmap, 0, 0);
+            if (lightAnimator != null)
+            {
+                drawingBox.Invalidate();
+            }
         }
 
         private void CreateMesh()
         {
             mesh = new Mesh();
-            double padding = scene.Width * 0.05;
-            double gridWidth = scene.Width - 2 * padding;
-            double gridHeight = scene.Height - 2 * padding;
-            double gridHorizontalGap = gridWidth / m;
-            double gridVerticalGap = gridHeight / n;
+            float padding = scene.Width * 0.05f;
+            float gridWidth = scene.Width - 2 * padding;
+            float gridHeight = scene.Height - 2 * padding;
+            float gridHorizontalGap = gridWidth / m;
+            float gridVerticalGap = gridHeight / n;
             mesh.Vertices = new Vector2[(n + 1) * (m + 1)];
             mesh.UV = new Vector2[(n + 1) * (m + 1)];
             mesh.Triangles = new int[n * m * 2 * 3];
+            mesh.TrianglesLightParameters = new LightParameters[n * m * 2];
             for (int y = 0; y <= n; y++)
             {
                 for (int x = 0; x <= m; x++)
                 {
-                    mesh.Vertices[y * (m + 1) + x] = new Vector2(padding + gridHorizontalGap * x, padding + gridVerticalGap * y);
-                    mesh.UV[y * (m + 1) + x] = new Vector2(((double)x) / m, ((double)y) / n);
+                    mesh.Vertices[y * (m + 1) + x] = new Vector2(
+                        scene.MinX + padding + gridHorizontalGap * x,
+                        scene.MinY + padding + gridVerticalGap * y);
+                    mesh.UV[y * (m + 1) + x] = new Vector2(((float)x) / m, ((float)y) / n);
                 }
             }
             for (int y = 0; y < n; y++)
@@ -70,6 +92,33 @@ namespace FillingPolygons
                 }
             }
             deformer = new MeshDeformer(mesh);
+            SetLightParameters();
+        }
+        public void SetLightParameters()
+        {
+            if(parametersRandomized)
+            {
+                RandomizeLightParameters();
+            }
+            else
+            {
+                SetConstantLightParameters();
+            }
+        }
+
+        public void RandomizeLightParameters()
+        {
+            for (int i = 0; i < mesh.TrianglesLightParameters.Length; i++)
+            {
+                mesh.TrianglesLightParameters[i] = LightParameters.GetRandom(r);
+            }
+        }
+        public void SetConstantLightParameters()
+        {
+            for(int i = 0; i < mesh.TrianglesLightParameters.Length; i++)
+            {
+                mesh.TrianglesLightParameters[i] = currentLightParameters;
+            }
         }
 
         private void EditorForm_ResizeEnd(object sender, EventArgs e)
@@ -131,7 +180,7 @@ namespace FillingPolygons
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 ImageSampler isamp = new ImageSampler(new Bitmap(openFileDialog.FileName));
-                isamp.Transform(v => new Vector3(v.X * 2 - 1, v.Y * 2 - 1, v.Z).Normalized);
+                isamp.Transform(v => Vector3.Normalize(new Vector3(v.X * 2 - 1, v.Y * 2 - 1, v.Z)));
                 scene.Normals= isamp;
                 drawingBox.Invalidate();
             }
@@ -144,28 +193,6 @@ namespace FillingPolygons
             {
                 scene.GlobalData.SetLightColor(colorDialog.Color);
                 drawingBox.Invalidate();
-            }
-        }
-
-        private void ConfirmToLightVectorButton_Click(object sender, EventArgs e)
-        {
-            if(double.TryParse(xToLightVectorTextBox.Text, out double x)
-                && double.TryParse(yToLightVectorTextBox.Text, out double y)
-                && double.TryParse(zToLightVectorTextBox.Text, out double z))
-            {
-                if(z > 0)
-                {
-                    scene.GlobalData.ToLightVersor = new Vector3(x, y, z).Normalized;
-                    drawingBox.Invalidate();
-                }
-                else
-                {
-                    MessageBox.Show("Value of z must be positive");
-                }
-            }
-            else
-            {
-                MessageBox.Show("Coordinates must be numbers");
             }
         }
 
@@ -236,6 +263,73 @@ namespace FillingPolygons
             if (scene != null)
             {
                 scene.Bitmap.Resize(drawingBox.Width, drawingBox.Height);
+                drawingBox.Invalidate();
+            }
+        }
+
+        private void RandomLightParametersRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if(randomLightParametersRadioButton.Checked)
+            {
+                parametersRandomized = true;
+                SetLightParameters();
+                drawingBox.Invalidate();
+                kdLightParameterTrackBar.Enabled = false;
+                ksLightParameterTrackBar.Enabled = false;
+                mLightParameterTrackBar.Enabled = false;
+            }
+        }
+
+        private void UpdateLightParameterTrackBars()
+        {
+            parametersRandomized = false;
+            currentLightParameters = new LightParameters
+            {
+                Kd = kdLightParameterTrackBar.Value / 100f,
+                Ks = ksLightParameterTrackBar.Value / 100f,
+                M = mLightParameterTrackBar.Value
+            };
+            kdLightParameterTextBox.Text = currentLightParameters.Kd.ToString();
+            ksLightParameterTextBox.Text = currentLightParameters.Ks.ToString();
+            mLightParameterTextBox.Text = currentLightParameters.M.ToString();
+            SetLightParameters();
+            drawingBox.Invalidate();
+        }
+
+        private void ConstantLightParametersRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+
+            if (constantLightParametersRadioButton.Checked)
+            {
+                kdLightParameterTrackBar.Enabled = true;
+                ksLightParameterTrackBar.Enabled = true;
+                mLightParameterTrackBar.Enabled = true;
+                UpdateLightParameterTrackBars();
+            }
+        }
+
+        private void LightParametersScroll(object sender, EventArgs e)
+        {
+            UpdateLightParameterTrackBars();
+        }
+
+        private void ConstantLightPosLabel_CheckedChanged(object sender, EventArgs e)
+        {
+            if(constantLightParametersRadioButton.Checked)
+            {
+                lightAnimator = null;
+                scene.GlobalData.LightPosition = new Vector3(0, 0, 10000);
+                drawingBox.Invalidate();
+            }
+        }
+
+        private void AnimateLightPosLabel_CheckedChanged(object sender, EventArgs e)
+        {
+            if (animateLightPosLabel.Checked)
+            {
+                lightAnimator = new LightAnimator(scene.Width/2);
+                lightAnimator.StartAnimation();
+
                 drawingBox.Invalidate();
             }
         }

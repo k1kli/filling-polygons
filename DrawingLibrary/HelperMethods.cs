@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DrawingLibrary
 {
-    class HelperMethods
+    public static class HelperMethods
     {
     }
 }
