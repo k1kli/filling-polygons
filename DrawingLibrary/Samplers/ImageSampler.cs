@@ -14,6 +14,7 @@ namespace DrawingLibrary.Samplers
         private Vector3[] pixels;
         private int width;
         private int height;
+        private Vector2 pixelsSize;
 
         public ImageSampler(Bitmap bitmap)
         {
@@ -32,13 +33,13 @@ namespace DrawingLibrary.Samplers
         {
             set => SetPixels(value);
         }
+        private static Vector2 minUv = new Vector2(0, 0);
+        private static Vector2 maxUv = new Vector2(1, 1);
         public Vector3 Sample(Vector2 UV)
         {
-            return GetPixel(((int)(UV.X*width) + width)%width, ((int)(UV.Y*height) + height)%height);
-        }
-        private Vector3 GetPixel(int x, int y)
-        {
-            return pixels[y * width + x];
+            UV = Vector2.Clamp(UV, minUv, maxUv);
+            UV *= pixelsSize;
+            return pixels[(int)UV.X + (int)UV.Y*height];
         }
         private void SetPixels(Bitmap bmp)
         {
@@ -57,6 +58,7 @@ namespace DrawingLibrary.Samplers
             height = bmpData.Height;
             // Declare an array to hold the bytes of the bitmap.
             int size = width * height;
+            pixelsSize = new Vector2(width, height);
             int[] pixelsArgb = new int[size];
             pixels = new Vector3[size];
 

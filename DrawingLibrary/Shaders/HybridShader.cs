@@ -11,7 +11,7 @@ namespace DrawingLibrary.Shaders
 {
     public class HybridShader:Shader
     {
-        private IntVector2[] vertices = new IntVector2[3];
+        private Vector2[] vertices = new Vector2[3];
         private Vector3[] colors = new Vector3[3];
         private Vector3[] normals = new Vector3[3];
         int i;
@@ -20,7 +20,7 @@ namespace DrawingLibrary.Shaders
             base.StartTriangle(triangleIndex);
             i = 0;
         }
-        public override void ForVertex(in IntVector2 vertex)
+        public override void ForVertex(in Vector2 vertex)
         {
             vertices[i] = vertex;
             Vector2 uv = GetUV(vertex);
@@ -28,7 +28,7 @@ namespace DrawingLibrary.Shaders
             normals[i] = Normals.Sample(uv);
             i++;
         }
-        public override Color ForFragment(in IntVector2 bitmapPos)
+        public override Color ForFragment(in Vector2 bitmapPos)
         {
             float[] barymetricWeights = new float[3];
             GetBarymetricWeights(vertices, barymetricWeights, bitmapPos);

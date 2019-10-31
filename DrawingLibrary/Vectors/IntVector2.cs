@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,6 +16,11 @@ namespace DrawingLibrary.Vectors
         {
             X = x;
             Y = y;
+        }
+        public IntVector2(Vector2 v)
+        {
+            X = (int)v.X;
+            Y = (int)v.Y;
         }
         public int Magnitude =>
             (int)Math.Sqrt(MagnitudeSqr);

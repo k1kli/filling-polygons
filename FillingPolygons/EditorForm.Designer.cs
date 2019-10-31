@@ -65,6 +65,12 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.widokToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.drawWireframeToolstripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.meshSizeGroupBox = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.GridXTextBox = new System.Windows.Forms.TextBox();
+            this.GridYTextBox = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.GridSizeConfirmButton = new System.Windows.Forms.Button();
             this.editorLayoutPanel.SuspendLayout();
             this.ToolboxPanel.SuspendLayout();
             this.lightParametersGroupBox.SuspendLayout();
@@ -78,6 +84,7 @@
             this.drawAreaPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.drawingBox)).BeginInit();
             this.menuStrip1.SuspendLayout();
+            this.meshSizeGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // editorLayoutPanel
@@ -98,6 +105,7 @@
             // 
             // ToolboxPanel
             // 
+            this.ToolboxPanel.Controls.Add(this.meshSizeGroupBox);
             this.ToolboxPanel.Controls.Add(this.lightParametersGroupBox);
             this.ToolboxPanel.Controls.Add(this.chooseShaderGroupBox);
             this.ToolboxPanel.Controls.Add(this.lightGroupBox);
@@ -138,7 +146,7 @@
             // 
             this.mLightParameterTextBox.Enabled = false;
             this.mLightParameterTextBox.Location = new System.Drawing.Point(259, 148);
-            this.mLightParameterTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.mLightParameterTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.mLightParameterTextBox.Name = "mLightParameterTextBox";
             this.mLightParameterTextBox.Size = new System.Drawing.Size(31, 22);
             this.mLightParameterTextBox.TabIndex = 15;
@@ -147,7 +155,7 @@
             // 
             this.ksLightParameterTextBox.Enabled = false;
             this.ksLightParameterTextBox.Location = new System.Drawing.Point(259, 116);
-            this.ksLightParameterTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.ksLightParameterTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.ksLightParameterTextBox.Name = "ksLightParameterTextBox";
             this.ksLightParameterTextBox.Size = new System.Drawing.Size(31, 22);
             this.ksLightParameterTextBox.TabIndex = 14;
@@ -156,7 +164,7 @@
             // 
             this.kdLightParameterTextBox.Enabled = false;
             this.kdLightParameterTextBox.Location = new System.Drawing.Point(260, 84);
-            this.kdLightParameterTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.kdLightParameterTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.kdLightParameterTextBox.Name = "kdLightParameterTextBox";
             this.kdLightParameterTextBox.Size = new System.Drawing.Size(31, 22);
             this.kdLightParameterTextBox.TabIndex = 13;
@@ -195,7 +203,7 @@
             // 
             this.mLightParameterTrackBar.Enabled = false;
             this.mLightParameterTrackBar.Location = new System.Drawing.Point(47, 146);
-            this.mLightParameterTrackBar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.mLightParameterTrackBar.Margin = new System.Windows.Forms.Padding(4);
             this.mLightParameterTrackBar.Maximum = 100;
             this.mLightParameterTrackBar.Name = "mLightParameterTrackBar";
             this.mLightParameterTrackBar.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -209,7 +217,7 @@
             // 
             this.ksLightParameterTrackBar.Enabled = false;
             this.ksLightParameterTrackBar.Location = new System.Drawing.Point(47, 114);
-            this.ksLightParameterTrackBar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.ksLightParameterTrackBar.Margin = new System.Windows.Forms.Padding(4);
             this.ksLightParameterTrackBar.Maximum = 100;
             this.ksLightParameterTrackBar.Name = "ksLightParameterTrackBar";
             this.ksLightParameterTrackBar.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -223,7 +231,7 @@
             // 
             this.kdLightParameterTrackBar.Enabled = false;
             this.kdLightParameterTrackBar.Location = new System.Drawing.Point(47, 84);
-            this.kdLightParameterTrackBar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.kdLightParameterTrackBar.Margin = new System.Windows.Forms.Padding(4);
             this.kdLightParameterTrackBar.Maximum = 100;
             this.kdLightParameterTrackBar.Name = "kdLightParameterTrackBar";
             this.kdLightParameterTrackBar.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -337,7 +345,7 @@
             // 
             this.animateLightPosLabel.AutoSize = true;
             this.animateLightPosLabel.Location = new System.Drawing.Point(5, 73);
-            this.animateLightPosLabel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.animateLightPosLabel.Margin = new System.Windows.Forms.Padding(4);
             this.animateLightPosLabel.Name = "animateLightPosLabel";
             this.animateLightPosLabel.Size = new System.Drawing.Size(221, 21);
             this.animateLightPosLabel.TabIndex = 7;
@@ -350,7 +358,7 @@
             // 
             this.constantLightPosLabel.AutoSize = true;
             this.constantLightPosLabel.Location = new System.Drawing.Point(5, 44);
-            this.constantLightPosLabel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.constantLightPosLabel.Margin = new System.Windows.Forms.Padding(4);
             this.constantLightPosLabel.Name = "constantLightPosLabel";
             this.constantLightPosLabel.Size = new System.Drawing.Size(61, 21);
             this.constantLightPosLabel.TabIndex = 6;
@@ -557,6 +565,66 @@
             this.drawWireframeToolstripMenuItem.Text = "Rysuj szkielet";
             this.drawWireframeToolstripMenuItem.Click += new System.EventHandler(this.DrawWireframeToolStripMenuItem_Click);
             // 
+            // meshSizeGroupBox
+            // 
+            this.meshSizeGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.meshSizeGroupBox.Controls.Add(this.GridSizeConfirmButton);
+            this.meshSizeGroupBox.Controls.Add(this.GridYTextBox);
+            this.meshSizeGroupBox.Controls.Add(this.label2);
+            this.meshSizeGroupBox.Controls.Add(this.GridXTextBox);
+            this.meshSizeGroupBox.Controls.Add(this.label1);
+            this.meshSizeGroupBox.Location = new System.Drawing.Point(9, 611);
+            this.meshSizeGroupBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.meshSizeGroupBox.Name = "meshSizeGroupBox";
+            this.meshSizeGroupBox.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.meshSizeGroupBox.Size = new System.Drawing.Size(297, 62);
+            this.meshSizeGroupBox.TabIndex = 14;
+            this.meshSizeGroupBox.TabStop = false;
+            this.meshSizeGroupBox.Text = "Rozmiar siatki";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(12, 30);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(17, 17);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "X";
+            // 
+            // GridXTextBox
+            // 
+            this.GridXTextBox.Location = new System.Drawing.Point(34, 30);
+            this.GridXTextBox.Name = "GridXTextBox";
+            this.GridXTextBox.Size = new System.Drawing.Size(40, 22);
+            this.GridXTextBox.TabIndex = 1;
+            // 
+            // GridYTextBox
+            // 
+            this.GridYTextBox.Location = new System.Drawing.Point(103, 30);
+            this.GridYTextBox.Name = "GridYTextBox";
+            this.GridYTextBox.Size = new System.Drawing.Size(40, 22);
+            this.GridYTextBox.TabIndex = 3;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(80, 30);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(17, 17);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "Y";
+            // 
+            // GridSizeConfirmButton
+            // 
+            this.GridSizeConfirmButton.Location = new System.Drawing.Point(179, 20);
+            this.GridSizeConfirmButton.Name = "GridSizeConfirmButton";
+            this.GridSizeConfirmButton.Size = new System.Drawing.Size(111, 32);
+            this.GridSizeConfirmButton.TabIndex = 4;
+            this.GridSizeConfirmButton.Text = "Zatwierdź";
+            this.GridSizeConfirmButton.UseVisualStyleBackColor = true;
+            this.GridSizeConfirmButton.Click += new System.EventHandler(this.GridSizeConfirmButton_Click);
+            // 
             // EditorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -589,6 +657,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.drawingBox)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.meshSizeGroupBox.ResumeLayout(false);
+            this.meshSizeGroupBox.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -633,5 +703,11 @@
         private System.Windows.Forms.TextBox kdLightParameterTextBox;
         private System.Windows.Forms.RadioButton animateLightPosLabel;
         private System.Windows.Forms.RadioButton constantLightPosLabel;
+        private System.Windows.Forms.GroupBox meshSizeGroupBox;
+        private System.Windows.Forms.Button GridSizeConfirmButton;
+        private System.Windows.Forms.TextBox GridYTextBox;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox GridXTextBox;
+        private System.Windows.Forms.Label label1;
     }
 }

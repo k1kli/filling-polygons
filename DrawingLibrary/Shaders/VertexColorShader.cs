@@ -11,7 +11,7 @@ namespace DrawingLibrary.Shaders
 {
     public class VertexColorShader : Shader
     {
-        private IntVector2[] vertices = new IntVector2[3];
+        private Vector2[] vertices = new Vector2[3];
         private Vector3[] colors = new Vector3[3];
         int i;
         public override void StartTriangle(int triangleIndex)
@@ -19,7 +19,7 @@ namespace DrawingLibrary.Shaders
             base.StartTriangle(triangleIndex);
             i = 0;
         }
-        public override void ForVertex(in IntVector2 vertex)
+        public override void ForVertex(in Vector2 vertex)
         {
             vertices[i] = vertex;
             Vector2 uv = GetUV(vertex);
@@ -33,7 +33,7 @@ namespace DrawingLibrary.Shaders
                                    mesh.TrianglesLightParameters[triangleIndex]);
             i++;
         }
-        public override Color ForFragment(in IntVector2 bitmapPos)
+        public override Color ForFragment(in Vector2 bitmapPos)
         {
             float[] barymetricWeights = new float[3];
             GetBarymetricWeights(vertices, barymetricWeights, bitmapPos);

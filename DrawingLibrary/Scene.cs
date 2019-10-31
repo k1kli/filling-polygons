@@ -31,6 +31,13 @@ namespace DrawingLibrary
             triangleDrawer = new TriangleDrawer(Bitmap);
             GlobalData = globalData;
             Shader = shader;
+            BitmapToSceneMatrix = Matrix3x2.Multiply(
+                Matrix3x2.CreateScale(Width / Bitmap.Width, Height / Bitmap.Height),
+                Matrix3x2.CreateTranslation(MinX, MinY)
+                );
+            SceneToBitmapMatrix = Matrix3x2.Multiply(
+                Matrix3x2.CreateTranslation(-MinX, -MinY),
+                Matrix3x2.CreateScale(Bitmap.Width / Width, Bitmap.Height / Height));
         }
         public float MinX { get; set; } = -5;
         public float MinY { get; set; } = -5;
@@ -39,32 +46,31 @@ namespace DrawingLibrary
         public float Width => MaxX - MinX;
         public float Height => MaxY - MinY;
 
+        private Matrix3x2 BitmapToSceneMatrix;
+        private Matrix3x2 SceneToBitmapMatrix;
+        public void ResizeBitmap(Vector2 newSize)
+        {
+            Bitmap.Resize((int)newSize.X, (int)newSize.Y);
+            BitmapToSceneMatrix = Matrix3x2.Multiply(
+                Matrix3x2.CreateScale(Width / Bitmap.Width, Height / Bitmap.Height),
+                Matrix3x2.CreateTranslation(MinX, MinY)
+                );
+            SceneToBitmapMatrix = Matrix3x2.Multiply(
+                Matrix3x2.CreateTranslation(-MinX, -MinY),
+                Matrix3x2.CreateScale(Bitmap.Width / Width, Bitmap.Height / Height));
+        }
+
         public Vector2 TransformToSceneCoords(in Vector2 bitmapCoordsPos)
         {
-            return new Vector2(
-                Width * bitmapCoordsPos.X / Bitmap.Width + MinX,
-                Height * bitmapCoordsPos.Y / Bitmap.Height + MinY);
-        }
-        public Vector2 TransformToSceneCoords(in IntVector2 bitmapCoordsPos)
-        {
-            return new Vector2(
-                Width * bitmapCoordsPos.X / Bitmap.Width + MinX,
-                Height * bitmapCoordsPos.Y / Bitmap.Height + MinY);
+            return Vector2.Transform(bitmapCoordsPos, BitmapToSceneMatrix);
         }
 
         public Vector2 TransformToBitmapCoords(in Vector2 sceneCoordsPos)
         {
-            return new Vector2(
-                 Bitmap.Width * (sceneCoordsPos.X - MinX) / Width,
-                Bitmap.Height * (sceneCoordsPos.Y - MinY) / Height);
-        }
-        public void TransformToBitmapCoords(in Vector2 sceneCoordsPos, out int bitmapX, out int bitmapY)
-        {
-            bitmapX = (int)(Bitmap.Width * (sceneCoordsPos.X - MinX) / Width);
-            bitmapY = (int)(Bitmap.Height * (sceneCoordsPos.Y - MinY) / Height);
+            return Vector2.Transform(sceneCoordsPos, SceneToBitmapMatrix);
         }
 
-        private static readonly IntVector2[] triangleVertices = { new IntVector2(), new IntVector2(), new IntVector2() };
+        private static readonly IntVector2[] triangleVertices = new IntVector2[3];
         public void DrawMesh(Mesh mesh)
         {
             Bitmap.Clear();
@@ -79,19 +85,21 @@ namespace DrawingLibrary
             Shader.StartMesh(mesh);
             for (int triangle = 0; triangle < mesh.Triangles.Length; triangle += 3)
             {
-                int p1X, p1Y, p2X, p2Y, p3X, p3Y;
-                TransformToBitmapCoords(mesh.Vertices[mesh.Triangles[triangle]], out p1X, out p1Y);
-                TransformToBitmapCoords(mesh.Vertices[mesh.Triangles[triangle+1]], out p2X, out p2Y);
-                TransformToBitmapCoords(mesh.Vertices[mesh.Triangles[triangle+2]], out p3X, out p3Y);
-                triangleVertices[0].X = p1X; triangleVertices[0].Y = p1Y;
-                triangleVertices[1].X = p2X; triangleVertices[1].Y = p2Y;
-                triangleVertices[2].X = p3X; triangleVertices[2].Y = p3Y;
+                triangleVertices[0] = new IntVector2(TransformToBitmapCoords(mesh.Vertices[mesh.Triangles[triangle]]));
+                triangleVertices[1] = new IntVector2(TransformToBitmapCoords(mesh.Vertices[mesh.Triangles[triangle+1]]));
+                triangleVertices[2] = new IntVector2(TransformToBitmapCoords(mesh.Vertices[mesh.Triangles[triangle+2]]));
                 triangleDrawer.DrawTriangle(triangleVertices, triangle/3);
                 if(DrawWireframe)
                 {
-                    g.DrawLine(Pens.Black, p1X, p1Y, p2X, p2Y);
-                    g.DrawLine(Pens.Black, p3X, p3Y, p2X, p2Y);
-                    g.DrawLine(Pens.Black, p1X, p1Y, p3X, p3Y);
+                    g.DrawLine(Pens.Black,
+                        triangleVertices[0].X, triangleVertices[0].Y,
+                        triangleVertices[1].X, triangleVertices[1].Y);
+                    g.DrawLine(Pens.Black,
+                        triangleVertices[2].X, triangleVertices[2].Y,
+                        triangleVertices[1].X, triangleVertices[1].Y);
+                    g.DrawLine(Pens.Black,
+                        triangleVertices[2].X, triangleVertices[2].Y,
+                        triangleVertices[0].X, triangleVertices[0].Y);
                 }
             }
             watch.Stop();

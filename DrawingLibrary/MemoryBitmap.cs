@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
+using System.Numerics;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,12 +18,15 @@ namespace DrawingLibrary
         public bool Disposed { get; private set; }
         public int Width { get; private set; }
         public int Height { get; private set; }
+
+        public Vector2 Size { get; private set; }
         protected GCHandle BitsHandle { get; private set; }
         private Graphics g;
         public MemoryBitmap(int xSize, int ySize)
         {
             Width = xSize;
             Height = ySize;
+            Size = new Vector2(Width, Height);
             Bits = new Int32[Width * Height];
             BitsHandle = GCHandle.Alloc(Bits, GCHandleType.Pinned);
             Bitmap = new Bitmap(Width, Height, Width * 4, PixelFormat.Format32bppPArgb, BitsHandle.AddrOfPinnedObject());
@@ -33,6 +37,7 @@ namespace DrawingLibrary
             BitsHandle.Free();
             Width = newXSize;
             Height = newYSize;
+            Size = new Vector2(Width, Height);
             Bits = new Int32[Width * Height];
             BitsHandle = GCHandle.Alloc(Bits, GCHandleType.Pinned);
             Bitmap = new Bitmap(Width, Height, Width * 4, PixelFormat.Format32bppPArgb, BitsHandle.AddrOfPinnedObject());

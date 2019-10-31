@@ -44,7 +44,7 @@ namespace FillingPolygons
 
         private void DrawingBox_Paint(object sender, PaintEventArgs e)
         {
-            if(lightAnimator != null)
+            if (lightAnimator != null)
             {
                 scene.GlobalData.LightPosition = lightAnimator.NextPos();
             }
@@ -96,7 +96,7 @@ namespace FillingPolygons
         }
         public void SetLightParameters()
         {
-            if(parametersRandomized)
+            if (parametersRandomized)
             {
                 RandomizeLightParameters();
             }
@@ -115,17 +115,12 @@ namespace FillingPolygons
         }
         public void SetConstantLightParameters()
         {
-            for(int i = 0; i < mesh.TrianglesLightParameters.Length; i++)
+            for (int i = 0; i < mesh.TrianglesLightParameters.Length; i++)
             {
                 mesh.TrianglesLightParameters[i] = currentLightParameters;
             }
         }
 
-        private void EditorForm_ResizeEnd(object sender, EventArgs e)
-        {
-            scene.Bitmap.Resize(drawingBox.Width, drawingBox.Height);
-            drawingBox.Invalidate();
-        }
 
         private void StaticColorRadioButton_CheckedChanged(object sender, EventArgs e)
         {
@@ -181,7 +176,7 @@ namespace FillingPolygons
             {
                 ImageSampler isamp = new ImageSampler(new Bitmap(openFileDialog.FileName));
                 isamp.Transform(v => Vector3.Normalize(new Vector3(v.X * 2 - 1, v.Y * 2 - 1, v.Z)));
-                scene.Normals= isamp;
+                scene.Normals = isamp;
                 drawingBox.Invalidate();
             }
         }
@@ -204,7 +199,7 @@ namespace FillingPolygons
 
         private void PreciseShaderRadioButton_CheckedChanged(object sender, EventArgs e)
         {
-            if(preciseShaderRadioButton.Checked)
+            if (preciseShaderRadioButton.Checked)
             {
                 scene.Shader = new PreciseShader();
                 drawingBox.Invalidate();
@@ -231,7 +226,7 @@ namespace FillingPolygons
 
         private void EditorForm_Load(object sender, EventArgs e)
         {
-            
+
         }
 
         private void DrawingBox_MouseDown(object sender, MouseEventArgs e)
@@ -241,7 +236,7 @@ namespace FillingPolygons
 
         private void DrawingBox_MouseMove(object sender, MouseEventArgs e)
         {
-            if(deformer.MouseMove(scene.TransformToSceneCoords(new Vector2(e.X, e.Y))))
+            if (deformer.MouseMove(scene.TransformToSceneCoords(new Vector2(e.X, e.Y))))
             {
                 drawingBox.Invalidate();
             }
@@ -262,14 +257,14 @@ namespace FillingPolygons
 
             if (scene != null)
             {
-                scene.Bitmap.Resize(drawingBox.Width, drawingBox.Height);
+                scene.ResizeBitmap(new Vector2(drawingBox.Width, drawingBox.Height));
                 drawingBox.Invalidate();
             }
         }
 
         private void RandomLightParametersRadioButton_CheckedChanged(object sender, EventArgs e)
         {
-            if(randomLightParametersRadioButton.Checked)
+            if (randomLightParametersRadioButton.Checked)
             {
                 parametersRandomized = true;
                 SetLightParameters();
@@ -315,7 +310,7 @@ namespace FillingPolygons
 
         private void ConstantLightPosLabel_CheckedChanged(object sender, EventArgs e)
         {
-            if(constantLightParametersRadioButton.Checked)
+            if (constantLightPosLabel.Checked)
             {
                 lightAnimator = null;
                 scene.GlobalData.LightPosition = new Vector3(0, 0, 10000);
@@ -327,9 +322,22 @@ namespace FillingPolygons
         {
             if (animateLightPosLabel.Checked)
             {
-                lightAnimator = new LightAnimator(scene.Width/2);
+                lightAnimator = new LightAnimator(scene.Width / 2);
                 lightAnimator.StartAnimation();
 
+                drawingBox.Invalidate();
+            }
+        }
+
+        private void GridSizeConfirmButton_Click(object sender, EventArgs e)
+        {
+            if (
+                int.TryParse(GridXTextBox.Text, out int width)
+                && int.TryParse(GridYTextBox.Text, out int height))
+            {
+                n = height;
+                m = width;
+                CreateMesh();
                 drawingBox.Invalidate();
             }
         }
