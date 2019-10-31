@@ -634,8 +634,7 @@
             this.Controls.Add(this.menuStrip1);
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "EditorForm";
-            this.Text = "EditorForm";
-            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.Text = "Wypełnianie wielokątów";
             this.Load += new System.EventHandler(this.EditorForm_Load);
             this.ClientSizeChanged += new System.EventHandler(this.EditorForm_ClientSizeChanged);
             this.editorLayoutPanel.ResumeLayout(false);

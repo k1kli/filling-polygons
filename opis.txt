@@ -1,0 +1,17 @@
+Wybór rozmiaru siatki: w panelu Rozmiar siatki, wpisać oczekiwane rozmiary i wcisnąć zatwierdź.
+Wybór źródła koloru: w panelu Źródło koloru
+	-stały: wybrać radio button Kolor Stały, nacisnąć sąsiadujący przycisk wybierz i wybrać kolor z Color Pickera
+	-z tekstury: wybrać radio button Obraz, nacisnąć sąsiadujący przycisk wybierz i określić lokację tekstury
+Wybór źródła wektorów normalnych: w panelu Źródło wektora normalnego
+	-stały: wybrać radio button Stały [0,0,1]
+	-z NormalMap: wybrać radio button Tekstura(RGB), nacisnąć sąsiadujący przycisk wybierz i określić lokację tekstury
+Wybór sposobu wyznaczania koloru wypełnienia: w panelu Wyznaczanie koloru piksela wybrać odpowiedni radio button
+
+Określanie współczynników kd, ks, m: w panelu parametry światła wybrać odpowiedni radio button
+Dla trybu stałe: każdy trójkąt ma takie same parametry określone za pomocą suwaków
+
+Wybór koloru światła: w panelu Światło nacisnąć przycisk wybierz kolor i wybrać kolor z Color Pickera
+Wybór położenia światła: w panelu Światło, Lokacja światła
+	-wektor do światła [0,0,1]: radio button Stała
+	-pozycja światła animowana po półsferze wokół sceny: radio button Punkt animowany po półsferze
+Wyłączenie linii siatki: z menu Widok->Rysuj Szkielet
