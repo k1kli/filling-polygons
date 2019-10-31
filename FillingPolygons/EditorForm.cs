@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -19,8 +20,8 @@ namespace FillingPolygons
         Scene scene;
         Mesh mesh;
         MeshDeformer deformer;
-        int n = 10;
-        int m = 15;
+        int n = 5;
+        int m = 5;
         bool parametersRandomized = true;
         LightAnimator lightAnimator;
 
@@ -31,8 +32,13 @@ namespace FillingPolygons
             InitializeComponent();
             Shader shader = new PreciseShader();
             GlobalData globalData = new GlobalData(Color.White, new Vector3(0, 0, 10000));
-            scene = new Scene(new MemoryBitmap(drawingBox.Width, drawingBox.Height), shader, globalData);
-            scene.MainTex = new ImageSampler(new Bitmap("..\\..\\data\\Image.jpg"));
+            var normals = new ImageSampler(new Bitmap("..\\..\\data\\Normals.jpg"));
+            normals.Transform(v => Vector3.Normalize(new Vector3(v.X * 2 - 1, v.Y * 2 - 1, v.Z)));
+            scene = new Scene(new MemoryBitmap(drawingBox.Width, drawingBox.Height), shader, globalData)
+            {
+                MainTex = new ImageSampler(new Bitmap("..\\..\\data\\Image.jpg")),
+                Normals = normals
+            };
             CreateMesh();
         }
 
@@ -174,7 +180,7 @@ namespace FillingPolygons
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 ImageSampler isamp = new ImageSampler(new Bitmap(openFileDialog.FileName));
-                isamp.Transform(v => new Vector3(v.X * 2 - 1, v.Y * 2 - 1, v.Z).Normalized);
+                isamp.Transform(v => Vector3.Normalize(new Vector3(v.X * 2 - 1, v.Y * 2 - 1, v.Z)));
                 scene.Normals= isamp;
                 drawingBox.Invalidate();
             }
@@ -274,18 +280,7 @@ namespace FillingPolygons
             }
         }
 
-        private void ConstantLightParametersRadioButton_CheckedChanged(object sender, EventArgs e)
-        {
-
-            if (constantLightParametersRadioButton.Checked)
-            {
-                kdLightParameterTrackBar.Enabled = true;
-                ksLightParameterTrackBar.Enabled = true;
-                mLightParameterTrackBar.Enabled = true;
-            }
-        }
-
-        private void LightParametersScroll(object sender, EventArgs e)
+        private void UpdateLightParameterTrackBars()
         {
             parametersRandomized = false;
             currentLightParameters = new LightParameters
@@ -299,6 +294,23 @@ namespace FillingPolygons
             mLightParameterTextBox.Text = currentLightParameters.M.ToString();
             SetLightParameters();
             drawingBox.Invalidate();
+        }
+
+        private void ConstantLightParametersRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+
+            if (constantLightParametersRadioButton.Checked)
+            {
+                kdLightParameterTrackBar.Enabled = true;
+                ksLightParameterTrackBar.Enabled = true;
+                mLightParameterTrackBar.Enabled = true;
+                UpdateLightParameterTrackBars();
+            }
+        }
+
+        private void LightParametersScroll(object sender, EventArgs e)
+        {
+            UpdateLightParameterTrackBars();
         }
 
         private void ConstantLightPosLabel_CheckedChanged(object sender, EventArgs e)

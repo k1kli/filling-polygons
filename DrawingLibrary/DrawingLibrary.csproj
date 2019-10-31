@@ -34,6 +34,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -59,8 +60,6 @@
     <Compile Include="Shaders\PreciseShader.cs" />
     <Compile Include="TriangleDrawer.cs" />
     <Compile Include="Vectors\IntVector2.cs" />
-    <Compile Include="Vectors\Vector2.cs" />
-    <Compile Include="Vectors\Vector3.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

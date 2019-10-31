@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -74,23 +75,19 @@ namespace DrawingLibrary.Shaders
             return weights[0] * vectors[0] + weights[1] * vectors[1] + weights[2] * vectors[2];
         }
         private static readonly Vector3 V = new Vector3(0, 0, 1);
+        private static Vector3 MinColorVec = new Vector3(0, 0, 0);
+        private static Vector3 MaxColorVec = new Vector3(1, 1, 1);
         public static Vector3 CalculateLight(in Vector3 lightColor, in Vector3 objectColor, in Vector3 toLight, in Vector3 normal, in LightParameters lightParameters)
         {
-            float NLAngleCos = Vector3.DotProduct(normal, toLight);
-            float VRAngleCos = Vector3.DotProduct(V, (2*normal - toLight).Normalized);
+            float NLAngleCos = Vector3.Dot(normal, toLight);
+            float VRAngleCos = Vector3.Dot(V, Vector3.Normalize(2 * normal - toLight));
             return
-                Saturate(
-                    Vector3.CoordinateMultiplication(lightColor, objectColor)
-                 * (lightParameters.Kd * NLAngleCos + lightParameters.Ks * (float)Math.Pow(VRAngleCos, lightParameters.M))
+                Vector3.Clamp(
+                    Vector3.Multiply(lightColor, objectColor)
+                 * (lightParameters.Kd * NLAngleCos + lightParameters.Ks * (float)Math.Pow(VRAngleCos, lightParameters.M)),
+                    MinColorVec,
+                    MaxColorVec
                  );
-        }
-        public static Vector3 Saturate(in Vector3 v)
-        {
-            return new Vector3(Saturate(v.X), Saturate(v.Y), Saturate(v.Z));
-        }
-        public static float Saturate(float d)
-        {
-            return d >= 0 ? (d <= 1 ? d : 1) : 0;
         }
     }
 }

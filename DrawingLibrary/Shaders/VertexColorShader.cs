@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -23,8 +24,8 @@ namespace DrawingLibrary.Shaders
             vertices[i] = vertex;
             Vector2 uv = GetUV(vertex);
             colors[i] = MainTex.Sample(uv);
-            Vectors.Vector3 normal = Normals.Sample(uv);
-            Vector3 toLight = (globalData.LightPosition - new Vector3(scene.TransformToSceneCoords(vertex))).Normalized;
+            Vector3 normal = Normals.Sample(uv);
+            Vector3 toLight = Vector3.Normalize(globalData.LightPosition - new Vector3(scene.TransformToSceneCoords(vertex), 0));
             colors[i] = CalculateLight(globalData.LightRGB,
                                    colors[i],
                                    toLight,

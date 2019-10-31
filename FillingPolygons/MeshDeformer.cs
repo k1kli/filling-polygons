@@ -1,10 +1,10 @@
 ﻿using DrawingLibrary;
-using DrawingLibrary.Vectors;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Numerics;
 
 namespace FillingPolygons
 {
@@ -32,7 +32,7 @@ namespace FillingPolygons
             int minId = -1;
             for(int i = 0; i < Mesh.Vertices.Length; i++)
             {
-                float dist = (sceneCursorPos - Mesh.Vertices[i]).MagnitudeSqr;
+                float dist = (sceneCursorPos - Mesh.Vertices[i]).LengthSquared();
                 if(dist < toleranceSqr && minDist > dist)
                 {
                     minDist = dist;
@@ -47,7 +47,7 @@ namespace FillingPolygons
             if(selectedVertexId != -1)
             {
                 Vector2 movement = sceneCursorPos - prevCursorPos;
-                if(movement.MagnitudeSqr > float.Epsilon)
+                if(movement.LengthSquared() > float.Epsilon)
                 {
                     Mesh.Vertices[selectedVertexId] += movement;
                     prevCursorPos = sceneCursorPos;

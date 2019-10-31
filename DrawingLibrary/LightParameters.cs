@@ -10,7 +10,7 @@ namespace DrawingLibrary
     {
         public float Kd { get; set; }
         public float Ks { get; set; }
-        public float M { get; set; }
+        public int M { get; set; }
         public static LightParameters GetRandom(Random r)
         {
             LightParameters res = new LightParameters();

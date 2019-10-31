@@ -1,11 +1,12 @@
 ﻿using DrawingLibrary.Samplers;
-using DrawingLibrary.Vectors;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Numerics;
+using DrawingLibrary.Vectors;
 
 namespace DrawingLibrary
 {
@@ -51,7 +52,7 @@ namespace DrawingLibrary
                 Height * bitmapCoordsPos.Y / Bitmap.Height + MinY);
         }
 
-        public Vectors.Vector2 TransformToBitmapCoords(in Vector2 sceneCoordsPos)
+        public Vector2 TransformToBitmapCoords(in Vector2 sceneCoordsPos)
         {
             return new Vector2(
                  Bitmap.Width * (sceneCoordsPos.X - MinX) / Width,

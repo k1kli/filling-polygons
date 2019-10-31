@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Numerics;
 
 namespace DrawingLibrary.Shaders
 {
@@ -26,8 +27,8 @@ namespace DrawingLibrary.Shaders
             float[] barymetricWeights = new float[3];
             Vector2 uv = GetUV(bitmapPos);
             Vector3 color = MainTex.Sample(uv);
-            Vectors.Vector3 normal = Normals.Sample(uv);
-            Vector3 toLight = (globalData.LightPosition - new Vector3(scene.TransformToSceneCoords(bitmapPos))).Normalized;
+            Vector3 normal = Normals.Sample(uv);
+            Vector3 toLight = Vector3.Normalize(globalData.LightPosition - new Vector3(scene.TransformToSceneCoords(bitmapPos), 0.0f));
             color = CalculateLight(globalData.LightRGB,
                                    color,
                                    toLight,

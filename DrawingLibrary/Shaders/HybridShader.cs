@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -31,9 +32,15 @@ namespace DrawingLibrary.Shaders
         {
             float[] barymetricWeights = new float[3];
             GetBarymetricWeights(vertices, barymetricWeights, bitmapPos);
-            Vector3 color = colors[0] * barymetricWeights[0] + colors[1] * barymetricWeights[1] + colors[2] * barymetricWeights[2];
-            Vector3 normal = normals[0] * barymetricWeights[0] + normals[1] * barymetricWeights[1] + normals[2] * barymetricWeights[2];
-            Vector3 toLight = (globalData.LightPosition - new Vector3(scene.TransformToSceneCoords(bitmapPos))).Normalized;
+            Vector3 color = 
+                colors[0] * barymetricWeights[0]
+                + colors[1] * barymetricWeights[1]
+                + colors[2] * barymetricWeights[2];
+            Vector3 normal = normals[0] * barymetricWeights[0]
+                + normals[1] * barymetricWeights[1]
+                + normals[2] * barymetricWeights[2];
+            Vector3 toLight = Vector3.Normalize(
+                globalData.LightPosition - new Vector3(scene.TransformToSceneCoords(bitmapPos),0));
             return CalculateLight(globalData.LightRGB,
                                    color,
                                    toLight,
