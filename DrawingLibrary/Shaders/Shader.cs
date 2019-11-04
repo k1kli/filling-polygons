@@ -76,7 +76,8 @@ namespace DrawingLibrary.Shaders
         public static Vector3 CalculateLight(in Vector3 lightColor, in Vector3 objectColor, in Vector3 toLight, in Vector3 normal, in LightParameters lightParameters)
         {
             float NLAngleCos = Vector3.Dot(normal, toLight);
-            float VRAngleCos = Vector3.Dot(V, Vector3.Normalize(2 * normal - toLight));
+            Vector3 R = 2 * Vector3.Dot(normal, toLight) * normal - toLight;
+            float VRAngleCos = Vector3.Dot(V, R);
             return
                 Vector3.Clamp(
                     Vector3.Multiply(lightColor, objectColor)

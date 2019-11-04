@@ -69,7 +69,8 @@ namespace DrawingLibrary
                     edge.x += edge.antitangent;
                 }
                 AET.Sort((AETData edge1, AETData edge2) => edge1.x.CompareTo(edge2.x));
-                DrawOnScanLine(y);
+                if(y >=0 && y < bitmap.Height)
+                    DrawOnScanLine(y);
                 RemoveFinishedEdges(y);
             }
             Parallel.ForEach(ToDraw, (v) => bitmap.SetPixel((int)v.X, (int)v.Y, Shader.ForFragment(v)));
@@ -103,7 +104,9 @@ namespace DrawingLibrary
                 if (!enumerator.MoveNext()) return;
                 var current = enumerator.Current;
                 int startX = (int)(previous.x + 0.5);
+                startX = startX < 0 ? 0 : startX;
                 int endX = (int)(current.x + 0.5);
+                endX = endX >= bitmap.Width ? (bitmap.Width - 1) : endX;
                 for (int x = startX; x < endX; x++)
                 {
                     ToDraw.AddLast(new Vector2(x, y));
