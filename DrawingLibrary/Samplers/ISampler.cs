@@ -10,5 +10,6 @@ namespace DrawingLibrary.Samplers
     public interface ISampler
     {
         Vector3 Sample(Vector2 UV);
+        void Resize(int width, int height);
     }
 }

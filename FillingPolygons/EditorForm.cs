@@ -32,11 +32,11 @@ namespace FillingPolygons
             InitializeComponent();
             Shader shader = new PreciseShader();
             GlobalData globalData = new GlobalData(Color.White, new Vector3(0, 0, 10000));
-            var normals = new ImageSampler(new Bitmap("..\\..\\data\\Normals.jpg"));
+            var normals = new ImageSampler(new Bitmap("..\\..\\data\\Normals.jpg"), drawingBox.Width, drawingBox.Height);
             normals.Transform(v => Vector3.Normalize(new Vector3(v.X * 2 - 1, -(v.Y * 2 - 1), v.Z)));
             scene = new Scene(new MemoryBitmap(drawingBox.Width, drawingBox.Height), shader, globalData)
             {
-                MainTex = new ImageSampler(new Bitmap("..\\..\\data\\Image.jpg")),
+                MainTex = new ImageSampler(new Bitmap("..\\..\\data\\Image.jpg"), drawingBox.Width, drawingBox.Height),
                 Normals = normals
             };
             CreateMesh();
@@ -151,7 +151,7 @@ namespace FillingPolygons
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 scene.MainTex
-                    = new ImageSampler(new Bitmap(openFileDialog.FileName));
+                    = new ImageSampler(new Bitmap(openFileDialog.FileName), drawingBox.Width, drawingBox.Height);
                 drawingBox.Invalidate();
             }
         }
@@ -174,7 +174,7 @@ namespace FillingPolygons
                 "png files (*.png)|*.png|All files (*.*)|*.*";
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                ImageSampler isamp = new ImageSampler(new Bitmap(openFileDialog.FileName));
+                ImageSampler isamp = new ImageSampler(new Bitmap(openFileDialog.FileName), drawingBox.Width, drawingBox.Height);
                 isamp.Transform(v => Vector3.Normalize(new Vector3(v.X * 2 - 1, -(v.Y * 2 - 1), v.Z)));
                 scene.Normals = isamp;
                 drawingBox.Invalidate();

@@ -25,9 +25,8 @@ namespace DrawingLibrary.Shaders
         public override Color ForFragment(in Vector2 bitmapPos)
         {
             float[] barymetricWeights = new float[3];
-            Vector2 uv = GetUV(bitmapPos);
-            Vector3 color = MainTex.Sample(uv);
-            Vector3 normal = Normals.Sample(uv);
+            Vector3 color = MainTex.Sample(bitmapPos);
+            Vector3 normal = Normals.Sample(bitmapPos);
             Vector3 toLight = Vector3.Normalize(globalData.LightPosition - new Vector3(scene.TransformToSceneCoords(bitmapPos), 0.0f));
             color = CalculateLight(globalData.LightRGB,
                                    color,

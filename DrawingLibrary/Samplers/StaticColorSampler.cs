@@ -23,5 +23,9 @@ namespace DrawingLibrary.Samplers
         {
             return color;
         }
+
+        public void Resize(int width, int height)
+        {
+        }
     }
 }

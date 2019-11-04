@@ -22,9 +22,8 @@ namespace DrawingLibrary.Shaders
         public override void ForVertex(in Vector2 vertex)
         {
             vertices[i] = vertex;
-            Vector2 uv = GetUV(vertex);
-            colors[i] = MainTex.Sample(uv);
-            Vector3 normal = Normals.Sample(uv);
+            colors[i] = MainTex.Sample(vertex);
+            Vector3 normal = Normals.Sample(vertex);
             Vector3 toLight = Vector3.Normalize(globalData.LightPosition - new Vector3(scene.TransformToSceneCoords(vertex), 0));
             colors[i] = CalculateLight(globalData.LightRGB,
                                    colors[i],

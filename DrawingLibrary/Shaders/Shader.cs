@@ -33,10 +33,6 @@ namespace DrawingLibrary.Shaders
         }
         public abstract Color ForFragment(in Vector2 bitmapPos);
 
-        public Vector2 GetUV(in Vector2 bitmapPos)
-        {
-            return new Vector2((float)bitmapPos.X / scene.Bitmap.Width, (float)bitmapPos.Y / scene.Bitmap.Height);
-        }
 
         public static void GetBarymetricWeights(Vector2[] vertices, float[] resultingWeights, in Vector2 bitmapPos)
         {

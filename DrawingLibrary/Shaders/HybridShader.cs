@@ -23,9 +23,8 @@ namespace DrawingLibrary.Shaders
         public override void ForVertex(in Vector2 vertex)
         {
             vertices[i] = vertex;
-            Vector2 uv = GetUV(vertex);
-            colors[i] = MainTex.Sample(uv);
-            normals[i] = Normals.Sample(uv);
+            colors[i] = MainTex.Sample(vertex);
+            normals[i] = Normals.Sample(vertex);
             i++;
         }
         public override Color ForFragment(in Vector2 bitmapPos)

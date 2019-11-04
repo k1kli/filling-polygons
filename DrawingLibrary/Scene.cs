@@ -58,6 +58,8 @@ namespace DrawingLibrary
             SceneToBitmapMatrix = Matrix3x2.Multiply(
                 Matrix3x2.CreateTranslation(-MinX, -MinY),
                 Matrix3x2.CreateScale(Bitmap.Width / Width, Bitmap.Height / Height));
+            MainTex.Resize(Bitmap.Width, Bitmap.Height);
+            Normals.Resize(Bitmap.Width, Bitmap.Height);
         }
 
         public Vector2 TransformToSceneCoords(in Vector2 bitmapCoordsPos)
