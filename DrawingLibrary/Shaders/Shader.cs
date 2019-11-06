@@ -78,6 +78,7 @@ namespace DrawingLibrary.Shaders
             float NLAngleCos = Vector3.Dot(normal, toLight);
             Vector3 R = 2 * Vector3.Dot(normal, toLight) * normal - toLight;
             float VRAngleCos = Vector3.Dot(V, R);
+            VRAngleCos = VRAngleCos > 0 ? VRAngleCos : 0;
             return
                 Vector3.Clamp(
                     Vector3.Multiply(lightColor, objectColor)

@@ -51,10 +51,17 @@ namespace DrawingLibrary
             if (x < 0 || x >= Width || y < 0 || y >= Height) return;
             RawSetPixel(x, y, argb);
         }
-        private void RawSetPixel(int x, int y, int argb)
+        public void RawSetPixel(int x, int y, int argb)
         {
             int index = x + (y * Width);
             int col = argb;
+
+            Bits[index] = col;
+        }
+        public void RawSetPixel(int x, int y, Color color)
+        {
+            int index = x + (y * Width);
+            int col = color.ToArgb();
 
             Bits[index] = col;
         }
