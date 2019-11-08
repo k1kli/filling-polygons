@@ -53,17 +53,24 @@ namespace DrawingLibrary
         }
         public void RawSetPixel(int x, int y, int argb)
         {
-            int index = x + (y * Width);
-            int col = argb;
+            unchecked
+            {
+                int index = x + (y * Width);
+                int col = argb;
 
-            Bits[index] = col;
+
+                Bits[index] = col;
+            }
         }
-        public void RawSetPixel(int x, int y, Color color)
+        public unsafe void RawSetPixel(int x, int y, Color color)
         {
-            int index = x + (y * Width);
-            int col = color.ToArgb();
+            unchecked
+            {
+                int index = x + (y * Width);
+                int col = color.ToArgb();
 
-            Bits[index] = col;
+                Bits[index] = col;
+            }
         }
         public Color GetPixel(int x, int y)
         {

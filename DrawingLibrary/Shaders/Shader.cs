@@ -14,8 +14,8 @@ namespace DrawingLibrary.Shaders
     {
         protected Scene scene;
         protected GlobalData globalData => scene.GlobalData;
-        public ISampler MainTex => scene.MainTex;
-        public ISampler Normals => scene.Normals;
+        public Sampler MainTex => scene.MainTex;
+        public Sampler Normals => scene.Normals;
         protected Mesh mesh { get; private set; }
         protected int triangleIndex { get; private set; }
         internal void Init(Scene scene)
@@ -68,24 +68,30 @@ namespace DrawingLibrary.Shaders
         /// <returns></returns>
         public static Vector2 WeightedAverage(float[] weights, params Vector2[] vectors)
         {
-            return weights[0] * vectors[0] + weights[1] * vectors[1] + weights[2] * vectors[2];
+            unchecked
+            {
+                return weights[0] * vectors[0] + weights[1] * vectors[1] + weights[2] * vectors[2];
+            }
         }
         private static readonly Vector3 V = new Vector3(0, 0, 1);
         private static Vector3 MinColorVec = new Vector3(0, 0, 0);
         private static Vector3 MaxColorVec = new Vector3(1, 1, 1);
         public static Vector3 CalculateLight(in Vector3 lightColor, in Vector3 objectColor, in Vector3 toLight, in Vector3 normal, in LightParameters lightParameters)
         {
-            float NLAngleCos = Vector3.Dot(normal, toLight);
-            Vector3 R = 2 * Vector3.Dot(normal, toLight) * normal - toLight;
-            float VRAngleCos = Vector3.Dot(V, R);
-            VRAngleCos = VRAngleCos > 0 ? VRAngleCos : 0;
-            return
-                Vector3.Clamp(
-                    Vector3.Multiply(lightColor, objectColor)
-                 * (lightParameters.Kd * NLAngleCos + lightParameters.Ks * (float)Math.Pow(VRAngleCos, lightParameters.M)),
-                    MinColorVec,
-                    MaxColorVec
-                 );
+            unchecked
+            {
+                float NLAngleCos = Vector3.Dot(normal, toLight);
+                Vector3 R = 2 * Vector3.Dot(normal, toLight) * normal - toLight;
+                float VRAngleCos = Vector3.Dot(V, R);
+                VRAngleCos = VRAngleCos > 0 ? VRAngleCos : 0;
+                return
+                    Vector3.Clamp(
+                        Vector3.Multiply(lightColor, objectColor)
+                     * (lightParameters.Kd * NLAngleCos + lightParameters.Ks * (float)Math.Pow(VRAngleCos, lightParameters.M)),
+                        MinColorVec,
+                        MaxColorVec
+                     );
+            }
         }
     }
 }

@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace DrawingLibrary.Samplers
 {
-    public interface ISampler
+    public abstract class Sampler
     {
-        Vector3 Sample(Vector2 UV);
-        void Resize(int width, int height);
+        public abstract Vector3 Sample(Vector2 UV);
+        public virtual void Resize(int width, int height) { }
     }
 }

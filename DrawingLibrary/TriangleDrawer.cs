@@ -73,7 +73,11 @@ namespace DrawingLibrary
                     DrawOnScanLine(y);
                 RemoveFinishedEdges(y);
             }
-            Parallel.ForEach(ToDraw, (v) => bitmap.RawSetPixel((int)v.X, (int)v.Y, Shader.ForFragment(v)));
+            foreach (Vector2 v in ToDraw)
+            {
+                bitmap.RawSetPixel((int)v.X, (int)v.Y, Shader.ForFragment(v));
+            }
+            //Parallel.ForEach(ToDraw, (v) => bitmap.RawSetPixel((int)v.X, (int)v.Y, Shader.ForFragment(v)));
             ToDraw.Clear();
         }
 

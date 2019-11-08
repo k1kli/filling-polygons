@@ -9,10 +9,10 @@ using DrawingLibrary.Vectors;
 
 namespace DrawingLibrary.Samplers
 {
-    public class ImageSampler : ISampler
+    public unsafe class ImageSampler : Sampler
     {
         private Vector3[] pixels;
-        private Vector3[,] resizedPixels;
+        private Vector3[] resizedPixels;
         private int width;
         private int height;
         private int resizedWidth;
@@ -43,11 +43,12 @@ namespace DrawingLibrary.Samplers
                 Resize(resizedWidth, resizedHeight);
             }
         }
-        private static Vector2 minUv = new Vector2(0, 0);
-        private static Vector2 maxUv = new Vector2(1, 1);
-        public Vector3 Sample(Vector2 bitmapPos)
+        public override Vector3 Sample(Vector2 bitmapPos)
         {
-            return resizedPixels[(int)bitmapPos.X,(int)bitmapPos.Y];
+            unchecked
+            {
+                return resizedPixels[(int)bitmapPos.X + resizedWidth * (int)bitmapPos.Y];
+            }
         }
         private void SetPixels(Bitmap bmp)
         {
@@ -84,9 +85,9 @@ namespace DrawingLibrary.Samplers
 
         }
 
-        public void Resize(int newWidth, int newHeight)
+        public override void Resize(int newWidth, int newHeight)
         {
-            resizedPixels = new Vector3[newWidth,newHeight];
+            resizedPixels = new Vector3[newWidth*newHeight];
             for(int y = 0; y < newHeight; y++)
             {
 
@@ -94,9 +95,11 @@ namespace DrawingLibrary.Samplers
                 for (int x = 0; x < newWidth; x++)
                 {
                     int oldX = x * width / newWidth;
-                    resizedPixels[x, y] = pixels[oldX + width * oldY];
+                    resizedPixels[x + newWidth*y] = pixels[oldX + width * oldY];
                 }
             }
+            resizedWidth = newWidth;
+            resizedHeight = newHeight;
         }
     }
 }

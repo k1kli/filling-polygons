@@ -9,7 +9,7 @@ using DrawingLibrary.Vectors;
 
 namespace DrawingLibrary.Samplers
 {
-    public class StaticColorSampler : ISampler
+    public class StaticColorSampler : Sampler
     {
         private Vector3 color;
         public Color Color { get => color.ToColor(); set => color = value.ToVector3(); }
@@ -19,13 +19,10 @@ namespace DrawingLibrary.Samplers
             Color = color;
         }
 
-        public Vector3 Sample(Vector2 UV)
+        public override Vector3 Sample(Vector2 UV)
         {
             return color;
         }
 
-        public void Resize(int width, int height)
-        {
-        }
     }
 }

@@ -15,8 +15,8 @@ namespace DrawingLibrary
         public MemoryBitmap Bitmap { get; }
         private readonly TriangleDrawer triangleDrawer;
         public GlobalData GlobalData;
-        public ISampler MainTex { get; set; } = new StaticColorSampler(System.Drawing.Color.Red);
-        public ISampler Normals { get; set; } = new StaticColorSampler(System.Drawing.Color.Blue);
+        public Sampler MainTex { get; set; } = new StaticColorSampler(System.Drawing.Color.Red);
+        public Sampler Normals { get; set; } = new StaticColorSampler(System.Drawing.Color.Blue);
         public bool DrawWireframe { get; set; } = true;
         public Shaders.Shader Shader {
             get => triangleDrawer.Shader;
@@ -75,6 +75,9 @@ namespace DrawingLibrary
         private static readonly IntVector2[] triangleVertices = new IntVector2[3];
         public void DrawMesh(Mesh mesh)
         {
+            unchecked
+            {
+
             Bitmap.Clear();
             Bitmap.CreateGraphics();
             Graphics g = Bitmap.GetGraphics();
@@ -107,6 +110,7 @@ namespace DrawingLibrary
             watch.Stop();
             Console.WriteLine("Rendered mesh in " + watch.ElapsedMilliseconds + " ms");
             Bitmap.DisposeGraphics();
+            }
         }
     }
 }
