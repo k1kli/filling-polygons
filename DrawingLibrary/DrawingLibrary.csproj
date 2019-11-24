@@ -48,8 +48,9 @@
     <Compile Include="GlobalData.cs" />
     <Compile Include="HelperMethods.cs" />
     <Compile Include="LightParameters.cs" />
+    <Compile Include="Samplers\FunctionNormalSampler.cs" />
     <Compile Include="Samplers\ImageSampler.cs" />
-    <Compile Include="Samplers\ISampler.cs" />
+    <Compile Include="Samplers\Sampler.cs" />
     <Compile Include="Samplers\StaticColorSampler.cs" />
     <Compile Include="Shaders\HybridShader.cs" />
     <Compile Include="Shaders\Shader.cs" />

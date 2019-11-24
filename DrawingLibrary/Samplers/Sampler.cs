@@ -9,7 +9,7 @@ namespace DrawingLibrary.Samplers
 {
     public abstract class Sampler
     {
-        public abstract Vector3 Sample(Vector2 UV);
+        public abstract Vector3 Sample(Vector2 worldPosition);
         public virtual void Resize(int width, int height) { }
     }
 }

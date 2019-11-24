@@ -30,6 +30,12 @@
         {
             this.editorLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.ToolboxPanel = new System.Windows.Forms.Panel();
+            this.meshSizeGroupBox = new System.Windows.Forms.GroupBox();
+            this.GridSizeConfirmButton = new System.Windows.Forms.Button();
+            this.GridYTextBox = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.GridXTextBox = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.lightParametersGroupBox = new System.Windows.Forms.GroupBox();
             this.mLightParameterTextBox = new System.Windows.Forms.TextBox();
             this.ksLightParameterTextBox = new System.Windows.Forms.TextBox();
@@ -52,6 +58,15 @@
             this.lightLocationLabel = new System.Windows.Forms.Label();
             this.chooseLightColorButton = new System.Windows.Forms.Button();
             this.normalsSourceGroupBox = new System.Windows.Forms.GroupBox();
+            this.DFuncNormalLabel = new System.Windows.Forms.Label();
+            this.DFuncNormalTextbox = new System.Windows.Forms.TextBox();
+            this.CFuncNormalLabel = new System.Windows.Forms.Label();
+            this.CFuncNormalTextbox = new System.Windows.Forms.TextBox();
+            this.BFuncNormalLabel = new System.Windows.Forms.Label();
+            this.BFuncNormalTextbox = new System.Windows.Forms.TextBox();
+            this.AFuncNormalLabel = new System.Windows.Forms.Label();
+            this.AFuncNormalTextbox = new System.Windows.Forms.TextBox();
+            this.functionNormalsRadioButton = new System.Windows.Forms.RadioButton();
             this.chooseNormalMapButton = new System.Windows.Forms.Button();
             this.staticNormalRadioButton = new System.Windows.Forms.RadioButton();
             this.normalMapRadioButton = new System.Windows.Forms.RadioButton();
@@ -65,14 +80,9 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.widokToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.drawWireframeToolstripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.meshSizeGroupBox = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.GridXTextBox = new System.Windows.Forms.TextBox();
-            this.GridYTextBox = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.GridSizeConfirmButton = new System.Windows.Forms.Button();
             this.editorLayoutPanel.SuspendLayout();
             this.ToolboxPanel.SuspendLayout();
+            this.meshSizeGroupBox.SuspendLayout();
             this.lightParametersGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mLightParameterTrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ksLightParameterTrackBar)).BeginInit();
@@ -84,7 +94,6 @@
             this.drawAreaPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.drawingBox)).BeginInit();
             this.menuStrip1.SuspendLayout();
-            this.meshSizeGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // editorLayoutPanel
@@ -118,6 +127,66 @@
             this.ToolboxPanel.Size = new System.Drawing.Size(309, 770);
             this.ToolboxPanel.TabIndex = 0;
             // 
+            // meshSizeGroupBox
+            // 
+            this.meshSizeGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.meshSizeGroupBox.Controls.Add(this.GridSizeConfirmButton);
+            this.meshSizeGroupBox.Controls.Add(this.GridYTextBox);
+            this.meshSizeGroupBox.Controls.Add(this.label2);
+            this.meshSizeGroupBox.Controls.Add(this.GridXTextBox);
+            this.meshSizeGroupBox.Controls.Add(this.label1);
+            this.meshSizeGroupBox.Location = new System.Drawing.Point(4, 704);
+            this.meshSizeGroupBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.meshSizeGroupBox.Name = "meshSizeGroupBox";
+            this.meshSizeGroupBox.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.meshSizeGroupBox.Size = new System.Drawing.Size(297, 62);
+            this.meshSizeGroupBox.TabIndex = 14;
+            this.meshSizeGroupBox.TabStop = false;
+            this.meshSizeGroupBox.Text = "Rozmiar siatki";
+            // 
+            // GridSizeConfirmButton
+            // 
+            this.GridSizeConfirmButton.Location = new System.Drawing.Point(179, 20);
+            this.GridSizeConfirmButton.Name = "GridSizeConfirmButton";
+            this.GridSizeConfirmButton.Size = new System.Drawing.Size(111, 32);
+            this.GridSizeConfirmButton.TabIndex = 4;
+            this.GridSizeConfirmButton.Text = "Zatwierdź";
+            this.GridSizeConfirmButton.UseVisualStyleBackColor = true;
+            this.GridSizeConfirmButton.Click += new System.EventHandler(this.GridSizeConfirmButton_Click);
+            // 
+            // GridYTextBox
+            // 
+            this.GridYTextBox.Location = new System.Drawing.Point(103, 30);
+            this.GridYTextBox.Name = "GridYTextBox";
+            this.GridYTextBox.Size = new System.Drawing.Size(40, 22);
+            this.GridYTextBox.TabIndex = 3;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(80, 30);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(17, 17);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "Y";
+            // 
+            // GridXTextBox
+            // 
+            this.GridXTextBox.Location = new System.Drawing.Point(34, 30);
+            this.GridXTextBox.Name = "GridXTextBox";
+            this.GridXTextBox.Size = new System.Drawing.Size(40, 22);
+            this.GridXTextBox.TabIndex = 1;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(12, 30);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(17, 17);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "X";
+            // 
             // lightParametersGroupBox
             // 
             this.lightParametersGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -133,7 +202,7 @@
             this.lightParametersGroupBox.Controls.Add(this.kdLightParameterTrackBar);
             this.lightParametersGroupBox.Controls.Add(this.constantLightParametersRadioButton);
             this.lightParametersGroupBox.Controls.Add(this.randomLightParametersRadioButton);
-            this.lightParametersGroupBox.Location = new System.Drawing.Point(9, 420);
+            this.lightParametersGroupBox.Location = new System.Drawing.Point(4, 513);
             this.lightParametersGroupBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.lightParametersGroupBox.Name = "lightParametersGroupBox";
             this.lightParametersGroupBox.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -275,7 +344,7 @@
             this.chooseShaderGroupBox.Controls.Add(this.hybridShaderRadioButton);
             this.chooseShaderGroupBox.Controls.Add(this.vertexColorShaderRadioButton);
             this.chooseShaderGroupBox.Controls.Add(this.preciseShaderRadioButton);
-            this.chooseShaderGroupBox.Location = new System.Drawing.Point(9, 300);
+            this.chooseShaderGroupBox.Location = new System.Drawing.Point(4, 393);
             this.chooseShaderGroupBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.chooseShaderGroupBox.Name = "chooseShaderGroupBox";
             this.chooseShaderGroupBox.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -332,7 +401,7 @@
             this.lightGroupBox.Controls.Add(this.constantLightPosLabel);
             this.lightGroupBox.Controls.Add(this.lightLocationLabel);
             this.lightGroupBox.Controls.Add(this.chooseLightColorButton);
-            this.lightGroupBox.Location = new System.Drawing.Point(9, 191);
+            this.lightGroupBox.Location = new System.Drawing.Point(4, 284);
             this.lightGroupBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.lightGroupBox.Name = "lightGroupBox";
             this.lightGroupBox.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -392,6 +461,15 @@
             // 
             this.normalsSourceGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.normalsSourceGroupBox.Controls.Add(this.DFuncNormalLabel);
+            this.normalsSourceGroupBox.Controls.Add(this.DFuncNormalTextbox);
+            this.normalsSourceGroupBox.Controls.Add(this.CFuncNormalLabel);
+            this.normalsSourceGroupBox.Controls.Add(this.CFuncNormalTextbox);
+            this.normalsSourceGroupBox.Controls.Add(this.BFuncNormalLabel);
+            this.normalsSourceGroupBox.Controls.Add(this.BFuncNormalTextbox);
+            this.normalsSourceGroupBox.Controls.Add(this.AFuncNormalLabel);
+            this.normalsSourceGroupBox.Controls.Add(this.AFuncNormalTextbox);
+            this.normalsSourceGroupBox.Controls.Add(this.functionNormalsRadioButton);
             this.normalsSourceGroupBox.Controls.Add(this.chooseNormalMapButton);
             this.normalsSourceGroupBox.Controls.Add(this.staticNormalRadioButton);
             this.normalsSourceGroupBox.Controls.Add(this.normalMapRadioButton);
@@ -399,10 +477,94 @@
             this.normalsSourceGroupBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.normalsSourceGroupBox.Name = "normalsSourceGroupBox";
             this.normalsSourceGroupBox.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.normalsSourceGroupBox.Size = new System.Drawing.Size(297, 85);
+            this.normalsSourceGroupBox.Size = new System.Drawing.Size(297, 180);
             this.normalsSourceGroupBox.TabIndex = 4;
             this.normalsSourceGroupBox.TabStop = false;
             this.normalsSourceGroupBox.Text = "Źródło wektora normalnego";
+            // 
+            // DFuncNormalLabel
+            // 
+            this.DFuncNormalLabel.AutoSize = true;
+            this.DFuncNormalLabel.Location = new System.Drawing.Point(163, 130);
+            this.DFuncNormalLabel.Name = "DFuncNormalLabel";
+            this.DFuncNormalLabel.Size = new System.Drawing.Size(18, 17);
+            this.DFuncNormalLabel.TabIndex = 13;
+            this.DFuncNormalLabel.Text = "D";
+            // 
+            // DFuncNormalTextbox
+            // 
+            this.DFuncNormalTextbox.Location = new System.Drawing.Point(215, 130);
+            this.DFuncNormalTextbox.Name = "DFuncNormalTextbox";
+            this.DFuncNormalTextbox.Size = new System.Drawing.Size(70, 22);
+            this.DFuncNormalTextbox.TabIndex = 12;
+            this.DFuncNormalTextbox.Text = "1";
+            this.DFuncNormalTextbox.Leave += new System.EventHandler(this.AFuncNormalTextbox_Leave);
+            // 
+            // CFuncNormalLabel
+            // 
+            this.CFuncNormalLabel.AutoSize = true;
+            this.CFuncNormalLabel.Location = new System.Drawing.Point(8, 130);
+            this.CFuncNormalLabel.Name = "CFuncNormalLabel";
+            this.CFuncNormalLabel.Size = new System.Drawing.Size(17, 17);
+            this.CFuncNormalLabel.TabIndex = 11;
+            this.CFuncNormalLabel.Text = "C";
+            // 
+            // CFuncNormalTextbox
+            // 
+            this.CFuncNormalTextbox.Location = new System.Drawing.Point(60, 130);
+            this.CFuncNormalTextbox.Name = "CFuncNormalTextbox";
+            this.CFuncNormalTextbox.Size = new System.Drawing.Size(70, 22);
+            this.CFuncNormalTextbox.TabIndex = 10;
+            this.CFuncNormalTextbox.Text = "1";
+            this.CFuncNormalTextbox.Leave += new System.EventHandler(this.AFuncNormalTextbox_Leave);
+            // 
+            // BFuncNormalLabel
+            // 
+            this.BFuncNormalLabel.AutoSize = true;
+            this.BFuncNormalLabel.Location = new System.Drawing.Point(163, 102);
+            this.BFuncNormalLabel.Name = "BFuncNormalLabel";
+            this.BFuncNormalLabel.Size = new System.Drawing.Size(17, 17);
+            this.BFuncNormalLabel.TabIndex = 9;
+            this.BFuncNormalLabel.Text = "B";
+            // 
+            // BFuncNormalTextbox
+            // 
+            this.BFuncNormalTextbox.Location = new System.Drawing.Point(215, 102);
+            this.BFuncNormalTextbox.Name = "BFuncNormalTextbox";
+            this.BFuncNormalTextbox.Size = new System.Drawing.Size(70, 22);
+            this.BFuncNormalTextbox.TabIndex = 8;
+            this.BFuncNormalTextbox.Text = "1";
+            this.BFuncNormalTextbox.Leave += new System.EventHandler(this.AFuncNormalTextbox_Leave);
+            // 
+            // AFuncNormalLabel
+            // 
+            this.AFuncNormalLabel.AutoSize = true;
+            this.AFuncNormalLabel.Location = new System.Drawing.Point(8, 102);
+            this.AFuncNormalLabel.Name = "AFuncNormalLabel";
+            this.AFuncNormalLabel.Size = new System.Drawing.Size(17, 17);
+            this.AFuncNormalLabel.TabIndex = 7;
+            this.AFuncNormalLabel.Text = "A";
+            // 
+            // AFuncNormalTextbox
+            // 
+            this.AFuncNormalTextbox.Location = new System.Drawing.Point(60, 102);
+            this.AFuncNormalTextbox.Name = "AFuncNormalTextbox";
+            this.AFuncNormalTextbox.Size = new System.Drawing.Size(70, 22);
+            this.AFuncNormalTextbox.TabIndex = 6;
+            this.AFuncNormalTextbox.Text = "1";
+            this.AFuncNormalTextbox.Leave += new System.EventHandler(this.AFuncNormalTextbox_Leave);
+            // 
+            // functionNormalsRadioButton
+            // 
+            this.functionNormalsRadioButton.AutoSize = true;
+            this.functionNormalsRadioButton.Location = new System.Drawing.Point(5, 77);
+            this.functionNormalsRadioButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.functionNormalsRadioButton.Name = "functionNormalsRadioButton";
+            this.functionNormalsRadioButton.Size = new System.Drawing.Size(125, 21);
+            this.functionNormalsRadioButton.TabIndex = 5;
+            this.functionNormalsRadioButton.Text = "Funkcja (sinus)";
+            this.functionNormalsRadioButton.UseVisualStyleBackColor = true;
+            this.functionNormalsRadioButton.CheckedChanged += new System.EventHandler(this.functionNormalsRadioButton_CheckedChanged);
             // 
             // chooseNormalMapButton
             // 
@@ -565,66 +727,6 @@
             this.drawWireframeToolstripMenuItem.Text = "Rysuj szkielet";
             this.drawWireframeToolstripMenuItem.Click += new System.EventHandler(this.DrawWireframeToolStripMenuItem_Click);
             // 
-            // meshSizeGroupBox
-            // 
-            this.meshSizeGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.meshSizeGroupBox.Controls.Add(this.GridSizeConfirmButton);
-            this.meshSizeGroupBox.Controls.Add(this.GridYTextBox);
-            this.meshSizeGroupBox.Controls.Add(this.label2);
-            this.meshSizeGroupBox.Controls.Add(this.GridXTextBox);
-            this.meshSizeGroupBox.Controls.Add(this.label1);
-            this.meshSizeGroupBox.Location = new System.Drawing.Point(9, 611);
-            this.meshSizeGroupBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.meshSizeGroupBox.Name = "meshSizeGroupBox";
-            this.meshSizeGroupBox.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.meshSizeGroupBox.Size = new System.Drawing.Size(297, 62);
-            this.meshSizeGroupBox.TabIndex = 14;
-            this.meshSizeGroupBox.TabStop = false;
-            this.meshSizeGroupBox.Text = "Rozmiar siatki";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 30);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(17, 17);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "X";
-            // 
-            // GridXTextBox
-            // 
-            this.GridXTextBox.Location = new System.Drawing.Point(34, 30);
-            this.GridXTextBox.Name = "GridXTextBox";
-            this.GridXTextBox.Size = new System.Drawing.Size(40, 22);
-            this.GridXTextBox.TabIndex = 1;
-            // 
-            // GridYTextBox
-            // 
-            this.GridYTextBox.Location = new System.Drawing.Point(103, 30);
-            this.GridYTextBox.Name = "GridYTextBox";
-            this.GridYTextBox.Size = new System.Drawing.Size(40, 22);
-            this.GridYTextBox.TabIndex = 3;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(80, 30);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(17, 17);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Y";
-            // 
-            // GridSizeConfirmButton
-            // 
-            this.GridSizeConfirmButton.Location = new System.Drawing.Point(179, 20);
-            this.GridSizeConfirmButton.Name = "GridSizeConfirmButton";
-            this.GridSizeConfirmButton.Size = new System.Drawing.Size(111, 32);
-            this.GridSizeConfirmButton.TabIndex = 4;
-            this.GridSizeConfirmButton.Text = "Zatwierdź";
-            this.GridSizeConfirmButton.UseVisualStyleBackColor = true;
-            this.GridSizeConfirmButton.Click += new System.EventHandler(this.GridSizeConfirmButton_Click);
-            // 
             // EditorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -639,6 +741,8 @@
             this.ClientSizeChanged += new System.EventHandler(this.EditorForm_ClientSizeChanged);
             this.editorLayoutPanel.ResumeLayout(false);
             this.ToolboxPanel.ResumeLayout(false);
+            this.meshSizeGroupBox.ResumeLayout(false);
+            this.meshSizeGroupBox.PerformLayout();
             this.lightParametersGroupBox.ResumeLayout(false);
             this.lightParametersGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mLightParameterTrackBar)).EndInit();
@@ -656,8 +760,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.drawingBox)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            this.meshSizeGroupBox.ResumeLayout(false);
-            this.meshSizeGroupBox.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -708,5 +810,14 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox GridXTextBox;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label DFuncNormalLabel;
+        private System.Windows.Forms.TextBox DFuncNormalTextbox;
+        private System.Windows.Forms.Label CFuncNormalLabel;
+        private System.Windows.Forms.TextBox CFuncNormalTextbox;
+        private System.Windows.Forms.Label BFuncNormalLabel;
+        private System.Windows.Forms.TextBox BFuncNormalTextbox;
+        private System.Windows.Forms.Label AFuncNormalLabel;
+        private System.Windows.Forms.TextBox AFuncNormalTextbox;
+        private System.Windows.Forms.RadioButton functionNormalsRadioButton;
     }
 }

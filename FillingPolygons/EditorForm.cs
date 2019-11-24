@@ -27,6 +27,8 @@ namespace FillingPolygons
 
         Random r = new Random();
         LightParameters currentLightParameters;
+        private int animated = 0;
+
         public EditorForm()
         {
             InitializeComponent();
@@ -50,7 +52,7 @@ namespace FillingPolygons
             }
             scene.DrawMesh(mesh);
             e.Graphics.DrawImageUnscaled(scene.Bitmap.Bitmap, 0, 0);
-            if (lightAnimator != null)
+            if (animated>0)
             {
                 drawingBox.Invalidate();
             }
@@ -324,8 +326,12 @@ namespace FillingPolygons
             {
                 lightAnimator = new LightAnimator(scene.Width / 2);
                 lightAnimator.StartAnimation();
-
+                animated++;
                 drawingBox.Invalidate();
+            }
+            else
+            {
+                animated--;
             }
         }
 
@@ -340,6 +346,44 @@ namespace FillingPolygons
                 CreateMesh();
                 drawingBox.Invalidate();
             }
+        }
+        private (float a, float b, float c, float d) GetFunctionNormalParams()
+        {
+            float a;
+            float b;
+            float c;
+            float d;
+            if (!float.TryParse(AFuncNormalTextbox.Text, out a)) a = 1;
+            if (!float.TryParse(BFuncNormalTextbox.Text, out b)) b = 1;
+            if (!float.TryParse(CFuncNormalTextbox.Text, out c)) c = 1;
+            if (!float.TryParse(DFuncNormalTextbox.Text, out d)) d = 1;
+            return (a, b, c, d);
+        }
+        private void functionNormalsRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if(functionNormalsRadioButton.Checked)
+            {
+                var funcParams = GetFunctionNormalParams();
+                scene.Normals = new FunctionNormalSampler(
+                    funcParams.a,
+                    funcParams.b,
+                    funcParams.c,
+                    funcParams.d
+                    );
+                animated++;
+                drawingBox.Invalidate();
+            }
+            else
+            {
+                animated--;
+            }
+        }
+
+        private void AFuncNormalTextbox_Leave(object sender, EventArgs e)
+        {
+            FunctionNormalSampler sampler = scene.Normals as FunctionNormalSampler;
+            if (sampler == null) return;
+            sampler.SetFunctionNormalParams(GetFunctionNormalParams());
         }
     }
 }

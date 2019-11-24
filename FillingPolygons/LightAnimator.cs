@@ -30,15 +30,15 @@ namespace FillingPolygons
         }
         private float X(float t)
         {
-            return domeRadius * (float)Math.Cos(t);
+            return domeRadius / 2 * (float)Math.Cos(t);
         }
         private float Y(float t)
         {
-            return domeRadius * (float)Math.Sin(t);
+            return domeRadius/2 * (float)Math.Sin(t);
         }
         private float Z(float t)
         {
-            return domeRadius * (1f-(float)Math.Sin(t/2));
+            return domeRadius / 2 * (1f-(float)Math.Sin(t/2));
         }
     }
 }
